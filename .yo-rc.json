@@ -1,0 +1,40 @@
+{
+  "generator-jhipster": {
+    "promptValues": {
+      "packageName": "com.eyun.user",
+      "nativeLanguage": "zh-cn"
+    },
+    "jhipsterVersion": "4.14.1",
+    "baseName": "user",
+    "packageName": "com.eyun.user",
+    "packageFolder": "com/eyun/user",
+    "serverPort": "8104",
+    "authenticationType": "uaa",
+    "uaaBaseName": "uaa",
+    "cacheProvider": "hazelcast",
+    "enableHibernateCache": true,
+    "websocket": false,
+    "databaseType": "sql",
+    "devDatabaseType": "mysql",
+    "prodDatabaseType": "mysql",
+    "searchEngine": false,
+    "messageBroker": false,
+    "serviceDiscoveryType": "eureka",
+    "buildTool": "maven",
+    "enableSocialSignIn": false,
+    "enableSwaggerCodegen": false,
+    "jwtSecretKey": "c6853fbdf6911b88ac1863311a769e78ac8b627a",
+    "enableTranslation": true,
+    "applicationType": "microservice",
+    "testFrameworks": [],
+    "jhiPrefix": "jhi",
+    "nativeLanguage": "zh-cn",
+    "languages": [
+      "zh-cn",
+      "en"
+    ],
+    "clientPackageManager": "yarn",
+    "skipClient": true,
+    "skipUserManagement": true
+  }
+}
