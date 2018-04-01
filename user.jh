@@ -1,0 +1,55 @@
+/**
+ * The UserAnnex entity.
+ */
+entity UserAnnex {
+  /**
+   * The firstname attribute.
+   */
+  firstName String,
+  lastName String,
+  nickname String,
+  email String,
+  mobile String,
+  avatar String,
+}
+
+entity Delivery {
+  aliases String,
+  contact String,
+  mobile  String,
+  address String,
+  postal String,
+  city String,
+  province String,
+}
+
+entity UserType {
+  name String,
+}
+
+relationship ManyToMany {
+  UserAnnex{userTypes} to UserType
+}
+
+relationship OneToMany {
+  /**
+   * A relationship
+   */
+  UserAnnex{deliveries} to
+  /**
+   * Another side of the same relationship
+   */
+  Delivery
+}
+
+relationship ManyToOne {
+  UserAnnex{inviter} to UserAnnex{invitee}
+}
+
+
+paginate UserType with infinite-scroll
+paginate UserAnnex,Delivery with pagination
+
+dto * with mapstruct
+
+service * with serviceClass

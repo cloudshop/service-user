@@ -1,0 +1,66 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipName": "department",
+            "otherEntityName": "department",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "job",
+            "otherEntityName": "job",
+            "otherEntityRelationshipName": "member"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "manager",
+            "otherEntityName": "member",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "employeeId",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "firstName",
+            "javadoc": "The firstname attribute.",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "lastName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "email",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "phoneNumber",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "hireDate",
+            "fieldType": "ZonedDateTime"
+        },
+        {
+            "fieldName": "salary",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "commissionPct",
+            "fieldType": "Long"
+        }
+    ],
+    "changelogDate": "20180401064445",
+    "javadoc": "The Member entity.",
+    "entityTableName": "member",
+    "dto": "mapstruct",
+    "pagination": "infinite-scroll",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "microserviceName": "user"
+}

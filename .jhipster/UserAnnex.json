@@ -1,0 +1,67 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "javadoc": "A relationship",
+            "relationshipName": "deliveries",
+            "otherEntityName": "delivery",
+            "otherEntityRelationshipName": "userAnnex"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "inviter",
+            "otherEntityName": "userAnnex",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "many-to-many",
+            "otherEntityRelationshipName": "",
+            "relationshipName": "userTypes",
+            "otherEntityName": "userType",
+            "otherEntityField": "id",
+            "ownerSide": true
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "invitee",
+            "otherEntityName": "userAnnex",
+            "otherEntityRelationshipName": "inviter"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "firstName",
+            "javadoc": "The firstname attribute.",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "lastName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "nickname",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "email",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "mobile",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "avatar",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20180401103245",
+    "javadoc": "The UserAnnex entity.",
+    "entityTableName": "user_annex",
+    "dto": "mapstruct",
+    "pagination": "pagination",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "microserviceName": "user"
+}
