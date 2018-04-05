@@ -39,7 +39,7 @@ public class MercuryDTO implements Serializable {
 
     private String desc;
 
-    private Long statusId;
+    private Long statusnameId;
 
     public Long getId() {
         return id;
@@ -153,12 +153,12 @@ public class MercuryDTO implements Serializable {
         this.desc = desc;
     }
 
-    public Long getStatusId() {
-        return statusId;
+    public Long getStatusnameId() {
+        return statusnameId;
     }
 
-    public void setStatusId(Long mercuryStatusId) {
-        this.statusId = mercuryStatusId;
+    public void setStatusnameId(Long mercuryStatusId) {
+        this.statusnameId = mercuryStatusId;
     }
 
     @Override

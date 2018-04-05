@@ -13,11 +13,11 @@ public class OwnerRelationDTO implements Serializable {
 
     private Long id;
 
-    private Long ownerTypeId;
+    private Long ownerTypenameId;
 
-    private Long ownerId;
+    private Long ownernicknameId;
 
-    private Long mercuryId;
+    private Long mercurynameId;
 
     public Long getId() {
         return id;
@@ -27,28 +27,28 @@ public class OwnerRelationDTO implements Serializable {
         this.id = id;
     }
 
-    public Long getOwnerTypeId() {
-        return ownerTypeId;
+    public Long getOwnerTypenameId() {
+        return ownerTypenameId;
     }
 
-    public void setOwnerTypeId(Long ownerTypeId) {
-        this.ownerTypeId = ownerTypeId;
+    public void setOwnerTypenameId(Long ownerTypeId) {
+        this.ownerTypenameId = ownerTypeId;
     }
 
-    public Long getOwnerId() {
-        return ownerId;
+    public Long getOwnernicknameId() {
+        return ownernicknameId;
     }
 
-    public void setOwnerId(Long userAnnexId) {
-        this.ownerId = userAnnexId;
+    public void setOwnernicknameId(Long userAnnexId) {
+        this.ownernicknameId = userAnnexId;
     }
 
-    public Long getMercuryId() {
-        return mercuryId;
+    public Long getMercurynameId() {
+        return mercurynameId;
     }
 
-    public void setMercuryId(Long mercuryId) {
-        this.mercuryId = mercuryId;
+    public void setMercurynameId(Long mercuryId) {
+        this.mercurynameId = mercuryId;
     }
 
     @Override

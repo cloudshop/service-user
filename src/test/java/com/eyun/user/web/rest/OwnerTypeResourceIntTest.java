@@ -24,6 +24,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -45,6 +46,11 @@ public class OwnerTypeResourceIntTest {
 
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
+
+    private static final byte[] DEFAULT_DESC = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_DESC = TestUtil.createByteArray(2, "1");
+    private static final String DEFAULT_DESC_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_DESC_CONTENT_TYPE = "image/png";
 
     @Autowired
     private OwnerTypeRepository ownerTypeRepository;
@@ -90,7 +96,9 @@ public class OwnerTypeResourceIntTest {
      */
     public static OwnerType createEntity(EntityManager em) {
         OwnerType ownerType = new OwnerType()
-            .name(DEFAULT_NAME);
+            .name(DEFAULT_NAME)
+            .desc(DEFAULT_DESC)
+            .descContentType(DEFAULT_DESC_CONTENT_TYPE);
         return ownerType;
     }
 
@@ -116,6 +124,8 @@ public class OwnerTypeResourceIntTest {
         assertThat(ownerTypeList).hasSize(databaseSizeBeforeCreate + 1);
         OwnerType testOwnerType = ownerTypeList.get(ownerTypeList.size() - 1);
         assertThat(testOwnerType.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testOwnerType.getDesc()).isEqualTo(DEFAULT_DESC);
+        assertThat(testOwnerType.getDescContentType()).isEqualTo(DEFAULT_DESC_CONTENT_TYPE);
     }
 
     @Test
@@ -149,7 +159,9 @@ public class OwnerTypeResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(ownerType.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].descContentType").value(hasItem(DEFAULT_DESC_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].desc").value(hasItem(Base64Utils.encodeToString(DEFAULT_DESC))));
     }
 
     @Test
@@ -163,7 +175,9 @@ public class OwnerTypeResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(ownerType.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.descContentType").value(DEFAULT_DESC_CONTENT_TYPE))
+            .andExpect(jsonPath("$.desc").value(Base64Utils.encodeToString(DEFAULT_DESC)));
     }
 
     @Test
@@ -186,7 +200,9 @@ public class OwnerTypeResourceIntTest {
         // Disconnect from session so that the updates on updatedOwnerType are not directly saved in db
         em.detach(updatedOwnerType);
         updatedOwnerType
-            .name(UPDATED_NAME);
+            .name(UPDATED_NAME)
+            .desc(UPDATED_DESC)
+            .descContentType(UPDATED_DESC_CONTENT_TYPE);
         OwnerTypeDTO ownerTypeDTO = ownerTypeMapper.toDto(updatedOwnerType);
 
         restOwnerTypeMockMvc.perform(put("/api/owner-types")
@@ -199,6 +215,8 @@ public class OwnerTypeResourceIntTest {
         assertThat(ownerTypeList).hasSize(databaseSizeBeforeUpdate);
         OwnerType testOwnerType = ownerTypeList.get(ownerTypeList.size() - 1);
         assertThat(testOwnerType.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testOwnerType.getDesc()).isEqualTo(UPDATED_DESC);
+        assertThat(testOwnerType.getDescContentType()).isEqualTo(UPDATED_DESC_CONTENT_TYPE);
     }
 
     @Test

@@ -8,26 +8,26 @@
     -->
     <changeSet id="20180405065738-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="status_id"
+        <addForeignKeyConstraint baseColumnNames="statusname_id"
                                  baseTableName="user_annex"
-                                 constraintName="fk_user_annex_status_id"
+                                 constraintName="fk_user_annex_statusname_id"
                                  referencedColumnNames="id"
                                  referencedTableName="user_status"/>
 
         <addForeignKeyConstraint baseColumnNames="user_annexes_id"
-                                 baseTableName="user_annex_user_type"
-                                 constraintName="fk_user_annex_user_type_user_annexes_id"
+                                 baseTableName="user_annex_user_typename"
+                                 constraintName="fk_user_annex_user_typename_user_annexes_id"
                                  referencedColumnNames="id"
                                  referencedTableName="user_annex"/>
-        <addForeignKeyConstraint baseColumnNames="user_types_id"
-                                 baseTableName="user_annex_user_type"
-                                 constraintName="fk_user_annex_user_type_user_types_id"
+        <addForeignKeyConstraint baseColumnNames="user_typenames_id"
+                                 baseTableName="user_annex_user_typename"
+                                 constraintName="fk_user_annex_user_typename_user_typenames_id"
                                  referencedColumnNames="id"
                                  referencedTableName="user_type"/>
         
-        <addForeignKeyConstraint baseColumnNames="invitee_id"
+        <addForeignKeyConstraint baseColumnNames="inviteenickname_id"
                                  baseTableName="user_annex"
-                                 constraintName="fk_user_annex_invitee_id"
+                                 constraintName="fk_user_annex_inviteenickname_id"
                                  referencedColumnNames="id"
                                  referencedTableName="user_annex"/>
 

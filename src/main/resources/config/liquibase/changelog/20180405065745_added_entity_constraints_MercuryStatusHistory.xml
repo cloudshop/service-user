@@ -8,21 +8,21 @@
     -->
     <changeSet id="20180405065745-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="mercury_id"
+        <addForeignKeyConstraint baseColumnNames="mercuryname_id"
                                  baseTableName="mercury_status_history"
-                                 constraintName="fk_mercury_status_history_mercury_id"
+                                 constraintName="fk_mercury_status_history_mercuryname_id"
                                  referencedColumnNames="id"
                                  referencedTableName="mercury"/>
 
-        <addForeignKeyConstraint baseColumnNames="old_status_id"
+        <addForeignKeyConstraint baseColumnNames="old_statusname_id"
                                  baseTableName="mercury_status_history"
-                                 constraintName="fk_mercury_status_history_old_status_id"
+                                 constraintName="fk_mercury_status_history_old_statusname_id"
                                  referencedColumnNames="id"
                                  referencedTableName="mercury_status"/>
 
-        <addForeignKeyConstraint baseColumnNames="newtatus_id"
+        <addForeignKeyConstraint baseColumnNames="newtatusname_id"
                                  baseTableName="mercury_status_history"
-                                 constraintName="fk_mercury_status_history_newtatus_id"
+                                 constraintName="fk_mercury_status_history_newtatusname_id"
                                  referencedColumnNames="id"
                                  referencedTableName="mercury_status"/>
 

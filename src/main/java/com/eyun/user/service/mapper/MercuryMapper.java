@@ -11,10 +11,10 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {MercuryStatusMapper.class})
 public interface MercuryMapper extends EntityMapper<MercuryDTO, Mercury> {
 
-    @Mapping(source = "status.id", target = "statusId")
+    @Mapping(source = "statusname.id", target = "statusnameId")
     MercuryDTO toDto(Mercury mercury);
 
-    @Mapping(source = "statusId", target = "status")
+    @Mapping(source = "statusnameId", target = "statusname")
     Mercury toEntity(MercuryDTO mercuryDTO);
 
     default Mercury fromId(Long id) {

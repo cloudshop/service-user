@@ -24,6 +24,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -45,6 +46,11 @@ public class UserStatusResourceIntTest {
 
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
+
+    private static final byte[] DEFAULT_DESC = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_DESC = TestUtil.createByteArray(2, "1");
+    private static final String DEFAULT_DESC_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_DESC_CONTENT_TYPE = "image/png";
 
     @Autowired
     private UserStatusRepository userStatusRepository;
@@ -90,7 +96,9 @@ public class UserStatusResourceIntTest {
      */
     public static UserStatus createEntity(EntityManager em) {
         UserStatus userStatus = new UserStatus()
-            .name(DEFAULT_NAME);
+            .name(DEFAULT_NAME)
+            .desc(DEFAULT_DESC)
+            .descContentType(DEFAULT_DESC_CONTENT_TYPE);
         return userStatus;
     }
 
@@ -116,6 +124,8 @@ public class UserStatusResourceIntTest {
         assertThat(userStatusList).hasSize(databaseSizeBeforeCreate + 1);
         UserStatus testUserStatus = userStatusList.get(userStatusList.size() - 1);
         assertThat(testUserStatus.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testUserStatus.getDesc()).isEqualTo(DEFAULT_DESC);
+        assertThat(testUserStatus.getDescContentType()).isEqualTo(DEFAULT_DESC_CONTENT_TYPE);
     }
 
     @Test
@@ -149,7 +159,9 @@ public class UserStatusResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(userStatus.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].descContentType").value(hasItem(DEFAULT_DESC_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].desc").value(hasItem(Base64Utils.encodeToString(DEFAULT_DESC))));
     }
 
     @Test
@@ -163,7 +175,9 @@ public class UserStatusResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(userStatus.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.descContentType").value(DEFAULT_DESC_CONTENT_TYPE))
+            .andExpect(jsonPath("$.desc").value(Base64Utils.encodeToString(DEFAULT_DESC)));
     }
 
     @Test
@@ -186,7 +200,9 @@ public class UserStatusResourceIntTest {
         // Disconnect from session so that the updates on updatedUserStatus are not directly saved in db
         em.detach(updatedUserStatus);
         updatedUserStatus
-            .name(UPDATED_NAME);
+            .name(UPDATED_NAME)
+            .desc(UPDATED_DESC)
+            .descContentType(UPDATED_DESC_CONTENT_TYPE);
         UserStatusDTO userStatusDTO = userStatusMapper.toDto(updatedUserStatus);
 
         restUserStatusMockMvc.perform(put("/api/user-statuses")
@@ -199,6 +215,8 @@ public class UserStatusResourceIntTest {
         assertThat(userStatusList).hasSize(databaseSizeBeforeUpdate);
         UserStatus testUserStatus = userStatusList.get(userStatusList.size() - 1);
         assertThat(testUserStatus.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testUserStatus.getDesc()).isEqualTo(UPDATED_DESC);
+        assertThat(testUserStatus.getDescContentType()).isEqualTo(UPDATED_DESC_CONTENT_TYPE);
     }
 
     @Test

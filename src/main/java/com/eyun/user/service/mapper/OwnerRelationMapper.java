@@ -11,14 +11,14 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {OwnerTypeMapper.class, UserAnnexMapper.class, MercuryMapper.class})
 public interface OwnerRelationMapper extends EntityMapper<OwnerRelationDTO, OwnerRelation> {
 
-    @Mapping(source = "ownerType.id", target = "ownerTypeId")
-    @Mapping(source = "owner.id", target = "ownerId")
-    @Mapping(source = "mercury.id", target = "mercuryId")
+    @Mapping(source = "ownerTypename.id", target = "ownerTypenameId")
+    @Mapping(source = "ownernickname.id", target = "ownernicknameId")
+    @Mapping(source = "mercuryname.id", target = "mercurynameId")
     OwnerRelationDTO toDto(OwnerRelation ownerRelation);
 
-    @Mapping(source = "ownerTypeId", target = "ownerType")
-    @Mapping(source = "ownerId", target = "owner")
-    @Mapping(source = "mercuryId", target = "mercury")
+    @Mapping(source = "ownerTypenameId", target = "ownerTypename")
+    @Mapping(source = "ownernicknameId", target = "ownernickname")
+    @Mapping(source = "mercurynameId", target = "mercuryname")
     OwnerRelation toEntity(OwnerRelationDTO ownerRelationDTO);
 
     default OwnerRelation fromId(Long id) {

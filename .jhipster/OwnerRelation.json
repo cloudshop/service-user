@@ -3,7 +3,7 @@
     "relationships": [
         {
             "relationshipType": "one-to-one",
-            "relationshipName": "ownerType",
+            "relationshipName": "ownerTypename",
             "otherEntityName": "ownerType",
             "otherEntityField": "id",
             "ownerSide": true,
@@ -11,7 +11,7 @@
         },
         {
             "relationshipType": "one-to-one",
-            "relationshipName": "owner",
+            "relationshipName": "ownernickname",
             "otherEntityName": "userAnnex",
             "otherEntityField": "id",
             "ownerSide": true,
@@ -19,7 +19,7 @@
         },
         {
             "relationshipType": "one-to-one",
-            "relationshipName": "mercury",
+            "relationshipName": "mercuryname",
             "otherEntityName": "mercury",
             "otherEntityField": "id",
             "ownerSide": true,

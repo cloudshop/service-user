@@ -24,15 +24,15 @@ public class OwnerRelation implements Serializable {
 
     @OneToOne
     @JoinColumn(unique = true)
-    private OwnerType ownerType;
+    private OwnerType ownerTypename;
 
     @OneToOne
     @JoinColumn(unique = true)
-    private UserAnnex owner;
+    private UserAnnex ownernickname;
 
     @OneToOne
     @JoinColumn(unique = true)
-    private Mercury mercury;
+    private Mercury mercuryname;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -43,43 +43,43 @@ public class OwnerRelation implements Serializable {
         this.id = id;
     }
 
-    public OwnerType getOwnerType() {
-        return ownerType;
+    public OwnerType getOwnerTypename() {
+        return ownerTypename;
     }
 
-    public OwnerRelation ownerType(OwnerType ownerType) {
-        this.ownerType = ownerType;
+    public OwnerRelation ownerTypename(OwnerType ownerType) {
+        this.ownerTypename = ownerType;
         return this;
     }
 
-    public void setOwnerType(OwnerType ownerType) {
-        this.ownerType = ownerType;
+    public void setOwnerTypename(OwnerType ownerType) {
+        this.ownerTypename = ownerType;
     }
 
-    public UserAnnex getOwner() {
-        return owner;
+    public UserAnnex getOwnernickname() {
+        return ownernickname;
     }
 
-    public OwnerRelation owner(UserAnnex userAnnex) {
-        this.owner = userAnnex;
+    public OwnerRelation ownernickname(UserAnnex userAnnex) {
+        this.ownernickname = userAnnex;
         return this;
     }
 
-    public void setOwner(UserAnnex userAnnex) {
-        this.owner = userAnnex;
+    public void setOwnernickname(UserAnnex userAnnex) {
+        this.ownernickname = userAnnex;
     }
 
-    public Mercury getMercury() {
-        return mercury;
+    public Mercury getMercuryname() {
+        return mercuryname;
     }
 
-    public OwnerRelation mercury(Mercury mercury) {
-        this.mercury = mercury;
+    public OwnerRelation mercuryname(Mercury mercury) {
+        this.mercuryname = mercury;
         return this;
     }
 
-    public void setMercury(Mercury mercury) {
-        this.mercury = mercury;
+    public void setMercuryname(Mercury mercury) {
+        this.mercuryname = mercury;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

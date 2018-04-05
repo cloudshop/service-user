@@ -8,21 +8,21 @@
     -->
     <changeSet id="20180405065747-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="owner_type_id"
+        <addForeignKeyConstraint baseColumnNames="owner_typename_id"
                                  baseTableName="owner_relation"
-                                 constraintName="fk_owner_relation_owner_type_id"
+                                 constraintName="fk_owner_relation_owner_typename_id"
                                  referencedColumnNames="id"
                                  referencedTableName="owner_type"/>
 
-        <addForeignKeyConstraint baseColumnNames="owner_id"
+        <addForeignKeyConstraint baseColumnNames="ownernickname_id"
                                  baseTableName="owner_relation"
-                                 constraintName="fk_owner_relation_owner_id"
+                                 constraintName="fk_owner_relation_ownernickname_id"
                                  referencedColumnNames="id"
                                  referencedTableName="user_annex"/>
 
-        <addForeignKeyConstraint baseColumnNames="mercury_id"
+        <addForeignKeyConstraint baseColumnNames="mercuryname_id"
                                  baseTableName="owner_relation"
-                                 constraintName="fk_owner_relation_mercury_id"
+                                 constraintName="fk_owner_relation_mercuryname_id"
                                  referencedColumnNames="id"
                                  referencedTableName="mercury"/>
 

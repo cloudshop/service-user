@@ -1,8 +1,6 @@
 package com.eyun.user.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import io.swagger.annotations.ApiModel;
-import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -14,9 +12,8 @@ import java.util.Set;
 import java.util.Objects;
 
 /**
- * The Employee entity.
+ * A UserAnnex.
  */
-@ApiModel(description = "The Employee entity.")
 @Entity
 @Table(name = "user_annex")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -28,24 +25,17 @@ public class UserAnnex implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /**
-     * The firstname attribute.
-     */
-    @ApiModelProperty(value = "The firstname attribute.")
     @Column(name = "user_id")
     private Long userId;
 
-    @Column(name = "first_name")
-    private String firstName;
-
-    @Column(name = "last_name")
-    private String lastName;
+    @Column(name = "name")
+    private String name;
 
     @Column(name = "email")
     private String email;
 
-    @Column(name = "phone_number")
-    private String phoneNumber;
+    @Column(name = "phone")
+    private String phone;
 
     @Column(name = "nickname")
     private String nickname;
@@ -55,27 +45,27 @@ public class UserAnnex implements Serializable {
 
     @OneToOne
     @JoinColumn(unique = true)
-    private UserStatus status;
+    private UserStatus statusname;
 
     @OneToMany(mappedBy = "userAnnex")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<DeliveryAddress> deliveryAddresses = new HashSet<>();
+    private Set<DeliveryAddress> deliveryAddressaliases = new HashSet<>();
 
-    @OneToMany(mappedBy = "invitee")
+    @OneToMany(mappedBy = "invitee[nickname]")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<UserAnnex> inviters = new HashSet<>();
+    private Set<UserAnnex> inviternicknames = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "user_annex_user_type",
+    @JoinTable(name = "user_annex_user_typename",
                joinColumns = @JoinColumn(name="user_annexes_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="user_types_id", referencedColumnName="id"))
-    private Set<UserType> userTypes = new HashSet<>();
+               inverseJoinColumns = @JoinColumn(name="user_typenames_id", referencedColumnName="id"))
+    private Set<UserType> userTypenames = new HashSet<>();
 
     @ManyToOne
-    private UserAnnex invitee;
+    private UserAnnex inviteenickname;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -99,30 +89,17 @@ public class UserAnnex implements Serializable {
         this.userId = userId;
     }
 
-    public String getFirstName() {
-        return firstName;
+    public String getName() {
+        return name;
     }
 
-    public UserAnnex firstName(String firstName) {
-        this.firstName = firstName;
+    public UserAnnex name(String name) {
+        this.name = name;
         return this;
     }
 
-    public void setFirstName(String firstName) {
-        this.firstName = firstName;
-    }
-
-    public String getLastName() {
-        return lastName;
-    }
-
-    public UserAnnex lastName(String lastName) {
-        this.lastName = lastName;
-        return this;
-    }
-
-    public void setLastName(String lastName) {
-        this.lastName = lastName;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public String getEmail() {
@@ -138,17 +115,17 @@ public class UserAnnex implements Serializable {
         this.email = email;
     }
 
-    public String getPhoneNumber() {
-        return phoneNumber;
+    public String getPhone() {
+        return phone;
     }
 
-    public UserAnnex phoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public UserAnnex phone(String phone) {
+        this.phone = phone;
         return this;
     }
 
-    public void setPhoneNumber(String phoneNumber) {
-        this.phoneNumber = phoneNumber;
+    public void setPhone(String phone) {
+        this.phone = phone;
     }
 
     public String getNickname() {
@@ -177,103 +154,103 @@ public class UserAnnex implements Serializable {
         this.avatar = avatar;
     }
 
-    public UserStatus getStatus() {
-        return status;
+    public UserStatus getStatusname() {
+        return statusname;
     }
 
-    public UserAnnex status(UserStatus userStatus) {
-        this.status = userStatus;
+    public UserAnnex statusname(UserStatus userStatus) {
+        this.statusname = userStatus;
         return this;
     }
 
-    public void setStatus(UserStatus userStatus) {
-        this.status = userStatus;
+    public void setStatusname(UserStatus userStatus) {
+        this.statusname = userStatus;
     }
 
-    public Set<DeliveryAddress> getDeliveryAddresses() {
-        return deliveryAddresses;
+    public Set<DeliveryAddress> getDeliveryAddressaliases() {
+        return deliveryAddressaliases;
     }
 
-    public UserAnnex deliveryAddresses(Set<DeliveryAddress> deliveryAddresses) {
-        this.deliveryAddresses = deliveryAddresses;
+    public UserAnnex deliveryAddressaliases(Set<DeliveryAddress> deliveryAddresses) {
+        this.deliveryAddressaliases = deliveryAddresses;
         return this;
     }
 
-    public UserAnnex addDeliveryAddress(DeliveryAddress deliveryAddress) {
-        this.deliveryAddresses.add(deliveryAddress);
+    public UserAnnex addDeliveryAddressaliases(DeliveryAddress deliveryAddress) {
+        this.deliveryAddressaliases.add(deliveryAddress);
         deliveryAddress.setUserAnnex(this);
         return this;
     }
 
-    public UserAnnex removeDeliveryAddress(DeliveryAddress deliveryAddress) {
-        this.deliveryAddresses.remove(deliveryAddress);
+    public UserAnnex removeDeliveryAddressaliases(DeliveryAddress deliveryAddress) {
+        this.deliveryAddressaliases.remove(deliveryAddress);
         deliveryAddress.setUserAnnex(null);
         return this;
     }
 
-    public void setDeliveryAddresses(Set<DeliveryAddress> deliveryAddresses) {
-        this.deliveryAddresses = deliveryAddresses;
+    public void setDeliveryAddressaliases(Set<DeliveryAddress> deliveryAddresses) {
+        this.deliveryAddressaliases = deliveryAddresses;
     }
 
-    public Set<UserAnnex> getInviters() {
-        return inviters;
+    public Set<UserAnnex> getInviternicknames() {
+        return inviternicknames;
     }
 
-    public UserAnnex inviters(Set<UserAnnex> userAnnexes) {
-        this.inviters = userAnnexes;
+    public UserAnnex inviternicknames(Set<UserAnnex> userAnnexes) {
+        this.inviternicknames = userAnnexes;
         return this;
     }
 
-    public UserAnnex addInviter(UserAnnex userAnnex) {
-        this.inviters.add(userAnnex);
-        userAnnex.setInvitee(this);
+    public UserAnnex addInviternickname(UserAnnex userAnnex) {
+        this.inviternicknames.add(userAnnex);
+        userAnnex.setInvitee[nickname](this);
         return this;
     }
 
-    public UserAnnex removeInviter(UserAnnex userAnnex) {
-        this.inviters.remove(userAnnex);
-        userAnnex.setInvitee(null);
+    public UserAnnex removeInviternickname(UserAnnex userAnnex) {
+        this.inviternicknames.remove(userAnnex);
+        userAnnex.setInvitee[nickname](null);
         return this;
     }
 
-    public void setInviters(Set<UserAnnex> userAnnexes) {
-        this.inviters = userAnnexes;
+    public void setInviternicknames(Set<UserAnnex> userAnnexes) {
+        this.inviternicknames = userAnnexes;
     }
 
-    public Set<UserType> getUserTypes() {
-        return userTypes;
+    public Set<UserType> getUserTypenames() {
+        return userTypenames;
     }
 
-    public UserAnnex userTypes(Set<UserType> userTypes) {
-        this.userTypes = userTypes;
+    public UserAnnex userTypenames(Set<UserType> userTypes) {
+        this.userTypenames = userTypes;
         return this;
     }
 
-    public UserAnnex addUserType(UserType userType) {
-        this.userTypes.add(userType);
+    public UserAnnex addUserTypename(UserType userType) {
+        this.userTypenames.add(userType);
         return this;
     }
 
-    public UserAnnex removeUserType(UserType userType) {
-        this.userTypes.remove(userType);
+    public UserAnnex removeUserTypename(UserType userType) {
+        this.userTypenames.remove(userType);
         return this;
     }
 
-    public void setUserTypes(Set<UserType> userTypes) {
-        this.userTypes = userTypes;
+    public void setUserTypenames(Set<UserType> userTypes) {
+        this.userTypenames = userTypes;
     }
 
-    public UserAnnex getInvitee() {
-        return invitee;
+    public UserAnnex getInviteenickname() {
+        return inviteenickname;
     }
 
-    public UserAnnex invitee(UserAnnex userAnnex) {
-        this.invitee = userAnnex;
+    public UserAnnex inviteenickname(UserAnnex userAnnex) {
+        this.inviteenickname = userAnnex;
         return this;
     }
 
-    public void setInvitee(UserAnnex userAnnex) {
-        this.invitee = userAnnex;
+    public void setInviteenickname(UserAnnex userAnnex) {
+        this.inviteenickname = userAnnex;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -302,10 +279,9 @@ public class UserAnnex implements Serializable {
         return "UserAnnex{" +
             "id=" + getId() +
             ", userId=" + getUserId() +
-            ", firstName='" + getFirstName() + "'" +
-            ", lastName='" + getLastName() + "'" +
+            ", name='" + getName() + "'" +
             ", email='" + getEmail() + "'" +
-            ", phoneNumber='" + getPhoneNumber() + "'" +
+            ", phone='" + getPhone() + "'" +
             ", nickname='" + getNickname() + "'" +
             ", avatar='" + getAvatar() + "'" +
             "}";

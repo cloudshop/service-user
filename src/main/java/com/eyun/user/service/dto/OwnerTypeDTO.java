@@ -3,6 +3,7 @@ package com.eyun.user.service.dto;
 
 import java.io.Serializable;
 import java.util.Objects;
+import javax.persistence.Lob;
 
 /**
  * A DTO for the OwnerType entity.
@@ -12,6 +13,10 @@ public class OwnerTypeDTO implements Serializable {
     private Long id;
 
     private String name;
+
+    @Lob
+    private byte[] desc;
+    private String descContentType;
 
     public Long getId() {
         return id;
@@ -27,6 +32,22 @@ public class OwnerTypeDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public byte[] getDesc() {
+        return desc;
+    }
+
+    public void setDesc(byte[] desc) {
+        this.desc = desc;
+    }
+
+    public String getDescContentType() {
+        return descContentType;
+    }
+
+    public void setDescContentType(String descContentType) {
+        this.descContentType = descContentType;
     }
 
     @Override
@@ -55,6 +76,7 @@ public class OwnerTypeDTO implements Serializable {
         return "OwnerTypeDTO{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", desc='" + getDesc() + "'" +
             "}";
     }
 }

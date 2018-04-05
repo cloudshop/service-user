@@ -25,6 +25,13 @@ public class UserStatus implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @Lob
+    @Column(name = "jhi_desc")
+    private byte[] desc;
+
+    @Column(name = "jhi_desc_content_type")
+    private String descContentType;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -45,6 +52,32 @@ public class UserStatus implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public byte[] getDesc() {
+        return desc;
+    }
+
+    public UserStatus desc(byte[] desc) {
+        this.desc = desc;
+        return this;
+    }
+
+    public void setDesc(byte[] desc) {
+        this.desc = desc;
+    }
+
+    public String getDescContentType() {
+        return descContentType;
+    }
+
+    public UserStatus descContentType(String descContentType) {
+        this.descContentType = descContentType;
+        return this;
+    }
+
+    public void setDescContentType(String descContentType) {
+        this.descContentType = descContentType;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -73,6 +106,8 @@ public class UserStatus implements Serializable {
         return "UserStatus{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", desc='" + getDesc() + "'" +
+            ", descContentType='" + getDescContentType() + "'" +
             "}";
     }
 }

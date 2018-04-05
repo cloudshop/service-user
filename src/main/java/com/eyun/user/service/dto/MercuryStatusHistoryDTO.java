@@ -18,11 +18,11 @@ public class MercuryStatusHistoryDTO implements Serializable {
 
     private Instant modifiedTime;
 
-    private Long mercuryId;
+    private Long mercurynameId;
 
-    private Long oldStatusId;
+    private Long oldStatusnameId;
 
-    private Long newtatusId;
+    private Long newtatusnameId;
 
     public Long getId() {
         return id;
@@ -48,28 +48,28 @@ public class MercuryStatusHistoryDTO implements Serializable {
         this.modifiedTime = modifiedTime;
     }
 
-    public Long getMercuryId() {
-        return mercuryId;
+    public Long getMercurynameId() {
+        return mercurynameId;
     }
 
-    public void setMercuryId(Long mercuryId) {
-        this.mercuryId = mercuryId;
+    public void setMercurynameId(Long mercuryId) {
+        this.mercurynameId = mercuryId;
     }
 
-    public Long getOldStatusId() {
-        return oldStatusId;
+    public Long getOldStatusnameId() {
+        return oldStatusnameId;
     }
 
-    public void setOldStatusId(Long mercuryStatusId) {
-        this.oldStatusId = mercuryStatusId;
+    public void setOldStatusnameId(Long mercuryStatusId) {
+        this.oldStatusnameId = mercuryStatusId;
     }
 
-    public Long getNewtatusId() {
-        return newtatusId;
+    public Long getNewtatusnameId() {
+        return newtatusnameId;
     }
 
-    public void setNewtatusId(Long mercuryStatusId) {
-        this.newtatusId = mercuryStatusId;
+    public void setNewtatusnameId(Long mercuryStatusId) {
+        this.newtatusnameId = mercuryStatusId;
     }
 
     @Override

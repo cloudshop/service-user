@@ -46,17 +46,14 @@ public class UserAnnexResourceIntTest {
     private static final Long DEFAULT_USER_ID = 1L;
     private static final Long UPDATED_USER_ID = 2L;
 
-    private static final String DEFAULT_FIRST_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_FIRST_NAME = "BBBBBBBBBB";
-
-    private static final String DEFAULT_LAST_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_LAST_NAME = "BBBBBBBBBB";
+    private static final String DEFAULT_NAME = "AAAAAAAAAA";
+    private static final String UPDATED_NAME = "BBBBBBBBBB";
 
     private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
     private static final String UPDATED_EMAIL = "BBBBBBBBBB";
 
-    private static final String DEFAULT_PHONE_NUMBER = "AAAAAAAAAA";
-    private static final String UPDATED_PHONE_NUMBER = "BBBBBBBBBB";
+    private static final String DEFAULT_PHONE = "AAAAAAAAAA";
+    private static final String UPDATED_PHONE = "BBBBBBBBBB";
 
     private static final String DEFAULT_NICKNAME = "AAAAAAAAAA";
     private static final String UPDATED_NICKNAME = "BBBBBBBBBB";
@@ -109,10 +106,9 @@ public class UserAnnexResourceIntTest {
     public static UserAnnex createEntity(EntityManager em) {
         UserAnnex userAnnex = new UserAnnex()
             .userId(DEFAULT_USER_ID)
-            .firstName(DEFAULT_FIRST_NAME)
-            .lastName(DEFAULT_LAST_NAME)
+            .name(DEFAULT_NAME)
             .email(DEFAULT_EMAIL)
-            .phoneNumber(DEFAULT_PHONE_NUMBER)
+            .phone(DEFAULT_PHONE)
             .nickname(DEFAULT_NICKNAME)
             .avatar(DEFAULT_AVATAR);
         return userAnnex;
@@ -140,10 +136,9 @@ public class UserAnnexResourceIntTest {
         assertThat(userAnnexList).hasSize(databaseSizeBeforeCreate + 1);
         UserAnnex testUserAnnex = userAnnexList.get(userAnnexList.size() - 1);
         assertThat(testUserAnnex.getUserId()).isEqualTo(DEFAULT_USER_ID);
-        assertThat(testUserAnnex.getFirstName()).isEqualTo(DEFAULT_FIRST_NAME);
-        assertThat(testUserAnnex.getLastName()).isEqualTo(DEFAULT_LAST_NAME);
+        assertThat(testUserAnnex.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testUserAnnex.getEmail()).isEqualTo(DEFAULT_EMAIL);
-        assertThat(testUserAnnex.getPhoneNumber()).isEqualTo(DEFAULT_PHONE_NUMBER);
+        assertThat(testUserAnnex.getPhone()).isEqualTo(DEFAULT_PHONE);
         assertThat(testUserAnnex.getNickname()).isEqualTo(DEFAULT_NICKNAME);
         assertThat(testUserAnnex.getAvatar()).isEqualTo(DEFAULT_AVATAR);
     }
@@ -180,10 +175,9 @@ public class UserAnnexResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(userAnnex.getId().intValue())))
             .andExpect(jsonPath("$.[*].userId").value(hasItem(DEFAULT_USER_ID.intValue())))
-            .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRST_NAME.toString())))
-            .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME.toString())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
-            .andExpect(jsonPath("$.[*].phoneNumber").value(hasItem(DEFAULT_PHONE_NUMBER.toString())))
+            .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE.toString())))
             .andExpect(jsonPath("$.[*].nickname").value(hasItem(DEFAULT_NICKNAME.toString())))
             .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())));
     }
@@ -200,10 +194,9 @@ public class UserAnnexResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(userAnnex.getId().intValue()))
             .andExpect(jsonPath("$.userId").value(DEFAULT_USER_ID.intValue()))
-            .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRST_NAME.toString()))
-            .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME.toString()))
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL.toString()))
-            .andExpect(jsonPath("$.phoneNumber").value(DEFAULT_PHONE_NUMBER.toString()))
+            .andExpect(jsonPath("$.phone").value(DEFAULT_PHONE.toString()))
             .andExpect(jsonPath("$.nickname").value(DEFAULT_NICKNAME.toString()))
             .andExpect(jsonPath("$.avatar").value(DEFAULT_AVATAR.toString()));
     }
@@ -229,10 +222,9 @@ public class UserAnnexResourceIntTest {
         em.detach(updatedUserAnnex);
         updatedUserAnnex
             .userId(UPDATED_USER_ID)
-            .firstName(UPDATED_FIRST_NAME)
-            .lastName(UPDATED_LAST_NAME)
+            .name(UPDATED_NAME)
             .email(UPDATED_EMAIL)
-            .phoneNumber(UPDATED_PHONE_NUMBER)
+            .phone(UPDATED_PHONE)
             .nickname(UPDATED_NICKNAME)
             .avatar(UPDATED_AVATAR);
         UserAnnexDTO userAnnexDTO = userAnnexMapper.toDto(updatedUserAnnex);
@@ -247,10 +239,9 @@ public class UserAnnexResourceIntTest {
         assertThat(userAnnexList).hasSize(databaseSizeBeforeUpdate);
         UserAnnex testUserAnnex = userAnnexList.get(userAnnexList.size() - 1);
         assertThat(testUserAnnex.getUserId()).isEqualTo(UPDATED_USER_ID);
-        assertThat(testUserAnnex.getFirstName()).isEqualTo(UPDATED_FIRST_NAME);
-        assertThat(testUserAnnex.getLastName()).isEqualTo(UPDATED_LAST_NAME);
+        assertThat(testUserAnnex.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testUserAnnex.getEmail()).isEqualTo(UPDATED_EMAIL);
-        assertThat(testUserAnnex.getPhoneNumber()).isEqualTo(UPDATED_PHONE_NUMBER);
+        assertThat(testUserAnnex.getPhone()).isEqualTo(UPDATED_PHONE);
         assertThat(testUserAnnex.getNickname()).isEqualTo(UPDATED_NICKNAME);
         assertThat(testUserAnnex.getAvatar()).isEqualTo(UPDATED_AVATAR);
     }

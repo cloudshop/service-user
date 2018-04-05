@@ -24,6 +24,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Base64Utils;
 
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -45,6 +46,11 @@ public class UserTypeResourceIntTest {
 
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
+
+    private static final byte[] DEFAULT_DESC = TestUtil.createByteArray(1, "0");
+    private static final byte[] UPDATED_DESC = TestUtil.createByteArray(2, "1");
+    private static final String DEFAULT_DESC_CONTENT_TYPE = "image/jpg";
+    private static final String UPDATED_DESC_CONTENT_TYPE = "image/png";
 
     @Autowired
     private UserTypeRepository userTypeRepository;
@@ -90,7 +96,9 @@ public class UserTypeResourceIntTest {
      */
     public static UserType createEntity(EntityManager em) {
         UserType userType = new UserType()
-            .name(DEFAULT_NAME);
+            .name(DEFAULT_NAME)
+            .desc(DEFAULT_DESC)
+            .descContentType(DEFAULT_DESC_CONTENT_TYPE);
         return userType;
     }
 
@@ -116,6 +124,8 @@ public class UserTypeResourceIntTest {
         assertThat(userTypeList).hasSize(databaseSizeBeforeCreate + 1);
         UserType testUserType = userTypeList.get(userTypeList.size() - 1);
         assertThat(testUserType.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testUserType.getDesc()).isEqualTo(DEFAULT_DESC);
+        assertThat(testUserType.getDescContentType()).isEqualTo(DEFAULT_DESC_CONTENT_TYPE);
     }
 
     @Test
@@ -149,7 +159,9 @@ public class UserTypeResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(userType.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].descContentType").value(hasItem(DEFAULT_DESC_CONTENT_TYPE)))
+            .andExpect(jsonPath("$.[*].desc").value(hasItem(Base64Utils.encodeToString(DEFAULT_DESC))));
     }
 
     @Test
@@ -163,7 +175,9 @@ public class UserTypeResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(userType.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.descContentType").value(DEFAULT_DESC_CONTENT_TYPE))
+            .andExpect(jsonPath("$.desc").value(Base64Utils.encodeToString(DEFAULT_DESC)));
     }
 
     @Test
@@ -186,7 +200,9 @@ public class UserTypeResourceIntTest {
         // Disconnect from session so that the updates on updatedUserType are not directly saved in db
         em.detach(updatedUserType);
         updatedUserType
-            .name(UPDATED_NAME);
+            .name(UPDATED_NAME)
+            .desc(UPDATED_DESC)
+            .descContentType(UPDATED_DESC_CONTENT_TYPE);
         UserTypeDTO userTypeDTO = userTypeMapper.toDto(updatedUserType);
 
         restUserTypeMockMvc.perform(put("/api/user-types")
@@ -199,6 +215,8 @@ public class UserTypeResourceIntTest {
         assertThat(userTypeList).hasSize(databaseSizeBeforeUpdate);
         UserType testUserType = userTypeList.get(userTypeList.size() - 1);
         assertThat(testUserType.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testUserType.getDesc()).isEqualTo(UPDATED_DESC);
+        assertThat(testUserType.getDescContentType()).isEqualTo(UPDATED_DESC_CONTENT_TYPE);
     }
 
     @Test

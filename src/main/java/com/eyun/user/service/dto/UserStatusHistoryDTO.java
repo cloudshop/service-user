@@ -18,11 +18,11 @@ public class UserStatusHistoryDTO implements Serializable {
 
     private Instant modifiedTime;
 
-    private Long userId;
+    private Long usernicknameId;
 
-    private Long oldStatusId;
+    private Long oldStatusnameId;
 
-    private Long newtatusId;
+    private Long newtatusnameId;
 
     public Long getId() {
         return id;
@@ -48,28 +48,28 @@ public class UserStatusHistoryDTO implements Serializable {
         this.modifiedTime = modifiedTime;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getUsernicknameId() {
+        return usernicknameId;
     }
 
-    public void setUserId(Long userAnnexId) {
-        this.userId = userAnnexId;
+    public void setUsernicknameId(Long userAnnexId) {
+        this.usernicknameId = userAnnexId;
     }
 
-    public Long getOldStatusId() {
-        return oldStatusId;
+    public Long getOldStatusnameId() {
+        return oldStatusnameId;
     }
 
-    public void setOldStatusId(Long userStatusId) {
-        this.oldStatusId = userStatusId;
+    public void setOldStatusnameId(Long userStatusId) {
+        this.oldStatusnameId = userStatusId;
     }
 
-    public Long getNewtatusId() {
-        return newtatusId;
+    public Long getNewtatusnameId() {
+        return newtatusnameId;
     }
 
-    public void setNewtatusId(Long userStatusId) {
-        this.newtatusId = userStatusId;
+    public void setNewtatusnameId(Long userStatusId) {
+        this.newtatusnameId = userStatusId;
     }
 
     @Override

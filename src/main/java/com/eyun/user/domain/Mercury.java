@@ -1,6 +1,5 @@
 package com.eyun.user.domain;
 
-import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -23,10 +22,6 @@ public class Mercury implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /**
-     * The firstname attribute.
-     */
-    @ApiModelProperty(value = "The firstname attribute.")
     @Column(name = "name")
     private String name;
 
@@ -68,7 +63,7 @@ public class Mercury implements Serializable {
 
     @OneToOne
     @JoinColumn(unique = true)
-    private MercuryStatus status;
+    private MercuryStatus statusname;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -248,17 +243,17 @@ public class Mercury implements Serializable {
         this.desc = desc;
     }
 
-    public MercuryStatus getStatus() {
-        return status;
+    public MercuryStatus getStatusname() {
+        return statusname;
     }
 
-    public Mercury status(MercuryStatus mercuryStatus) {
-        this.status = mercuryStatus;
+    public Mercury statusname(MercuryStatus mercuryStatus) {
+        this.statusname = mercuryStatus;
         return this;
     }
 
-    public void setStatus(MercuryStatus mercuryStatus) {
-        this.status = mercuryStatus;
+    public void setStatusname(MercuryStatus mercuryStatus) {
+        this.statusname = mercuryStatus;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

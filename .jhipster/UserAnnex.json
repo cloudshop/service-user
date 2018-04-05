@@ -3,7 +3,7 @@
     "relationships": [
         {
             "relationshipType": "one-to-one",
-            "relationshipName": "status",
+            "relationshipName": "statusname",
             "otherEntityName": "userStatus",
             "otherEntityField": "id",
             "ownerSide": true,
@@ -11,27 +11,27 @@
         },
         {
             "relationshipType": "one-to-many",
-            "relationshipName": "deliveryAddress",
+            "relationshipName": "deliveryAddressaliases",
             "otherEntityName": "deliveryAddress",
             "otherEntityRelationshipName": "userAnnex"
         },
         {
             "relationshipType": "one-to-many",
-            "relationshipName": "inviter",
+            "relationshipName": "inviternickname",
             "otherEntityName": "userAnnex",
-            "otherEntityRelationshipName": "invitee"
+            "otherEntityRelationshipName": "invitee[nickname]"
         },
         {
             "relationshipType": "many-to-many",
             "otherEntityRelationshipName": "",
-            "relationshipName": "userType",
+            "relationshipName": "userTypename",
             "otherEntityName": "userType",
             "otherEntityField": "id",
             "ownerSide": true
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "invitee",
+            "relationshipName": "inviteenickname",
             "otherEntityName": "userAnnex",
             "otherEntityField": "id"
         }
@@ -39,15 +39,10 @@
     "fields": [
         {
             "fieldName": "userId",
-            "javadoc": "The firstname attribute.",
             "fieldType": "Long"
         },
         {
-            "fieldName": "firstName",
-            "fieldType": "String"
-        },
-        {
-            "fieldName": "lastName",
+            "fieldName": "name",
             "fieldType": "String"
         },
         {
@@ -55,7 +50,7 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "phoneNumber",
+            "fieldName": "phone",
             "fieldType": "String"
         },
         {
@@ -68,7 +63,6 @@
         }
     ],
     "changelogDate": "20180405065738",
-    "javadoc": "The Employee entity.",
     "entityTableName": "user_annex",
     "dto": "mapstruct",
     "pagination": "no",

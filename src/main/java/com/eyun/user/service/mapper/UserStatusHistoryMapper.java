@@ -11,14 +11,14 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = {UserAnnexMapper.class, UserStatusMapper.class})
 public interface UserStatusHistoryMapper extends EntityMapper<UserStatusHistoryDTO, UserStatusHistory> {
 
-    @Mapping(source = "user.id", target = "userId")
-    @Mapping(source = "oldStatus.id", target = "oldStatusId")
-    @Mapping(source = "newtatus.id", target = "newtatusId")
+    @Mapping(source = "usernickname.id", target = "usernicknameId")
+    @Mapping(source = "oldStatusname.id", target = "oldStatusnameId")
+    @Mapping(source = "newtatusname.id", target = "newtatusnameId")
     UserStatusHistoryDTO toDto(UserStatusHistory userStatusHistory);
 
-    @Mapping(source = "userId", target = "user")
-    @Mapping(source = "oldStatusId", target = "oldStatus")
-    @Mapping(source = "newtatusId", target = "newtatus")
+    @Mapping(source = "usernicknameId", target = "usernickname")
+    @Mapping(source = "oldStatusnameId", target = "oldStatusname")
+    @Mapping(source = "newtatusnameId", target = "newtatusname")
     UserStatusHistory toEntity(UserStatusHistoryDTO userStatusHistoryDTO);
 
     default UserStatusHistory fromId(Long id) {

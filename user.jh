@@ -1,24 +1,18 @@
-/**
- * The Employee entity.
- */
 entity UserAnnex {
-	/**
-	* The firstname attribute.
-	*/
   userId  Long
-  firstName String,
-  lastName String,
+  name String,
   email String,
-  phoneNumber String,
+  phone String,
   nickname String,
   avatar String,
 }
 
 entity UserStatus {
   name String,			//  用户状态, 未审核，审核未通过,审核通过，黑名单
+  desc Blob
 }
 relationship OneToOne {
-  UserAnnex{status} to UserStatus
+  UserAnnex{status[name]} to UserStatus
 }
 
 entity UserStatusHistory{
@@ -26,41 +20,39 @@ entity UserStatusHistory{
   modifiedTime Instant,
 }
 relationship OneToOne {
-  UserStatusHistory{user} to UserAnnex
-  UserStatusHistory{oldStatus} to UserStatus
-  UserStatusHistory{newtatus} to UserStatus
+  UserStatusHistory{user[nickname]} to UserAnnex
+  UserStatusHistory{oldStatus[name]} to UserStatus
+  UserStatusHistory{newtatus[name]} to UserStatus
 }
 
 entity UserType {
-	name String,			//  用户类型，普通用户，会员、商家
+  name String,			//  用户类型，普通用户，会员、商家
+  desc Blob,
 }
 relationship ManyToMany {
-  UserAnnex{userType} to UserType
+  UserAnnex{userType[name]} to UserType
 }
 
 entity DeliveryAddress {
-	aliases String,  		// 地址别名
-	contact String,  		// 联系人
-    phone String,    		// 联系人电话
-	stateProvince String	// 省
-	city String,			// 城市
-    streetAddress String,	// 地址
-    postalCode String,		// 邮编
+  aliases String,  		// 地址别名
+  contact String,  		// 联系人
+  phone String,    		// 联系人电话
+  stateProvince String	// 省
+  city String,			// 城市
+  streetAddress String,	// 地址
+  postalCode String,		// 邮编
 }
 
 relationship OneToMany {
-  UserAnnex{deliveryAddress} to DeliveryAddress
+  UserAnnex{deliveryAddress[aliases]} to DeliveryAddress
 }
 
 // defining multiple OneToMany relationships with comments
 relationship OneToMany {
-	UserAnnex{inviter} to UserAnnex{invitee}
+  UserAnnex{inviter[nickname]} to UserAnnex{invitee[nickname]}
 }
 
 entity Mercury {
-	/**
-	* The firstname attribute.
-	*/
   name String,
   imgLicense String,
   imgIdcardFront String,
@@ -79,9 +71,10 @@ entity Mercury {
 }
 entity MercuryStatus {
   name String,			//  用户状态, 未审核，审核未通过,审核通过，黑名单
+  desc Blob
 }
 relationship OneToOne {
-  Mercury{status} to MercuryStatus
+  Mercury{status[name]} to MercuryStatus
 }
 
 entity MercuryStatusHistory{
@@ -89,20 +82,21 @@ entity MercuryStatusHistory{
   modifiedTime Instant,
 }
 relationship OneToOne {
-  MercuryStatusHistory{mercury} to Mercury
-  MercuryStatusHistory{oldStatus} to MercuryStatus
-  MercuryStatusHistory{newtatus} to MercuryStatus
+  MercuryStatusHistory{mercury[name]} to Mercury
+  MercuryStatusHistory{oldStatus[name]} to MercuryStatus
+  MercuryStatusHistory{newtatus[name]} to MercuryStatus
 }
 
 entity OwnerType{
   name String,
+  desc Blob
 }
 entity OwnerRelation{
 }
 relationship OneToOne {
-  OwnerRelation{ownerType} to OwnerType
-  OwnerRelation{owner} to UserAnnex
-  OwnerRelation{mercury} to Mercury
+  OwnerRelation{ownerType[name]} to OwnerType
+  OwnerRelation{owner[nickname]} to UserAnnex
+  OwnerRelation{mercury[name]} to Mercury
 }
 
 // Set pagination options

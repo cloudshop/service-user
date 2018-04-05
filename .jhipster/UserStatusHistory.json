@@ -3,7 +3,7 @@
     "relationships": [
         {
             "relationshipType": "one-to-one",
-            "relationshipName": "user",
+            "relationshipName": "usernickname",
             "otherEntityName": "userAnnex",
             "otherEntityField": "id",
             "ownerSide": true,
@@ -11,7 +11,7 @@
         },
         {
             "relationshipType": "one-to-one",
-            "relationshipName": "oldStatus",
+            "relationshipName": "oldStatusname",
             "otherEntityName": "userStatus",
             "otherEntityField": "id",
             "ownerSide": true,
@@ -19,7 +19,7 @@
         },
         {
             "relationshipType": "one-to-one",
-            "relationshipName": "newtatus",
+            "relationshipName": "newtatusname",
             "otherEntityName": "userStatus",
             "otherEntityField": "id",
             "ownerSide": true,

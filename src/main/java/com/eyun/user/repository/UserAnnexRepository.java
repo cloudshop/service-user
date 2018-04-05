@@ -13,10 +13,10 @@ import java.util.List;
 @SuppressWarnings("unused")
 @Repository
 public interface UserAnnexRepository extends JpaRepository<UserAnnex, Long> {
-    @Query("select distinct user_annex from UserAnnex user_annex left join fetch user_annex.userTypes")
+    @Query("select distinct user_annex from UserAnnex user_annex left join fetch user_annex.userTypenames")
     List<UserAnnex> findAllWithEagerRelationships();
 
-    @Query("select user_annex from UserAnnex user_annex left join fetch user_annex.userTypes where user_annex.id =:id")
+    @Query("select user_annex from UserAnnex user_annex left join fetch user_annex.userTypenames where user_annex.id =:id")
     UserAnnex findOneWithEagerRelationships(@Param("id") Long id);
 
 }

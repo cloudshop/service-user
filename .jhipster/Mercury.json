@@ -3,7 +3,7 @@
     "relationships": [
         {
             "relationshipType": "one-to-one",
-            "relationshipName": "status",
+            "relationshipName": "statusname",
             "otherEntityName": "mercuryStatus",
             "otherEntityField": "id",
             "ownerSide": true,
@@ -13,7 +13,6 @@
     "fields": [
         {
             "fieldName": "name",
-            "javadoc": "The firstname attribute.",
             "fieldType": "String"
         },
         {
