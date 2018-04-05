@@ -49,14 +49,14 @@ public class UserAnnexResourceIntTest {
     private static final String DEFAULT_LAST_NAME = "AAAAAAAAAA";
     private static final String UPDATED_LAST_NAME = "BBBBBBBBBB";
 
-    private static final String DEFAULT_NICKNAME = "AAAAAAAAAA";
-    private static final String UPDATED_NICKNAME = "BBBBBBBBBB";
-
     private static final String DEFAULT_EMAIL = "AAAAAAAAAA";
     private static final String UPDATED_EMAIL = "BBBBBBBBBB";
 
-    private static final String DEFAULT_MOBILE = "AAAAAAAAAA";
-    private static final String UPDATED_MOBILE = "BBBBBBBBBB";
+    private static final String DEFAULT_PHONE_NUMBER = "AAAAAAAAAA";
+    private static final String UPDATED_PHONE_NUMBER = "BBBBBBBBBB";
+
+    private static final String DEFAULT_NICKNAME = "AAAAAAAAAA";
+    private static final String UPDATED_NICKNAME = "BBBBBBBBBB";
 
     private static final String DEFAULT_AVATAR = "AAAAAAAAAA";
     private static final String UPDATED_AVATAR = "BBBBBBBBBB";
@@ -107,9 +107,9 @@ public class UserAnnexResourceIntTest {
         UserAnnex userAnnex = new UserAnnex()
             .firstName(DEFAULT_FIRST_NAME)
             .lastName(DEFAULT_LAST_NAME)
-            .nickname(DEFAULT_NICKNAME)
             .email(DEFAULT_EMAIL)
-            .mobile(DEFAULT_MOBILE)
+            .phoneNumber(DEFAULT_PHONE_NUMBER)
+            .nickname(DEFAULT_NICKNAME)
             .avatar(DEFAULT_AVATAR);
         return userAnnex;
     }
@@ -137,9 +137,9 @@ public class UserAnnexResourceIntTest {
         UserAnnex testUserAnnex = userAnnexList.get(userAnnexList.size() - 1);
         assertThat(testUserAnnex.getFirstName()).isEqualTo(DEFAULT_FIRST_NAME);
         assertThat(testUserAnnex.getLastName()).isEqualTo(DEFAULT_LAST_NAME);
-        assertThat(testUserAnnex.getNickname()).isEqualTo(DEFAULT_NICKNAME);
         assertThat(testUserAnnex.getEmail()).isEqualTo(DEFAULT_EMAIL);
-        assertThat(testUserAnnex.getMobile()).isEqualTo(DEFAULT_MOBILE);
+        assertThat(testUserAnnex.getPhoneNumber()).isEqualTo(DEFAULT_PHONE_NUMBER);
+        assertThat(testUserAnnex.getNickname()).isEqualTo(DEFAULT_NICKNAME);
         assertThat(testUserAnnex.getAvatar()).isEqualTo(DEFAULT_AVATAR);
     }
 
@@ -176,9 +176,9 @@ public class UserAnnexResourceIntTest {
             .andExpect(jsonPath("$.[*].id").value(hasItem(userAnnex.getId().intValue())))
             .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRST_NAME.toString())))
             .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME.toString())))
-            .andExpect(jsonPath("$.[*].nickname").value(hasItem(DEFAULT_NICKNAME.toString())))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
-            .andExpect(jsonPath("$.[*].mobile").value(hasItem(DEFAULT_MOBILE.toString())))
+            .andExpect(jsonPath("$.[*].phoneNumber").value(hasItem(DEFAULT_PHONE_NUMBER.toString())))
+            .andExpect(jsonPath("$.[*].nickname").value(hasItem(DEFAULT_NICKNAME.toString())))
             .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())));
     }
 
@@ -195,9 +195,9 @@ public class UserAnnexResourceIntTest {
             .andExpect(jsonPath("$.id").value(userAnnex.getId().intValue()))
             .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRST_NAME.toString()))
             .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME.toString()))
-            .andExpect(jsonPath("$.nickname").value(DEFAULT_NICKNAME.toString()))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL.toString()))
-            .andExpect(jsonPath("$.mobile").value(DEFAULT_MOBILE.toString()))
+            .andExpect(jsonPath("$.phoneNumber").value(DEFAULT_PHONE_NUMBER.toString()))
+            .andExpect(jsonPath("$.nickname").value(DEFAULT_NICKNAME.toString()))
             .andExpect(jsonPath("$.avatar").value(DEFAULT_AVATAR.toString()));
     }
 
@@ -223,9 +223,9 @@ public class UserAnnexResourceIntTest {
         updatedUserAnnex
             .firstName(UPDATED_FIRST_NAME)
             .lastName(UPDATED_LAST_NAME)
-            .nickname(UPDATED_NICKNAME)
             .email(UPDATED_EMAIL)
-            .mobile(UPDATED_MOBILE)
+            .phoneNumber(UPDATED_PHONE_NUMBER)
+            .nickname(UPDATED_NICKNAME)
             .avatar(UPDATED_AVATAR);
         UserAnnexDTO userAnnexDTO = userAnnexMapper.toDto(updatedUserAnnex);
 
@@ -240,9 +240,9 @@ public class UserAnnexResourceIntTest {
         UserAnnex testUserAnnex = userAnnexList.get(userAnnexList.size() - 1);
         assertThat(testUserAnnex.getFirstName()).isEqualTo(UPDATED_FIRST_NAME);
         assertThat(testUserAnnex.getLastName()).isEqualTo(UPDATED_LAST_NAME);
-        assertThat(testUserAnnex.getNickname()).isEqualTo(UPDATED_NICKNAME);
         assertThat(testUserAnnex.getEmail()).isEqualTo(UPDATED_EMAIL);
-        assertThat(testUserAnnex.getMobile()).isEqualTo(UPDATED_MOBILE);
+        assertThat(testUserAnnex.getPhoneNumber()).isEqualTo(UPDATED_PHONE_NUMBER);
+        assertThat(testUserAnnex.getNickname()).isEqualTo(UPDATED_NICKNAME);
         assertThat(testUserAnnex.getAvatar()).isEqualTo(UPDATED_AVATAR);
     }
 

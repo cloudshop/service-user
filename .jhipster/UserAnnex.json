@@ -2,31 +2,44 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "one-to-many",
-            "javadoc": "A relationship",
-            "relationshipName": "deliveries",
-            "otherEntityName": "delivery",
+            "relationshipType": "one-to-one",
+            "relationshipName": "status",
+            "otherEntityName": "userStatus",
+            "otherEntityField": "id",
+            "ownerSide": true,
             "otherEntityRelationshipName": "userAnnex"
         },
         {
-            "relationshipType": "many-to-one",
+            "relationshipType": "one-to-many",
+            "relationshipName": "deliveryAddress",
+            "otherEntityName": "deliveryAddress",
+            "otherEntityRelationshipName": "userAnnex"
+        },
+        {
+            "relationshipType": "one-to-many",
             "relationshipName": "inviter",
             "otherEntityName": "userAnnex",
-            "otherEntityField": "id"
+            "otherEntityRelationshipName": "invitee"
         },
         {
             "relationshipType": "many-to-many",
             "otherEntityRelationshipName": "",
-            "relationshipName": "userTypes",
+            "relationshipName": "userType",
             "otherEntityName": "userType",
             "otherEntityField": "id",
             "ownerSide": true
         },
         {
-            "relationshipType": "one-to-many",
+            "relationshipType": "many-to-one",
             "relationshipName": "invitee",
             "otherEntityName": "userAnnex",
-            "otherEntityRelationshipName": "inviter"
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "userStatusHistory",
+            "otherEntityName": "userStatusHistory",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
         }
     ],
     "fields": [
@@ -40,15 +53,15 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "nickname",
-            "fieldType": "String"
-        },
-        {
             "fieldName": "email",
             "fieldType": "String"
         },
         {
-            "fieldName": "mobile",
+            "fieldName": "phoneNumber",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "nickname",
             "fieldType": "String"
         },
         {
@@ -57,10 +70,10 @@
         }
     ],
     "changelogDate": "20180401103245",
-    "javadoc": "The UserAnnex entity.",
+    "javadoc": "The Employee entity.",
     "entityTableName": "user_annex",
     "dto": "mapstruct",
-    "pagination": "pagination",
+    "pagination": "no",
     "service": "serviceClass",
     "jpaMetamodelFiltering": false,
     "microserviceName": "user"

@@ -17,17 +17,21 @@ public class UserAnnexDTO implements Serializable {
 
     private String lastName;
 
-    private String nickname;
-
     private String email;
 
-    private String mobile;
+    private String phoneNumber;
+
+    private String nickname;
 
     private String avatar;
 
-    private Long inviterId;
+    private Long statusId;
 
     private Set<UserTypeDTO> userTypes = new HashSet<>();
+
+    private Long inviteeId;
+
+    private Long userStatusHistoryId;
 
     public Long getId() {
         return id;
@@ -53,14 +57,6 @@ public class UserAnnexDTO implements Serializable {
         this.lastName = lastName;
     }
 
-    public String getNickname() {
-        return nickname;
-    }
-
-    public void setNickname(String nickname) {
-        this.nickname = nickname;
-    }
-
     public String getEmail() {
         return email;
     }
@@ -69,12 +65,20 @@ public class UserAnnexDTO implements Serializable {
         this.email = email;
     }
 
-    public String getMobile() {
-        return mobile;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setMobile(String mobile) {
-        this.mobile = mobile;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getNickname() {
+        return nickname;
+    }
+
+    public void setNickname(String nickname) {
+        this.nickname = nickname;
     }
 
     public String getAvatar() {
@@ -85,12 +89,12 @@ public class UserAnnexDTO implements Serializable {
         this.avatar = avatar;
     }
 
-    public Long getInviterId() {
-        return inviterId;
+    public Long getStatusId() {
+        return statusId;
     }
 
-    public void setInviterId(Long userAnnexId) {
-        this.inviterId = userAnnexId;
+    public void setStatusId(Long userStatusId) {
+        this.statusId = userStatusId;
     }
 
     public Set<UserTypeDTO> getUserTypes() {
@@ -99,6 +103,22 @@ public class UserAnnexDTO implements Serializable {
 
     public void setUserTypes(Set<UserTypeDTO> userTypes) {
         this.userTypes = userTypes;
+    }
+
+    public Long getInviteeId() {
+        return inviteeId;
+    }
+
+    public void setInviteeId(Long userAnnexId) {
+        this.inviteeId = userAnnexId;
+    }
+
+    public Long getUserStatusHistoryId() {
+        return userStatusHistoryId;
+    }
+
+    public void setUserStatusHistoryId(Long userStatusHistoryId) {
+        this.userStatusHistoryId = userStatusHistoryId;
     }
 
     @Override
@@ -128,9 +148,9 @@ public class UserAnnexDTO implements Serializable {
             "id=" + getId() +
             ", firstName='" + getFirstName() + "'" +
             ", lastName='" + getLastName() + "'" +
-            ", nickname='" + getNickname() + "'" +
             ", email='" + getEmail() + "'" +
-            ", mobile='" + getMobile() + "'" +
+            ", phoneNumber='" + getPhoneNumber() + "'" +
+            ", nickname='" + getNickname() + "'" +
             ", avatar='" + getAvatar() + "'" +
             "}";
     }

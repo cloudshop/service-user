@@ -1,0 +1,81 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "status",
+            "otherEntityName": "mercuryStatus",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "mercury"
+        },
+        {
+            "relationshipName": "mercuryStatusHistory",
+            "otherEntityName": "mercuryStatusHistory",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "javadoc": "The firstname attribute.",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "imgLicense",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "imgIdcardFront",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "imgIdcardBack",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "imgIdcardHold",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "langitude",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "lantitude",
+            "fieldType": "Float"
+        },
+        {
+            "fieldName": "provice",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "city",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "street",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "imgFacade",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "imgIntroduces",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "desc",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20180405055055",
+    "entityTableName": "mercury",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "microserviceName": "user"
+}

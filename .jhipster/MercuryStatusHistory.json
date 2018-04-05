@@ -1,0 +1,40 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "mercury",
+            "otherEntityName": "mercury",
+            "otherEntityRelationshipName": "mercuryStatusHistory"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "oldStatus",
+            "otherEntityName": "mercuryStatus",
+            "otherEntityRelationshipName": "mercuryStatusHistory"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "newtatus",
+            "otherEntityName": "mercuryStatus",
+            "otherEntityRelationshipName": "mercuryStatusHistory"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "modifiedBy",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "modifiedTime",
+            "fieldType": "Instant"
+        }
+    ],
+    "changelogDate": "20180405055057",
+    "entityTableName": "mercury_status_history",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "microserviceName": "user"
+}

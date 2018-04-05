@@ -1,0 +1,40 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "user",
+            "otherEntityName": "userAnnex",
+            "otherEntityRelationshipName": "userStatusHistory"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "oldStatus",
+            "otherEntityName": "userStatus",
+            "otherEntityRelationshipName": "userStatusHistory"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "newtatus",
+            "otherEntityName": "userStatus",
+            "otherEntityRelationshipName": "userStatusHistory"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "modifiedBy",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "modifiedTime",
+            "fieldType": "Instant"
+        }
+    ],
+    "changelogDate": "20180405055052",
+    "entityTableName": "user_status_history",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "microserviceName": "user"
+}

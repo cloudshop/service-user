@@ -1,0 +1,37 @@
+{
+    "fluentMethods": true,
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "ownerType",
+            "otherEntityName": "ownerType",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "ownerRelation"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "owner",
+            "otherEntityName": "userAnnex",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "ownerRelation"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "mercury",
+            "otherEntityName": "mercury",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "ownerRelation"
+        }
+    ],
+    "fields": [],
+    "changelogDate": "20180405055846",
+    "entityTableName": "owner_relation",
+    "dto": "mapstruct",
+    "pagination": "no",
+    "service": "serviceClass",
+    "jpaMetamodelFiltering": false,
+    "microserviceName": "user"
+}

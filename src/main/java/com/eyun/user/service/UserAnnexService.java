@@ -6,11 +6,12 @@ import com.eyun.user.service.dto.UserAnnexDTO;
 import com.eyun.user.service.mapper.UserAnnexMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.LinkedList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Service Implementation for managing UserAnnex.
@@ -46,14 +47,14 @@ public class UserAnnexService {
     /**
      * Get all the userAnnexes.
      *
-     * @param pageable the pagination information
      * @return the list of entities
      */
     @Transactional(readOnly = true)
-    public Page<UserAnnexDTO> findAll(Pageable pageable) {
+    public List<UserAnnexDTO> findAll() {
         log.debug("Request to get all UserAnnexes");
-        return userAnnexRepository.findAll(pageable)
-            .map(userAnnexMapper::toDto);
+        return userAnnexRepository.findAllWithEagerRelationships().stream()
+            .map(userAnnexMapper::toDto)
+            .collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**

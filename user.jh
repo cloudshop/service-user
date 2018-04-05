@@ -1,55 +1,116 @@
 /**
- * The UserAnnex entity.
+ * The Employee entity.
  */
 entity UserAnnex {
-  /**
-   * The firstname attribute.
-   */
+	/**
+	* The firstname attribute.
+	*/
   firstName String,
   lastName String,
-  nickname String,
   email String,
-  mobile String,
+  phoneNumber String,
+  nickname String,
   avatar String,
 }
 
-entity Delivery {
-  aliases String,
-  contact String,
-  mobile  String,
-  address String,
-  postal String,
-  city String,
-  province String,
+entity UserStatus {
+  name String,			//  用户状态, 未审核，审核未通过,审核通过，黑名单
+}
+relationship OneToOne {
+  UserAnnex{status} to UserStatus
+}
+
+entity UserStatusHistory{
+  modifiedBy Long,
+  modifiedTime Instant,
+}
+relationship OneToMany {
+  UserStatusHistory{user} to UserAnnex
+  UserStatusHistory{oldStatus} to UserStatus
+  UserStatusHistory{newtatus} to UserStatus
 }
 
 entity UserType {
-  name String,
+	name String,			//  用户类型，普通用户，会员、商家
+}
+relationship ManyToMany {
+  UserAnnex{userType} to UserType
 }
 
-relationship ManyToMany {
-  UserAnnex{userTypes} to UserType
+entity DeliveryAddress {
+	aliases String,  		// 地址别名
+	contact String,  		// 联系人
+    phone String,    		// 联系人电话
+	stateProvince String	// 省
+	city String,			// 城市
+    streetAddress String,	// 地址
+    postalCode String,		// 邮编
 }
 
 relationship OneToMany {
-  /**
-   * A relationship
-   */
-  UserAnnex{deliveries} to
-  /**
-   * Another side of the same relationship
-   */
-  Delivery
+  UserAnnex{deliveryAddress} to DeliveryAddress
 }
 
-relationship ManyToOne {
-  UserAnnex{inviter} to UserAnnex{invitee}
+// defining multiple OneToMany relationships with comments
+relationship OneToMany {
+	UserAnnex{inviter} to UserAnnex{invitee}
 }
 
+entity Mercury {
+	/**
+	* The firstname attribute.
+	*/
+  name String,
+  imgLicense String,
+  imgIdcardFront String,
+  imgIdcardBack String,
+  imgIdcardHold String,
+  
+  langitude Float,
+  lantitude Float,
+  provice String
+  city String,
+  street String,
+  
+  imgFacade String,
+  imgIntroduces String,
+  desc String,
+}
+entity MercuryStatus {
+  name String,			//  用户状态, 未审核，审核未通过,审核通过，黑名单
+}
+relationship OneToOne {
+  Mercury{status} to MercuryStatus
+}
 
+entity MercuryStatusHistory{
+  modifiedBy Long,
+  modifiedTime Instant,
+}
+relationship OneToMany {
+  MercuryStatusHistory{mercury} to Mercury
+  MercuryStatusHistory{oldStatus} to MercuryStatus
+  MercuryStatusHistory{newtatus} to MercuryStatus
+}
+
+entity OwnerType{
+  name String,
+}
+entity OwnerRelation{
+}
+relationship OneToOne {
+  OwnerRelation{ownerType} to OwnerType
+  OwnerRelation{owner} to UserAnnex
+  OwnerRelation{mercury} to Mercury
+}
+
+// Set pagination options
 paginate UserType with infinite-scroll
-paginate UserAnnex,Delivery with pagination
 
 dto * with mapstruct
 
-service * with serviceClass
+// Set service options to all except few
+service all with serviceClass
+// Set an angular suffix
+//angularSuffix * with mySuffix
+//skipServer *
