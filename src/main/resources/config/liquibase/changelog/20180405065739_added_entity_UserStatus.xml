@@ -26,10 +26,7 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="jhi_desc" type="longblob">
-                <constraints nullable="true" />
-            </column>
-            <column name="jhi_desc_content_type" type="varchar(255)">
+            <column name="jhi_desc" type="clob">
                 <constraints nullable="true" />
             </column>
 

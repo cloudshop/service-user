@@ -9,7 +9,7 @@
         {
             "fieldName": "desc",
             "fieldType": "byte[]",
-            "fieldTypeBlobContent": "any"
+            "fieldTypeBlobContent": "text"
         }
     ],
     "changelogDate": "20180405065744",

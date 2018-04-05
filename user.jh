@@ -9,7 +9,7 @@ entity UserAnnex {
 
 entity UserStatus {
   name String,			//  用户状态, 未审核，审核未通过,审核通过，黑名单
-  desc Blob
+  desc TextBlob
 }
 relationship OneToOne {
   UserAnnex{status(name)} to UserStatus
@@ -27,7 +27,7 @@ relationship OneToOne {
 
 entity UserType {
   name String,			//  用户类型，普通用户，会员、商家
-  desc Blob,
+  desc TextBlob,
 }
 relationship ManyToMany {
   UserAnnex{userType(name)} to UserType
@@ -71,7 +71,7 @@ entity Mercury {
 }
 entity MercuryStatus {
   name String,			//  用户状态, 未审核，审核未通过,审核通过，黑名单
-  desc Blob
+  desc TextBlob
 }
 relationship OneToOne {
   Mercury{status(name)} to MercuryStatus
@@ -89,7 +89,7 @@ relationship OneToOne {
 
 entity OwnerType{
   name String,
-  desc Blob
+  desc TextBlob
 }
 entity OwnerRelation{
 }

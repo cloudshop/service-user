@@ -15,8 +15,7 @@ public class UserStatusDTO implements Serializable {
     private String name;
 
     @Lob
-    private byte[] desc;
-    private String descContentType;
+    private String desc;
 
     public Long getId() {
         return id;
@@ -34,20 +33,12 @@ public class UserStatusDTO implements Serializable {
         this.name = name;
     }
 
-    public byte[] getDesc() {
+    public String getDesc() {
         return desc;
     }
 
-    public void setDesc(byte[] desc) {
+    public void setDesc(String desc) {
         this.desc = desc;
-    }
-
-    public String getDescContentType() {
-        return descContentType;
-    }
-
-    public void setDescContentType(String descContentType) {
-        this.descContentType = descContentType;
     }
 
     @Override

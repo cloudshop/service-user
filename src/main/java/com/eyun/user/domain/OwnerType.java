@@ -27,10 +27,7 @@ public class OwnerType implements Serializable {
 
     @Lob
     @Column(name = "jhi_desc")
-    private byte[] desc;
-
-    @Column(name = "jhi_desc_content_type")
-    private String descContentType;
+    private String desc;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -54,30 +51,17 @@ public class OwnerType implements Serializable {
         this.name = name;
     }
 
-    public byte[] getDesc() {
+    public String getDesc() {
         return desc;
     }
 
-    public OwnerType desc(byte[] desc) {
+    public OwnerType desc(String desc) {
         this.desc = desc;
         return this;
     }
 
-    public void setDesc(byte[] desc) {
+    public void setDesc(String desc) {
         this.desc = desc;
-    }
-
-    public String getDescContentType() {
-        return descContentType;
-    }
-
-    public OwnerType descContentType(String descContentType) {
-        this.descContentType = descContentType;
-        return this;
-    }
-
-    public void setDescContentType(String descContentType) {
-        this.descContentType = descContentType;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -107,7 +91,6 @@ public class OwnerType implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", desc='" + getDesc() + "'" +
-            ", descContentType='" + getDescContentType() + "'" +
             "}";
     }
 }
