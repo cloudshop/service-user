@@ -2,8 +2,6 @@ package com.eyun.user.service.dto;
 
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -14,10 +12,6 @@ public class UserStatusDTO implements Serializable {
     private Long id;
 
     private String name;
-
-    private Long userStatusHistoryId;
-
-    private Long userStatusHistoryId;
 
     public Long getId() {
         return id;
@@ -33,22 +27,6 @@ public class UserStatusDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Long getUserStatusHistoryId() {
-        return userStatusHistoryId;
-    }
-
-    public void setUserStatusHistoryId(Long userStatusHistoryId) {
-        this.userStatusHistoryId = userStatusHistoryId;
-    }
-
-    public Long getUserStatusHistoryId() {
-        return userStatusHistoryId;
-    }
-
-    public void setUserStatusHistoryId(Long userStatusHistoryId) {
-        this.userStatusHistoryId = userStatusHistoryId;
     }
 
     @Override

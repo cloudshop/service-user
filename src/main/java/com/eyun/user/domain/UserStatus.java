@@ -25,12 +25,6 @@ public class UserStatus implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
-    private UserStatusHistory userStatusHistory;
-
-    @ManyToOne
-    private UserStatusHistory userStatusHistory;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -51,32 +45,6 @@ public class UserStatus implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public UserStatusHistory getUserStatusHistory() {
-        return userStatusHistory;
-    }
-
-    public UserStatus userStatusHistory(UserStatusHistory userStatusHistory) {
-        this.userStatusHistory = userStatusHistory;
-        return this;
-    }
-
-    public void setUserStatusHistory(UserStatusHistory userStatusHistory) {
-        this.userStatusHistory = userStatusHistory;
-    }
-
-    public UserStatusHistory getUserStatusHistory() {
-        return userStatusHistory;
-    }
-
-    public UserStatus userStatusHistory(UserStatusHistory userStatusHistory) {
-        this.userStatusHistory = userStatusHistory;
-        return this;
-    }
-
-    public void setUserStatusHistory(UserStatusHistory userStatusHistory) {
-        this.userStatusHistory = userStatusHistory;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

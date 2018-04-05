@@ -2,21 +2,27 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "one-to-many",
+            "relationshipType": "one-to-one",
             "relationshipName": "mercury",
             "otherEntityName": "mercury",
+            "otherEntityField": "id",
+            "ownerSide": true,
             "otherEntityRelationshipName": "mercuryStatusHistory"
         },
         {
-            "relationshipType": "one-to-many",
+            "relationshipType": "one-to-one",
             "relationshipName": "oldStatus",
             "otherEntityName": "mercuryStatus",
+            "otherEntityField": "id",
+            "ownerSide": true,
             "otherEntityRelationshipName": "mercuryStatusHistory"
         },
         {
-            "relationshipType": "one-to-many",
+            "relationshipType": "one-to-one",
             "relationshipName": "newtatus",
             "otherEntityName": "mercuryStatus",
+            "otherEntityField": "id",
+            "ownerSide": true,
             "otherEntityRelationshipName": "mercuryStatusHistory"
         }
     ],

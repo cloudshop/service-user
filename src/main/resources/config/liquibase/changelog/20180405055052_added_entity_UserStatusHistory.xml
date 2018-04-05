@@ -29,7 +29,13 @@
             <column name="modified_time" type="timestamp">
                 <constraints nullable="true" />
             </column>
-
+            <column name="user_id" type="bigint">
+                <constraints unique="true" nullable="true" />
+            </column>            <column name="old_status_id" type="bigint">
+                <constraints unique="true" nullable="true" />
+            </column>            <column name="newtatus_id" type="bigint">
+                <constraints unique="true" nullable="true" />
+            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         <dropDefaultValue tableName="user_status_history" columnName="modified_time" columnDataType="datetime"/>

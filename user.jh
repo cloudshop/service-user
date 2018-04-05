@@ -24,7 +24,7 @@ entity UserStatusHistory{
   modifiedBy Long,
   modifiedTime Instant,
 }
-relationship OneToMany {
+relationship OneToOne {
   UserStatusHistory{user} to UserAnnex
   UserStatusHistory{oldStatus} to UserStatus
   UserStatusHistory{newtatus} to UserStatus
@@ -87,7 +87,7 @@ entity MercuryStatusHistory{
   modifiedBy Long,
   modifiedTime Instant,
 }
-relationship OneToMany {
+relationship OneToOne {
   MercuryStatusHistory{mercury} to Mercury
   MercuryStatusHistory{oldStatus} to MercuryStatus
   MercuryStatusHistory{newtatus} to MercuryStatus

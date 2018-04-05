@@ -25,12 +25,6 @@ public class MercuryStatus implements Serializable {
     @Column(name = "name")
     private String name;
 
-    @ManyToOne
-    private MercuryStatusHistory mercuryStatusHistory;
-
-    @ManyToOne
-    private MercuryStatusHistory mercuryStatusHistory;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -51,32 +45,6 @@ public class MercuryStatus implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public MercuryStatusHistory getMercuryStatusHistory() {
-        return mercuryStatusHistory;
-    }
-
-    public MercuryStatus mercuryStatusHistory(MercuryStatusHistory mercuryStatusHistory) {
-        this.mercuryStatusHistory = mercuryStatusHistory;
-        return this;
-    }
-
-    public void setMercuryStatusHistory(MercuryStatusHistory mercuryStatusHistory) {
-        this.mercuryStatusHistory = mercuryStatusHistory;
-    }
-
-    public MercuryStatusHistory getMercuryStatusHistory() {
-        return mercuryStatusHistory;
-    }
-
-    public MercuryStatus mercuryStatusHistory(MercuryStatusHistory mercuryStatusHistory) {
-        this.mercuryStatusHistory = mercuryStatusHistory;
-        return this;
-    }
-
-    public void setMercuryStatusHistory(MercuryStatusHistory mercuryStatusHistory) {
-        this.mercuryStatusHistory = mercuryStatusHistory;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

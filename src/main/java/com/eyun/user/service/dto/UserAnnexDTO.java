@@ -31,8 +31,6 @@ public class UserAnnexDTO implements Serializable {
 
     private Long inviteeId;
 
-    private Long userStatusHistoryId;
-
     public Long getId() {
         return id;
     }
@@ -111,14 +109,6 @@ public class UserAnnexDTO implements Serializable {
 
     public void setInviteeId(Long userAnnexId) {
         this.inviteeId = userAnnexId;
-    }
-
-    public Long getUserStatusHistoryId() {
-        return userStatusHistoryId;
-    }
-
-    public void setUserStatusHistoryId(Long userStatusHistoryId) {
-        this.userStatusHistoryId = userStatusHistoryId;
     }
 
     @Override

@@ -74,9 +74,6 @@ public class UserAnnex implements Serializable {
     @ManyToOne
     private UserAnnex invitee;
 
-    @ManyToOne
-    private UserStatusHistory userStatusHistory;
-
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -261,19 +258,6 @@ public class UserAnnex implements Serializable {
 
     public void setInvitee(UserAnnex userAnnex) {
         this.invitee = userAnnex;
-    }
-
-    public UserStatusHistory getUserStatusHistory() {
-        return userStatusHistory;
-    }
-
-    public UserAnnex userStatusHistory(UserStatusHistory userStatusHistory) {
-        this.userStatusHistory = userStatusHistory;
-        return this;
-    }
-
-    public void setUserStatusHistory(UserStatusHistory userStatusHistory) {
-        this.userStatusHistory = userStatusHistory;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

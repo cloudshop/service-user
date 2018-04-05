@@ -1,19 +1,6 @@
 {
     "fluentMethods": true,
-    "relationships": [
-        {
-            "relationshipName": "mercuryStatusHistory",
-            "otherEntityName": "mercuryStatusHistory",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipName": "mercuryStatusHistory",
-            "otherEntityName": "mercuryStatusHistory",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
-        }
-    ],
+    "relationships": [],
     "fields": [
         {
             "fieldName": "name",

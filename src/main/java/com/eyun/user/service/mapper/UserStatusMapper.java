@@ -8,16 +8,10 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity UserStatus and its DTO UserStatusDTO.
  */
-@Mapper(componentModel = "spring", uses = {UserStatusHistoryMapper.class})
+@Mapper(componentModel = "spring", uses = {})
 public interface UserStatusMapper extends EntityMapper<UserStatusDTO, UserStatus> {
 
-    @Mapping(source = "userStatusHistory.id", target = "userStatusHistoryId")
-    @Mapping(source = "userStatusHistory.id", target = "userStatusHistoryId")
-    UserStatusDTO toDto(UserStatus userStatus);
 
-    @Mapping(source = "userStatusHistoryId", target = "userStatusHistory")
-    @Mapping(source = "userStatusHistoryId", target = "userStatusHistory")
-    UserStatus toEntity(UserStatusDTO userStatusDTO);
 
     default UserStatus fromId(Long id) {
         if (id == null) {

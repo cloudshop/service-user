@@ -41,8 +41,6 @@ public class MercuryDTO implements Serializable {
 
     private Long statusId;
 
-    private Long mercuryStatusHistoryId;
-
     public Long getId() {
         return id;
     }
@@ -161,14 +159,6 @@ public class MercuryDTO implements Serializable {
 
     public void setStatusId(Long mercuryStatusId) {
         this.statusId = mercuryStatusId;
-    }
-
-    public Long getMercuryStatusHistoryId() {
-        return mercuryStatusHistoryId;
-    }
-
-    public void setMercuryStatusHistoryId(Long mercuryStatusHistoryId) {
-        this.mercuryStatusHistoryId = mercuryStatusHistoryId;
     }
 
     @Override

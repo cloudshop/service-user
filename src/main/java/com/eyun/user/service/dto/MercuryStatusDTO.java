@@ -2,8 +2,6 @@ package com.eyun.user.service.dto;
 
 
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -14,10 +12,6 @@ public class MercuryStatusDTO implements Serializable {
     private Long id;
 
     private String name;
-
-    private Long mercuryStatusHistoryId;
-
-    private Long mercuryStatusHistoryId;
 
     public Long getId() {
         return id;
@@ -33,22 +27,6 @@ public class MercuryStatusDTO implements Serializable {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Long getMercuryStatusHistoryId() {
-        return mercuryStatusHistoryId;
-    }
-
-    public void setMercuryStatusHistoryId(Long mercuryStatusHistoryId) {
-        this.mercuryStatusHistoryId = mercuryStatusHistoryId;
-    }
-
-    public Long getMercuryStatusHistoryId() {
-        return mercuryStatusHistoryId;
-    }
-
-    public void setMercuryStatusHistoryId(Long mercuryStatusHistoryId) {
-        this.mercuryStatusHistoryId = mercuryStatusHistoryId;
     }
 
     @Override

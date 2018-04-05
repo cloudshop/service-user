@@ -31,11 +31,5 @@
                                  referencedColumnNames="id"
                                  referencedTableName="user_annex"/>
 
-        <addForeignKeyConstraint baseColumnNames="user_status_history_id"
-                                 baseTableName="user_annex"
-                                 constraintName="fk_user_annex_user_status_history_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="user_status_history"/>
-
     </changeSet>
 </databaseChangeLog>

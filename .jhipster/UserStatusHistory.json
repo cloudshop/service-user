@@ -2,21 +2,27 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "one-to-many",
+            "relationshipType": "one-to-one",
             "relationshipName": "user",
             "otherEntityName": "userAnnex",
+            "otherEntityField": "id",
+            "ownerSide": true,
             "otherEntityRelationshipName": "userStatusHistory"
         },
         {
-            "relationshipType": "one-to-many",
+            "relationshipType": "one-to-one",
             "relationshipName": "oldStatus",
             "otherEntityName": "userStatus",
+            "otherEntityField": "id",
+            "ownerSide": true,
             "otherEntityRelationshipName": "userStatusHistory"
         },
         {
-            "relationshipType": "one-to-many",
+            "relationshipType": "one-to-one",
             "relationshipName": "newtatus",
             "otherEntityName": "userStatus",
+            "otherEntityField": "id",
+            "ownerSide": true,
             "otherEntityRelationshipName": "userStatusHistory"
         }
     ],

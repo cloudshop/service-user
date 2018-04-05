@@ -34,12 +34,6 @@
             "relationshipName": "invitee",
             "otherEntityName": "userAnnex",
             "otherEntityField": "id"
-        },
-        {
-            "relationshipName": "userStatusHistory",
-            "otherEntityName": "userStatusHistory",
-            "relationshipType": "many-to-one",
-            "otherEntityField": "id"
         }
     ],
     "fields": [

@@ -8,13 +8,17 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity MercuryStatusHistory and its DTO MercuryStatusHistoryDTO.
  */
-@Mapper(componentModel = "spring", uses = {})
+@Mapper(componentModel = "spring", uses = {MercuryMapper.class, MercuryStatusMapper.class})
 public interface MercuryStatusHistoryMapper extends EntityMapper<MercuryStatusHistoryDTO, MercuryStatusHistory> {
 
+    @Mapping(source = "mercury.id", target = "mercuryId")
+    @Mapping(source = "oldStatus.id", target = "oldStatusId")
+    @Mapping(source = "newtatus.id", target = "newtatusId")
+    MercuryStatusHistoryDTO toDto(MercuryStatusHistory mercuryStatusHistory);
 
-    @Mapping(target = "mercuries", ignore = true)
-    @Mapping(target = "oldStatuses", ignore = true)
-    @Mapping(target = "newtatuses", ignore = true)
+    @Mapping(source = "mercuryId", target = "mercury")
+    @Mapping(source = "oldStatusId", target = "oldStatus")
+    @Mapping(source = "newtatusId", target = "newtatus")
     MercuryStatusHistory toEntity(MercuryStatusHistoryDTO mercuryStatusHistoryDTO);
 
     default MercuryStatusHistory fromId(Long id) {
