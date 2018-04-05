@@ -7,7 +7,7 @@
             "fieldType": "String"
         }
     ],
-    "changelogDate": "20180401103247",
+    "changelogDate": "20180405065741",
     "entityTableName": "user_type",
     "dto": "mapstruct",
     "pagination": "infinite-scroll",

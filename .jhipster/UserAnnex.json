@@ -67,7 +67,7 @@
             "fieldType": "String"
         }
     ],
-    "changelogDate": "20180401103245",
+    "changelogDate": "20180405065738",
     "javadoc": "The Employee entity.",
     "entityTableName": "user_annex",
     "dto": "mapstruct",

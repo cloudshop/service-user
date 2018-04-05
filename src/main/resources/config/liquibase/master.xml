@@ -16,6 +16,16 @@
     <include file="config/liquibase/changelog/20180405055057_added_entity_MercuryStatusHistory.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180405055845_added_entity_OwnerType.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180405055846_added_entity_OwnerRelation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180405065738_added_entity_UserAnnex.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180405065739_added_entity_UserStatus.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180405065740_added_entity_UserStatusHistory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180405065741_added_entity_UserType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180405065742_added_entity_DeliveryAddress.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180405065743_added_entity_Mercury.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180405065744_added_entity_MercuryStatus.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180405065745_added_entity_MercuryStatusHistory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180405065746_added_entity_OwnerType.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180405065747_added_entity_OwnerRelation.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
     <include file="config/liquibase/changelog/20180401103245_added_entity_constraints_UserAnnex.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180401103246_added_entity_constraints_Delivery.xml" relativeToChangelogFile="false"/>
@@ -26,5 +36,11 @@
     <include file="config/liquibase/changelog/20180405055846_added_entity_constraints_OwnerRelation.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180405055057_added_entity_constraints_MercuryStatusHistory.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/20180405055052_added_entity_constraints_UserStatusHistory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180405065738_added_entity_constraints_UserAnnex.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180405065740_added_entity_constraints_UserStatusHistory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180405065742_added_entity_constraints_DeliveryAddress.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180405065743_added_entity_constraints_Mercury.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180405065745_added_entity_constraints_MercuryStatusHistory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180405065747_added_entity_constraints_OwnerRelation.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>

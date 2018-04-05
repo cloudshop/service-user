@@ -38,7 +38,7 @@
             "fieldType": "String"
         }
     ],
-    "changelogDate": "20180405055054",
+    "changelogDate": "20180405065742",
     "entityTableName": "delivery_address",
     "dto": "mapstruct",
     "pagination": "no",

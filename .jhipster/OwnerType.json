@@ -7,7 +7,7 @@
             "fieldType": "String"
         }
     ],
-    "changelogDate": "20180405055845",
+    "changelogDate": "20180405065746",
     "entityTableName": "owner_type",
     "dto": "mapstruct",
     "pagination": "no",

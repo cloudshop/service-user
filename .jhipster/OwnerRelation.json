@@ -27,7 +27,7 @@
         }
     ],
     "fields": [],
-    "changelogDate": "20180405055846",
+    "changelogDate": "20180405065747",
     "entityTableName": "owner_relation",
     "dto": "mapstruct",
     "pagination": "no",

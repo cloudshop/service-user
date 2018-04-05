@@ -36,7 +36,7 @@
             "fieldType": "Instant"
         }
     ],
-    "changelogDate": "20180405055057",
+    "changelogDate": "20180405065745",
     "entityTableName": "mercury_status_history",
     "dto": "mapstruct",
     "pagination": "no",

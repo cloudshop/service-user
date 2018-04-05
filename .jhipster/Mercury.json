@@ -65,7 +65,7 @@
             "fieldType": "String"
         }
     ],
-    "changelogDate": "20180405055055",
+    "changelogDate": "20180405065743",
     "entityTableName": "mercury",
     "dto": "mapstruct",
     "pagination": "no",
