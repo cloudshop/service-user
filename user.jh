@@ -5,6 +5,7 @@ entity UserAnnex {
 	/**
 	* The firstname attribute.
 	*/
+  userId  Long
   firstName String,
   lastName String,
   email String,

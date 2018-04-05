@@ -43,6 +43,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = {UserApp.class, SecurityBeanOverrideConfiguration.class})
 public class UserAnnexResourceIntTest {
 
+    private static final Long DEFAULT_USER_ID = 1L;
+    private static final Long UPDATED_USER_ID = 2L;
+
     private static final String DEFAULT_FIRST_NAME = "AAAAAAAAAA";
     private static final String UPDATED_FIRST_NAME = "BBBBBBBBBB";
 
@@ -105,6 +108,7 @@ public class UserAnnexResourceIntTest {
      */
     public static UserAnnex createEntity(EntityManager em) {
         UserAnnex userAnnex = new UserAnnex()
+            .userId(DEFAULT_USER_ID)
             .firstName(DEFAULT_FIRST_NAME)
             .lastName(DEFAULT_LAST_NAME)
             .email(DEFAULT_EMAIL)
@@ -135,6 +139,7 @@ public class UserAnnexResourceIntTest {
         List<UserAnnex> userAnnexList = userAnnexRepository.findAll();
         assertThat(userAnnexList).hasSize(databaseSizeBeforeCreate + 1);
         UserAnnex testUserAnnex = userAnnexList.get(userAnnexList.size() - 1);
+        assertThat(testUserAnnex.getUserId()).isEqualTo(DEFAULT_USER_ID);
         assertThat(testUserAnnex.getFirstName()).isEqualTo(DEFAULT_FIRST_NAME);
         assertThat(testUserAnnex.getLastName()).isEqualTo(DEFAULT_LAST_NAME);
         assertThat(testUserAnnex.getEmail()).isEqualTo(DEFAULT_EMAIL);
@@ -174,6 +179,7 @@ public class UserAnnexResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(userAnnex.getId().intValue())))
+            .andExpect(jsonPath("$.[*].userId").value(hasItem(DEFAULT_USER_ID.intValue())))
             .andExpect(jsonPath("$.[*].firstName").value(hasItem(DEFAULT_FIRST_NAME.toString())))
             .andExpect(jsonPath("$.[*].lastName").value(hasItem(DEFAULT_LAST_NAME.toString())))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
@@ -193,6 +199,7 @@ public class UserAnnexResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(userAnnex.getId().intValue()))
+            .andExpect(jsonPath("$.userId").value(DEFAULT_USER_ID.intValue()))
             .andExpect(jsonPath("$.firstName").value(DEFAULT_FIRST_NAME.toString()))
             .andExpect(jsonPath("$.lastName").value(DEFAULT_LAST_NAME.toString()))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL.toString()))
@@ -221,6 +228,7 @@ public class UserAnnexResourceIntTest {
         // Disconnect from session so that the updates on updatedUserAnnex are not directly saved in db
         em.detach(updatedUserAnnex);
         updatedUserAnnex
+            .userId(UPDATED_USER_ID)
             .firstName(UPDATED_FIRST_NAME)
             .lastName(UPDATED_LAST_NAME)
             .email(UPDATED_EMAIL)
@@ -238,6 +246,7 @@ public class UserAnnexResourceIntTest {
         List<UserAnnex> userAnnexList = userAnnexRepository.findAll();
         assertThat(userAnnexList).hasSize(databaseSizeBeforeUpdate);
         UserAnnex testUserAnnex = userAnnexList.get(userAnnexList.size() - 1);
+        assertThat(testUserAnnex.getUserId()).isEqualTo(UPDATED_USER_ID);
         assertThat(testUserAnnex.getFirstName()).isEqualTo(UPDATED_FIRST_NAME);
         assertThat(testUserAnnex.getLastName()).isEqualTo(UPDATED_LAST_NAME);
         assertThat(testUserAnnex.getEmail()).isEqualTo(UPDATED_EMAIL);

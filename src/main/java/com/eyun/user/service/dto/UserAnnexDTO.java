@@ -13,6 +13,8 @@ public class UserAnnexDTO implements Serializable {
 
     private Long id;
 
+    private Long userId;
+
     private String firstName;
 
     private String lastName;
@@ -37,6 +39,14 @@ public class UserAnnexDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {
@@ -136,6 +146,7 @@ public class UserAnnexDTO implements Serializable {
     public String toString() {
         return "UserAnnexDTO{" +
             "id=" + getId() +
+            ", userId=" + getUserId() +
             ", firstName='" + getFirstName() + "'" +
             ", lastName='" + getLastName() + "'" +
             ", email='" + getEmail() + "'" +

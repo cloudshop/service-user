@@ -38,8 +38,12 @@
     ],
     "fields": [
         {
-            "fieldName": "firstName",
+            "fieldName": "userId",
             "javadoc": "The firstname attribute.",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "firstName",
             "fieldType": "String"
         },
         {

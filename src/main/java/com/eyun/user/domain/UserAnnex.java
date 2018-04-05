@@ -32,6 +32,9 @@ public class UserAnnex implements Serializable {
      * The firstname attribute.
      */
     @ApiModelProperty(value = "The firstname attribute.")
+    @Column(name = "user_id")
+    private Long userId;
+
     @Column(name = "first_name")
     private String firstName;
 
@@ -81,6 +84,19 @@ public class UserAnnex implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public UserAnnex userId(Long userId) {
+        this.userId = userId;
+        return this;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public String getFirstName() {
@@ -285,6 +301,7 @@ public class UserAnnex implements Serializable {
     public String toString() {
         return "UserAnnex{" +
             "id=" + getId() +
+            ", userId=" + getUserId() +
             ", firstName='" + getFirstName() + "'" +
             ", lastName='" + getLastName() + "'" +
             ", email='" + getEmail() + "'" +
