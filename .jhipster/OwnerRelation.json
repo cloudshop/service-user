@@ -3,25 +3,25 @@
     "relationships": [
         {
             "relationshipType": "one-to-one",
-            "relationshipName": "ownerTypename",
+            "relationshipName": "ownerType",
             "otherEntityName": "ownerType",
-            "otherEntityField": "id",
+            "otherEntityField": "name",
             "ownerSide": true,
             "otherEntityRelationshipName": "ownerRelation"
         },
         {
             "relationshipType": "one-to-one",
-            "relationshipName": "ownernickname",
+            "relationshipName": "owner",
             "otherEntityName": "userAnnex",
-            "otherEntityField": "id",
+            "otherEntityField": "name",
             "ownerSide": true,
             "otherEntityRelationshipName": "ownerRelation"
         },
         {
             "relationshipType": "one-to-one",
-            "relationshipName": "mercuryname",
+            "relationshipName": "mercury",
             "otherEntityName": "mercury",
-            "otherEntityField": "id",
+            "otherEntityField": "name",
             "ownerSide": true,
             "otherEntityRelationshipName": "ownerRelation"
         }

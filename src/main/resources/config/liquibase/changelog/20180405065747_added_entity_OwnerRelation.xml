@@ -21,11 +21,11 @@
         <createTable tableName="owner_relation">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
-            </column>            <column name="owner_typename_id" type="bigint">
+            </column>            <column name="owner_type_id" type="bigint">
                 <constraints unique="true" nullable="true" />
-            </column>            <column name="ownernickname_id" type="bigint">
+            </column>            <column name="owner_id" type="bigint">
                 <constraints unique="true" nullable="true" />
-            </column>            <column name="mercuryname_id" type="bigint">
+            </column>            <column name="mercury_id" type="bigint">
                 <constraints unique="true" nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->

@@ -63,7 +63,7 @@ public class Mercury implements Serializable {
 
     @OneToOne
     @JoinColumn(unique = true)
-    private MercuryStatus statusname;
+    private MercuryStatus status;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -243,17 +243,17 @@ public class Mercury implements Serializable {
         this.desc = desc;
     }
 
-    public MercuryStatus getStatusname() {
-        return statusname;
+    public MercuryStatus getStatus() {
+        return status;
     }
 
-    public Mercury statusname(MercuryStatus mercuryStatus) {
-        this.statusname = mercuryStatus;
+    public Mercury status(MercuryStatus mercuryStatus) {
+        this.status = mercuryStatus;
         return this;
     }
 
-    public void setStatusname(MercuryStatus mercuryStatus) {
-        this.statusname = mercuryStatus;
+    public void setStatus(MercuryStatus mercuryStatus) {
+        this.status = mercuryStatus;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

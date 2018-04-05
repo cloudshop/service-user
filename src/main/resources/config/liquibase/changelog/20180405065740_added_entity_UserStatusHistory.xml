@@ -29,11 +29,11 @@
             <column name="modified_time" type="timestamp">
                 <constraints nullable="true" />
             </column>
-            <column name="usernickname_id" type="bigint">
+            <column name="user_id" type="bigint">
                 <constraints unique="true" nullable="true" />
-            </column>            <column name="old_statusname_id" type="bigint">
+            </column>            <column name="old_status_id" type="bigint">
                 <constraints unique="true" nullable="true" />
-            </column>            <column name="newtatusname_id" type="bigint">
+            </column>            <column name="newtatus_id" type="bigint">
                 <constraints unique="true" nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->

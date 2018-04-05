@@ -31,15 +31,15 @@ public class UserStatusHistory implements Serializable {
 
     @OneToOne
     @JoinColumn(unique = true)
-    private UserAnnex usernickname;
+    private UserAnnex user;
 
     @OneToOne
     @JoinColumn(unique = true)
-    private UserStatus oldStatusname;
+    private UserStatus oldStatus;
 
     @OneToOne
     @JoinColumn(unique = true)
-    private UserStatus newtatusname;
+    private UserStatus newtatus;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -76,43 +76,43 @@ public class UserStatusHistory implements Serializable {
         this.modifiedTime = modifiedTime;
     }
 
-    public UserAnnex getUsernickname() {
-        return usernickname;
+    public UserAnnex getUser() {
+        return user;
     }
 
-    public UserStatusHistory usernickname(UserAnnex userAnnex) {
-        this.usernickname = userAnnex;
+    public UserStatusHistory user(UserAnnex userAnnex) {
+        this.user = userAnnex;
         return this;
     }
 
-    public void setUsernickname(UserAnnex userAnnex) {
-        this.usernickname = userAnnex;
+    public void setUser(UserAnnex userAnnex) {
+        this.user = userAnnex;
     }
 
-    public UserStatus getOldStatusname() {
-        return oldStatusname;
+    public UserStatus getOldStatus() {
+        return oldStatus;
     }
 
-    public UserStatusHistory oldStatusname(UserStatus userStatus) {
-        this.oldStatusname = userStatus;
+    public UserStatusHistory oldStatus(UserStatus userStatus) {
+        this.oldStatus = userStatus;
         return this;
     }
 
-    public void setOldStatusname(UserStatus userStatus) {
-        this.oldStatusname = userStatus;
+    public void setOldStatus(UserStatus userStatus) {
+        this.oldStatus = userStatus;
     }
 
-    public UserStatus getNewtatusname() {
-        return newtatusname;
+    public UserStatus getNewtatus() {
+        return newtatus;
     }
 
-    public UserStatusHistory newtatusname(UserStatus userStatus) {
-        this.newtatusname = userStatus;
+    public UserStatusHistory newtatus(UserStatus userStatus) {
+        this.newtatus = userStatus;
         return this;
     }
 
-    public void setNewtatusname(UserStatus userStatus) {
-        this.newtatusname = userStatus;
+    public void setNewtatus(UserStatus userStatus) {
+        this.newtatus = userStatus;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

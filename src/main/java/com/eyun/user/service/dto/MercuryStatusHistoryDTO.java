@@ -18,11 +18,17 @@ public class MercuryStatusHistoryDTO implements Serializable {
 
     private Instant modifiedTime;
 
-    private Long mercurynameId;
+    private Long mercuryId;
 
-    private Long oldStatusnameId;
+    private String mercuryName;
 
-    private Long newtatusnameId;
+    private Long oldStatusId;
+
+    private String oldStatusName;
+
+    private Long newtatusId;
+
+    private String newtatusName;
 
     public Long getId() {
         return id;
@@ -48,28 +54,52 @@ public class MercuryStatusHistoryDTO implements Serializable {
         this.modifiedTime = modifiedTime;
     }
 
-    public Long getMercurynameId() {
-        return mercurynameId;
+    public Long getMercuryId() {
+        return mercuryId;
     }
 
-    public void setMercurynameId(Long mercuryId) {
-        this.mercurynameId = mercuryId;
+    public void setMercuryId(Long mercuryId) {
+        this.mercuryId = mercuryId;
     }
 
-    public Long getOldStatusnameId() {
-        return oldStatusnameId;
+    public String getMercuryName() {
+        return mercuryName;
     }
 
-    public void setOldStatusnameId(Long mercuryStatusId) {
-        this.oldStatusnameId = mercuryStatusId;
+    public void setMercuryName(String mercuryName) {
+        this.mercuryName = mercuryName;
     }
 
-    public Long getNewtatusnameId() {
-        return newtatusnameId;
+    public Long getOldStatusId() {
+        return oldStatusId;
     }
 
-    public void setNewtatusnameId(Long mercuryStatusId) {
-        this.newtatusnameId = mercuryStatusId;
+    public void setOldStatusId(Long mercuryStatusId) {
+        this.oldStatusId = mercuryStatusId;
+    }
+
+    public String getOldStatusName() {
+        return oldStatusName;
+    }
+
+    public void setOldStatusName(String mercuryStatusName) {
+        this.oldStatusName = mercuryStatusName;
+    }
+
+    public Long getNewtatusId() {
+        return newtatusId;
+    }
+
+    public void setNewtatusId(Long mercuryStatusId) {
+        this.newtatusId = mercuryStatusId;
+    }
+
+    public String getNewtatusName() {
+        return newtatusName;
+    }
+
+    public void setNewtatusName(String mercuryStatusName) {
+        this.newtatusName = mercuryStatusName;
     }
 
     @Override

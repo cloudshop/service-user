@@ -3,37 +3,37 @@
     "relationships": [
         {
             "relationshipType": "one-to-one",
-            "relationshipName": "statusname",
+            "relationshipName": "status",
             "otherEntityName": "userStatus",
-            "otherEntityField": "id",
+            "otherEntityField": "name",
             "ownerSide": true,
             "otherEntityRelationshipName": "userAnnex"
         },
         {
             "relationshipType": "one-to-many",
-            "relationshipName": "deliveryAddressaliases",
+            "relationshipName": "deliveryAddress",
             "otherEntityName": "deliveryAddress",
             "otherEntityRelationshipName": "userAnnex"
         },
         {
             "relationshipType": "one-to-many",
-            "relationshipName": "inviternickname",
+            "relationshipName": "inviter",
             "otherEntityName": "userAnnex",
-            "otherEntityRelationshipName": "invitee[nickname]"
+            "otherEntityRelationshipName": "invitee"
         },
         {
             "relationshipType": "many-to-many",
             "otherEntityRelationshipName": "",
-            "relationshipName": "userTypename",
+            "relationshipName": "userType",
             "otherEntityName": "userType",
-            "otherEntityField": "id",
+            "otherEntityField": "name",
             "ownerSide": true
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "inviteenickname",
+            "relationshipName": "invitee",
             "otherEntityName": "userAnnex",
-            "otherEntityField": "id"
+            "otherEntityField": "name"
         }
     ],
     "fields": [

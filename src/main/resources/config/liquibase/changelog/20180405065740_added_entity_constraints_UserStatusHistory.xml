@@ -8,21 +8,21 @@
     -->
     <changeSet id="20180405065740-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="usernickname_id"
+        <addForeignKeyConstraint baseColumnNames="user_id"
                                  baseTableName="user_status_history"
-                                 constraintName="fk_user_status_history_usernickname_id"
+                                 constraintName="fk_user_status_history_user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="user_annex"/>
 
-        <addForeignKeyConstraint baseColumnNames="old_statusname_id"
+        <addForeignKeyConstraint baseColumnNames="old_status_id"
                                  baseTableName="user_status_history"
-                                 constraintName="fk_user_status_history_old_statusname_id"
+                                 constraintName="fk_user_status_history_old_status_id"
                                  referencedColumnNames="id"
                                  referencedTableName="user_status"/>
 
-        <addForeignKeyConstraint baseColumnNames="newtatusname_id"
+        <addForeignKeyConstraint baseColumnNames="newtatus_id"
                                  baseTableName="user_status_history"
-                                 constraintName="fk_user_status_history_newtatusname_id"
+                                 constraintName="fk_user_status_history_newtatus_id"
                                  referencedColumnNames="id"
                                  referencedTableName="user_status"/>
 

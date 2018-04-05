@@ -3,9 +3,9 @@
     "relationships": [
         {
             "relationshipType": "one-to-one",
-            "relationshipName": "statusname",
+            "relationshipName": "status",
             "otherEntityName": "mercuryStatus",
-            "otherEntityField": "id",
+            "otherEntityField": "name",
             "ownerSide": true,
             "otherEntityRelationshipName": "mercury"
         }

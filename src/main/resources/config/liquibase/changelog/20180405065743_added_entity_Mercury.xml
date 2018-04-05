@@ -73,7 +73,7 @@
             <column name="jhi_desc" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="statusname_id" type="bigint">
+            <column name="status_id" type="bigint">
                 <constraints unique="true" nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->

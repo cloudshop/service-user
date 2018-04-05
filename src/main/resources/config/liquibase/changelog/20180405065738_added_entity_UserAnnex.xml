@@ -45,18 +45,18 @@
             <column name="avatar" type="varchar(255)">
                 <constraints nullable="true" />
             </column>
-            <column name="statusname_id" type="bigint">
+            <column name="status_id" type="bigint">
                 <constraints unique="true" nullable="true" />
             </column>
-            <column name="inviteenickname_id" type="bigint">
+            <column name="invitee_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         
-        <createTable tableName="user_annex_user_typename">
-            <column name="user_typenames_id" type="bigint">
+        <createTable tableName="user_annex_user_type">
+            <column name="user_types_id" type="bigint">
                 <constraints nullable="false"/>
             </column>
             <column name="user_annexes_id" type="bigint">
@@ -64,7 +64,7 @@
             </column>
         </createTable>
 
-        <addPrimaryKey columnNames="user_annexes_id, user_typenames_id" tableName="user_annex_user_typename"/>
+        <addPrimaryKey columnNames="user_annexes_id, user_types_id" tableName="user_annex_user_type"/>
         
     </changeSet>
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here, do not remove-->

@@ -3,25 +3,25 @@
     "relationships": [
         {
             "relationshipType": "one-to-one",
-            "relationshipName": "usernickname",
+            "relationshipName": "user",
             "otherEntityName": "userAnnex",
-            "otherEntityField": "id",
+            "otherEntityField": "name",
             "ownerSide": true,
             "otherEntityRelationshipName": "userStatusHistory"
         },
         {
             "relationshipType": "one-to-one",
-            "relationshipName": "oldStatusname",
+            "relationshipName": "oldStatus",
             "otherEntityName": "userStatus",
-            "otherEntityField": "id",
+            "otherEntityField": "name",
             "ownerSide": true,
             "otherEntityRelationshipName": "userStatusHistory"
         },
         {
             "relationshipType": "one-to-one",
-            "relationshipName": "newtatusname",
+            "relationshipName": "newtatus",
             "otherEntityName": "userStatus",
-            "otherEntityField": "id",
+            "otherEntityField": "name",
             "ownerSide": true,
             "otherEntityRelationshipName": "userStatusHistory"
         }

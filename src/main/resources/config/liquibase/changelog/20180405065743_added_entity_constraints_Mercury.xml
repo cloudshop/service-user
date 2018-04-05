@@ -8,9 +8,9 @@
     -->
     <changeSet id="20180405065743-2" author="jhipster">
         
-        <addForeignKeyConstraint baseColumnNames="statusname_id"
+        <addForeignKeyConstraint baseColumnNames="status_id"
                                  baseTableName="mercury"
-                                 constraintName="fk_mercury_statusname_id"
+                                 constraintName="fk_mercury_status_id"
                                  referencedColumnNames="id"
                                  referencedTableName="mercury_status"/>
 

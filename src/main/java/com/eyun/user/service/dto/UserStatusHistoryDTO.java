@@ -18,11 +18,17 @@ public class UserStatusHistoryDTO implements Serializable {
 
     private Instant modifiedTime;
 
-    private Long usernicknameId;
+    private Long userId;
 
-    private Long oldStatusnameId;
+    private String userName;
 
-    private Long newtatusnameId;
+    private Long oldStatusId;
+
+    private String oldStatusName;
+
+    private Long newtatusId;
+
+    private String newtatusName;
 
     public Long getId() {
         return id;
@@ -48,28 +54,52 @@ public class UserStatusHistoryDTO implements Serializable {
         this.modifiedTime = modifiedTime;
     }
 
-    public Long getUsernicknameId() {
-        return usernicknameId;
+    public Long getUserId() {
+        return userId;
     }
 
-    public void setUsernicknameId(Long userAnnexId) {
-        this.usernicknameId = userAnnexId;
+    public void setUserId(Long userAnnexId) {
+        this.userId = userAnnexId;
     }
 
-    public Long getOldStatusnameId() {
-        return oldStatusnameId;
+    public String getUserName() {
+        return userName;
     }
 
-    public void setOldStatusnameId(Long userStatusId) {
-        this.oldStatusnameId = userStatusId;
+    public void setUserName(String userAnnexName) {
+        this.userName = userAnnexName;
     }
 
-    public Long getNewtatusnameId() {
-        return newtatusnameId;
+    public Long getOldStatusId() {
+        return oldStatusId;
     }
 
-    public void setNewtatusnameId(Long userStatusId) {
-        this.newtatusnameId = userStatusId;
+    public void setOldStatusId(Long userStatusId) {
+        this.oldStatusId = userStatusId;
+    }
+
+    public String getOldStatusName() {
+        return oldStatusName;
+    }
+
+    public void setOldStatusName(String userStatusName) {
+        this.oldStatusName = userStatusName;
+    }
+
+    public Long getNewtatusId() {
+        return newtatusId;
+    }
+
+    public void setNewtatusId(Long userStatusId) {
+        this.newtatusId = userStatusId;
+    }
+
+    public String getNewtatusName() {
+        return newtatusName;
+    }
+
+    public void setNewtatusName(String userStatusName) {
+        this.newtatusName = userStatusName;
     }
 
     @Override

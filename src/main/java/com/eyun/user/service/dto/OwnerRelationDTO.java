@@ -13,11 +13,17 @@ public class OwnerRelationDTO implements Serializable {
 
     private Long id;
 
-    private Long ownerTypenameId;
+    private Long ownerTypeId;
 
-    private Long ownernicknameId;
+    private String ownerTypeName;
 
-    private Long mercurynameId;
+    private Long ownerId;
+
+    private String ownerName;
+
+    private Long mercuryId;
+
+    private String mercuryName;
 
     public Long getId() {
         return id;
@@ -27,28 +33,52 @@ public class OwnerRelationDTO implements Serializable {
         this.id = id;
     }
 
-    public Long getOwnerTypenameId() {
-        return ownerTypenameId;
+    public Long getOwnerTypeId() {
+        return ownerTypeId;
     }
 
-    public void setOwnerTypenameId(Long ownerTypeId) {
-        this.ownerTypenameId = ownerTypeId;
+    public void setOwnerTypeId(Long ownerTypeId) {
+        this.ownerTypeId = ownerTypeId;
     }
 
-    public Long getOwnernicknameId() {
-        return ownernicknameId;
+    public String getOwnerTypeName() {
+        return ownerTypeName;
     }
 
-    public void setOwnernicknameId(Long userAnnexId) {
-        this.ownernicknameId = userAnnexId;
+    public void setOwnerTypeName(String ownerTypeName) {
+        this.ownerTypeName = ownerTypeName;
     }
 
-    public Long getMercurynameId() {
-        return mercurynameId;
+    public Long getOwnerId() {
+        return ownerId;
     }
 
-    public void setMercurynameId(Long mercuryId) {
-        this.mercurynameId = mercuryId;
+    public void setOwnerId(Long userAnnexId) {
+        this.ownerId = userAnnexId;
+    }
+
+    public String getOwnerName() {
+        return ownerName;
+    }
+
+    public void setOwnerName(String userAnnexName) {
+        this.ownerName = userAnnexName;
+    }
+
+    public Long getMercuryId() {
+        return mercuryId;
+    }
+
+    public void setMercuryId(Long mercuryId) {
+        this.mercuryId = mercuryId;
+    }
+
+    public String getMercuryName() {
+        return mercuryName;
+    }
+
+    public void setMercuryName(String mercuryName) {
+        this.mercuryName = mercuryName;
     }
 
     @Override

@@ -12,7 +12,7 @@ entity UserStatus {
   desc Blob
 }
 relationship OneToOne {
-  UserAnnex{status[name]} to UserStatus
+  UserAnnex{status(name)} to UserStatus
 }
 
 entity UserStatusHistory{
@@ -20,9 +20,9 @@ entity UserStatusHistory{
   modifiedTime Instant,
 }
 relationship OneToOne {
-  UserStatusHistory{user[nickname]} to UserAnnex
-  UserStatusHistory{oldStatus[name]} to UserStatus
-  UserStatusHistory{newtatus[name]} to UserStatus
+  UserStatusHistory{user(name)} to UserAnnex
+  UserStatusHistory{oldStatus(name)} to UserStatus
+  UserStatusHistory{newtatus(name)} to UserStatus
 }
 
 entity UserType {
@@ -30,7 +30,7 @@ entity UserType {
   desc Blob,
 }
 relationship ManyToMany {
-  UserAnnex{userType[name]} to UserType
+  UserAnnex{userType(name)} to UserType
 }
 
 entity DeliveryAddress {
@@ -44,12 +44,12 @@ entity DeliveryAddress {
 }
 
 relationship OneToMany {
-  UserAnnex{deliveryAddress[aliases]} to DeliveryAddress
+  UserAnnex{deliveryAddress(aliases)} to DeliveryAddress
 }
 
 // defining multiple OneToMany relationships with comments
 relationship OneToMany {
-  UserAnnex{inviter[nickname]} to UserAnnex{invitee[nickname]}
+  UserAnnex{inviter(name)} to UserAnnex{invitee(name)}
 }
 
 entity Mercury {
@@ -74,7 +74,7 @@ entity MercuryStatus {
   desc Blob
 }
 relationship OneToOne {
-  Mercury{status[name]} to MercuryStatus
+  Mercury{status(name)} to MercuryStatus
 }
 
 entity MercuryStatusHistory{
@@ -82,9 +82,9 @@ entity MercuryStatusHistory{
   modifiedTime Instant,
 }
 relationship OneToOne {
-  MercuryStatusHistory{mercury[name]} to Mercury
-  MercuryStatusHistory{oldStatus[name]} to MercuryStatus
-  MercuryStatusHistory{newtatus[name]} to MercuryStatus
+  MercuryStatusHistory{mercury(name)} to Mercury
+  MercuryStatusHistory{oldStatus(name)} to MercuryStatus
+  MercuryStatusHistory{newtatus(name)} to MercuryStatus
 }
 
 entity OwnerType{
@@ -94,9 +94,9 @@ entity OwnerType{
 entity OwnerRelation{
 }
 relationship OneToOne {
-  OwnerRelation{ownerType[name]} to OwnerType
-  OwnerRelation{owner[nickname]} to UserAnnex
-  OwnerRelation{mercury[name]} to Mercury
+  OwnerRelation{ownerType(name)} to OwnerType
+  OwnerRelation{owner(name)} to UserAnnex
+  OwnerRelation{mercury(name)} to Mercury
 }
 
 // Set pagination options

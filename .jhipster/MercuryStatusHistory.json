@@ -3,25 +3,25 @@
     "relationships": [
         {
             "relationshipType": "one-to-one",
-            "relationshipName": "mercuryname",
+            "relationshipName": "mercury",
             "otherEntityName": "mercury",
-            "otherEntityField": "id",
+            "otherEntityField": "name",
             "ownerSide": true,
             "otherEntityRelationshipName": "mercuryStatusHistory"
         },
         {
             "relationshipType": "one-to-one",
-            "relationshipName": "oldStatusname",
+            "relationshipName": "oldStatus",
             "otherEntityName": "mercuryStatus",
-            "otherEntityField": "id",
+            "otherEntityField": "name",
             "ownerSide": true,
             "otherEntityRelationshipName": "mercuryStatusHistory"
         },
         {
             "relationshipType": "one-to-one",
-            "relationshipName": "newtatusname",
+            "relationshipName": "newtatus",
             "otherEntityName": "mercuryStatus",
-            "otherEntityField": "id",
+            "otherEntityField": "name",
             "ownerSide": true,
             "otherEntityRelationshipName": "mercuryStatusHistory"
         }

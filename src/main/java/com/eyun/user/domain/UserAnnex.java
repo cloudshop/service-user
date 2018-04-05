@@ -45,27 +45,27 @@ public class UserAnnex implements Serializable {
 
     @OneToOne
     @JoinColumn(unique = true)
-    private UserStatus statusname;
+    private UserStatus status;
 
     @OneToMany(mappedBy = "userAnnex")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<DeliveryAddress> deliveryAddressaliases = new HashSet<>();
+    private Set<DeliveryAddress> deliveryAddresses = new HashSet<>();
 
-    @OneToMany(mappedBy = "invitee[nickname]")
+    @OneToMany(mappedBy = "invitee")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<UserAnnex> inviternicknames = new HashSet<>();
+    private Set<UserAnnex> inviters = new HashSet<>();
 
     @ManyToMany
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "user_annex_user_typename",
+    @JoinTable(name = "user_annex_user_type",
                joinColumns = @JoinColumn(name="user_annexes_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="user_typenames_id", referencedColumnName="id"))
-    private Set<UserType> userTypenames = new HashSet<>();
+               inverseJoinColumns = @JoinColumn(name="user_types_id", referencedColumnName="id"))
+    private Set<UserType> userTypes = new HashSet<>();
 
     @ManyToOne
-    private UserAnnex inviteenickname;
+    private UserAnnex invitee;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -154,103 +154,103 @@ public class UserAnnex implements Serializable {
         this.avatar = avatar;
     }
 
-    public UserStatus getStatusname() {
-        return statusname;
+    public UserStatus getStatus() {
+        return status;
     }
 
-    public UserAnnex statusname(UserStatus userStatus) {
-        this.statusname = userStatus;
+    public UserAnnex status(UserStatus userStatus) {
+        this.status = userStatus;
         return this;
     }
 
-    public void setStatusname(UserStatus userStatus) {
-        this.statusname = userStatus;
+    public void setStatus(UserStatus userStatus) {
+        this.status = userStatus;
     }
 
-    public Set<DeliveryAddress> getDeliveryAddressaliases() {
-        return deliveryAddressaliases;
+    public Set<DeliveryAddress> getDeliveryAddresses() {
+        return deliveryAddresses;
     }
 
-    public UserAnnex deliveryAddressaliases(Set<DeliveryAddress> deliveryAddresses) {
-        this.deliveryAddressaliases = deliveryAddresses;
+    public UserAnnex deliveryAddresses(Set<DeliveryAddress> deliveryAddresses) {
+        this.deliveryAddresses = deliveryAddresses;
         return this;
     }
 
-    public UserAnnex addDeliveryAddressaliases(DeliveryAddress deliveryAddress) {
-        this.deliveryAddressaliases.add(deliveryAddress);
+    public UserAnnex addDeliveryAddress(DeliveryAddress deliveryAddress) {
+        this.deliveryAddresses.add(deliveryAddress);
         deliveryAddress.setUserAnnex(this);
         return this;
     }
 
-    public UserAnnex removeDeliveryAddressaliases(DeliveryAddress deliveryAddress) {
-        this.deliveryAddressaliases.remove(deliveryAddress);
+    public UserAnnex removeDeliveryAddress(DeliveryAddress deliveryAddress) {
+        this.deliveryAddresses.remove(deliveryAddress);
         deliveryAddress.setUserAnnex(null);
         return this;
     }
 
-    public void setDeliveryAddressaliases(Set<DeliveryAddress> deliveryAddresses) {
-        this.deliveryAddressaliases = deliveryAddresses;
+    public void setDeliveryAddresses(Set<DeliveryAddress> deliveryAddresses) {
+        this.deliveryAddresses = deliveryAddresses;
     }
 
-    public Set<UserAnnex> getInviternicknames() {
-        return inviternicknames;
+    public Set<UserAnnex> getInviters() {
+        return inviters;
     }
 
-    public UserAnnex inviternicknames(Set<UserAnnex> userAnnexes) {
-        this.inviternicknames = userAnnexes;
+    public UserAnnex inviters(Set<UserAnnex> userAnnexes) {
+        this.inviters = userAnnexes;
         return this;
     }
 
-    public UserAnnex addInviternickname(UserAnnex userAnnex) {
-        this.inviternicknames.add(userAnnex);
-        userAnnex.setInvitee[nickname](this);
+    public UserAnnex addInviter(UserAnnex userAnnex) {
+        this.inviters.add(userAnnex);
+        userAnnex.setInvitee(this);
         return this;
     }
 
-    public UserAnnex removeInviternickname(UserAnnex userAnnex) {
-        this.inviternicknames.remove(userAnnex);
-        userAnnex.setInvitee[nickname](null);
+    public UserAnnex removeInviter(UserAnnex userAnnex) {
+        this.inviters.remove(userAnnex);
+        userAnnex.setInvitee(null);
         return this;
     }
 
-    public void setInviternicknames(Set<UserAnnex> userAnnexes) {
-        this.inviternicknames = userAnnexes;
+    public void setInviters(Set<UserAnnex> userAnnexes) {
+        this.inviters = userAnnexes;
     }
 
-    public Set<UserType> getUserTypenames() {
-        return userTypenames;
+    public Set<UserType> getUserTypes() {
+        return userTypes;
     }
 
-    public UserAnnex userTypenames(Set<UserType> userTypes) {
-        this.userTypenames = userTypes;
+    public UserAnnex userTypes(Set<UserType> userTypes) {
+        this.userTypes = userTypes;
         return this;
     }
 
-    public UserAnnex addUserTypename(UserType userType) {
-        this.userTypenames.add(userType);
+    public UserAnnex addUserType(UserType userType) {
+        this.userTypes.add(userType);
         return this;
     }
 
-    public UserAnnex removeUserTypename(UserType userType) {
-        this.userTypenames.remove(userType);
+    public UserAnnex removeUserType(UserType userType) {
+        this.userTypes.remove(userType);
         return this;
     }
 
-    public void setUserTypenames(Set<UserType> userTypes) {
-        this.userTypenames = userTypes;
+    public void setUserTypes(Set<UserType> userTypes) {
+        this.userTypes = userTypes;
     }
 
-    public UserAnnex getInviteenickname() {
-        return inviteenickname;
+    public UserAnnex getInvitee() {
+        return invitee;
     }
 
-    public UserAnnex inviteenickname(UserAnnex userAnnex) {
-        this.inviteenickname = userAnnex;
+    public UserAnnex invitee(UserAnnex userAnnex) {
+        this.invitee = userAnnex;
         return this;
     }
 
-    public void setInviteenickname(UserAnnex userAnnex) {
-        this.inviteenickname = userAnnex;
+    public void setInvitee(UserAnnex userAnnex) {
+        this.invitee = userAnnex;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
