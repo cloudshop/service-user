@@ -1,11 +1,15 @@
 package com.eyun.user.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.time.Instant;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -38,10 +42,10 @@ public class Mercury implements Serializable {
     private String imgIdcardHold;
 
     @Column(name = "langitude")
-    private Float langitude;
+    private Double langitude;
 
     @Column(name = "lantitude")
-    private Float lantitude;
+    private Double lantitude;
 
     @Column(name = "provice")
     private String provice;
@@ -58,12 +62,23 @@ public class Mercury implements Serializable {
     @Column(name = "img_introduces")
     private String imgIntroduces;
 
-    @Column(name = "jhi_desc")
-    private String desc;
+    @Column(name = "status")
+    private Integer status;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private MercuryStatus status;
+    @Column(name = "created_time")
+    private Instant createdTime;
+
+    @Column(name = "updated_time")
+    private Instant updatedTime;
+
+    @OneToMany(mappedBy = "mercury")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<MercuryStatusHistory> mercuryStatusHistories = new HashSet<>();
+
+    @OneToOne(mappedBy = "mercury")
+    @JsonIgnore
+    private OwnerRelation ownerRelation;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -139,29 +154,29 @@ public class Mercury implements Serializable {
         this.imgIdcardHold = imgIdcardHold;
     }
 
-    public Float getLangitude() {
+    public Double getLangitude() {
         return langitude;
     }
 
-    public Mercury langitude(Float langitude) {
+    public Mercury langitude(Double langitude) {
         this.langitude = langitude;
         return this;
     }
 
-    public void setLangitude(Float langitude) {
+    public void setLangitude(Double langitude) {
         this.langitude = langitude;
     }
 
-    public Float getLantitude() {
+    public Double getLantitude() {
         return lantitude;
     }
 
-    public Mercury lantitude(Float lantitude) {
+    public Mercury lantitude(Double lantitude) {
         this.lantitude = lantitude;
         return this;
     }
 
-    public void setLantitude(Float lantitude) {
+    public void setLantitude(Double lantitude) {
         this.lantitude = lantitude;
     }
 
@@ -230,30 +245,81 @@ public class Mercury implements Serializable {
         this.imgIntroduces = imgIntroduces;
     }
 
-    public String getDesc() {
-        return desc;
-    }
-
-    public Mercury desc(String desc) {
-        this.desc = desc;
-        return this;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
-    }
-
-    public MercuryStatus getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public Mercury status(MercuryStatus mercuryStatus) {
-        this.status = mercuryStatus;
+    public Mercury status(Integer status) {
+        this.status = status;
         return this;
     }
 
-    public void setStatus(MercuryStatus mercuryStatus) {
-        this.status = mercuryStatus;
+    public void setStatus(Integer status) {
+        this.status = status;
+    }
+
+    public Instant getCreatedTime() {
+        return createdTime;
+    }
+
+    public Mercury createdTime(Instant createdTime) {
+        this.createdTime = createdTime;
+        return this;
+    }
+
+    public void setCreatedTime(Instant createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public Instant getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public Mercury updatedTime(Instant updatedTime) {
+        this.updatedTime = updatedTime;
+        return this;
+    }
+
+    public void setUpdatedTime(Instant updatedTime) {
+        this.updatedTime = updatedTime;
+    }
+
+    public Set<MercuryStatusHistory> getMercuryStatusHistories() {
+        return mercuryStatusHistories;
+    }
+
+    public Mercury mercuryStatusHistories(Set<MercuryStatusHistory> mercuryStatusHistories) {
+        this.mercuryStatusHistories = mercuryStatusHistories;
+        return this;
+    }
+
+    public Mercury addMercuryStatusHistory(MercuryStatusHistory mercuryStatusHistory) {
+        this.mercuryStatusHistories.add(mercuryStatusHistory);
+        mercuryStatusHistory.setMercury(this);
+        return this;
+    }
+
+    public Mercury removeMercuryStatusHistory(MercuryStatusHistory mercuryStatusHistory) {
+        this.mercuryStatusHistories.remove(mercuryStatusHistory);
+        mercuryStatusHistory.setMercury(null);
+        return this;
+    }
+
+    public void setMercuryStatusHistories(Set<MercuryStatusHistory> mercuryStatusHistories) {
+        this.mercuryStatusHistories = mercuryStatusHistories;
+    }
+
+    public OwnerRelation getOwnerRelation() {
+        return ownerRelation;
+    }
+
+    public Mercury ownerRelation(OwnerRelation ownerRelation) {
+        this.ownerRelation = ownerRelation;
+        return this;
+    }
+
+    public void setOwnerRelation(OwnerRelation ownerRelation) {
+        this.ownerRelation = ownerRelation;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -293,7 +359,9 @@ public class Mercury implements Serializable {
             ", street='" + getStreet() + "'" +
             ", imgFacade='" + getImgFacade() + "'" +
             ", imgIntroduces='" + getImgIntroduces() + "'" +
-            ", desc='" + getDesc() + "'" +
+            ", status=" + getStatus() +
+            ", createdTime='" + getCreatedTime() + "'" +
+            ", updatedTime='" + getUpdatedTime() + "'" +
             "}";
     }
 }

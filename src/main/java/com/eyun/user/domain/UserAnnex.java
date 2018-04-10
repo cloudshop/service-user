@@ -7,6 +7,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
@@ -25,8 +26,8 @@ public class UserAnnex implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "user_id")
-    private Long userId;
+    @Column(name = "userid")
+    private Long userid;
 
     @Column(name = "name")
     private String name;
@@ -43,29 +44,23 @@ public class UserAnnex implements Serializable {
     @Column(name = "avatar")
     private String avatar;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private UserStatus status;
+    @Column(name = "status")
+    private Integer status;
+
+    @Column(name = "created_time")
+    private Instant createdTime;
+
+    @Column(name = "updated_time")
+    private Instant updatedTime;
+
+    @OneToOne(mappedBy = "userAnnex")
+    @JsonIgnore
+    private OwnerRelation ownerRelation;
 
     @OneToMany(mappedBy = "userAnnex")
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<DeliveryAddress> deliveryAddresses = new HashSet<>();
-
-    @OneToMany(mappedBy = "invitee")
-    @JsonIgnore
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<UserAnnex> inviters = new HashSet<>();
-
-    @ManyToMany
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    @JoinTable(name = "user_annex_user_type",
-               joinColumns = @JoinColumn(name="user_annexes_id", referencedColumnName="id"),
-               inverseJoinColumns = @JoinColumn(name="user_types_id", referencedColumnName="id"))
-    private Set<UserType> userTypes = new HashSet<>();
-
-    @ManyToOne
-    private UserAnnex invitee;
+    private Set<UserStatusHistory> userStatusHistories = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -76,17 +71,17 @@ public class UserAnnex implements Serializable {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getUserid() {
+        return userid;
     }
 
-    public UserAnnex userId(Long userId) {
-        this.userId = userId;
+    public UserAnnex userid(Long userid) {
+        this.userid = userid;
         return this;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUserid(Long userid) {
+        this.userid = userid;
     }
 
     public String getName() {
@@ -154,103 +149,81 @@ public class UserAnnex implements Serializable {
         this.avatar = avatar;
     }
 
-    public UserStatus getStatus() {
+    public Integer getStatus() {
         return status;
     }
 
-    public UserAnnex status(UserStatus userStatus) {
-        this.status = userStatus;
+    public UserAnnex status(Integer status) {
+        this.status = status;
         return this;
     }
 
-    public void setStatus(UserStatus userStatus) {
-        this.status = userStatus;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
-    public Set<DeliveryAddress> getDeliveryAddresses() {
-        return deliveryAddresses;
+    public Instant getCreatedTime() {
+        return createdTime;
     }
 
-    public UserAnnex deliveryAddresses(Set<DeliveryAddress> deliveryAddresses) {
-        this.deliveryAddresses = deliveryAddresses;
+    public UserAnnex createdTime(Instant createdTime) {
+        this.createdTime = createdTime;
         return this;
     }
 
-    public UserAnnex addDeliveryAddress(DeliveryAddress deliveryAddress) {
-        this.deliveryAddresses.add(deliveryAddress);
-        deliveryAddress.setUserAnnex(this);
+    public void setCreatedTime(Instant createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public Instant getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public UserAnnex updatedTime(Instant updatedTime) {
+        this.updatedTime = updatedTime;
         return this;
     }
 
-    public UserAnnex removeDeliveryAddress(DeliveryAddress deliveryAddress) {
-        this.deliveryAddresses.remove(deliveryAddress);
-        deliveryAddress.setUserAnnex(null);
+    public void setUpdatedTime(Instant updatedTime) {
+        this.updatedTime = updatedTime;
+    }
+
+    public OwnerRelation getOwnerRelation() {
+        return ownerRelation;
+    }
+
+    public UserAnnex ownerRelation(OwnerRelation ownerRelation) {
+        this.ownerRelation = ownerRelation;
         return this;
     }
 
-    public void setDeliveryAddresses(Set<DeliveryAddress> deliveryAddresses) {
-        this.deliveryAddresses = deliveryAddresses;
+    public void setOwnerRelation(OwnerRelation ownerRelation) {
+        this.ownerRelation = ownerRelation;
     }
 
-    public Set<UserAnnex> getInviters() {
-        return inviters;
+    public Set<UserStatusHistory> getUserStatusHistories() {
+        return userStatusHistories;
     }
 
-    public UserAnnex inviters(Set<UserAnnex> userAnnexes) {
-        this.inviters = userAnnexes;
+    public UserAnnex userStatusHistories(Set<UserStatusHistory> userStatusHistories) {
+        this.userStatusHistories = userStatusHistories;
         return this;
     }
 
-    public UserAnnex addInviter(UserAnnex userAnnex) {
-        this.inviters.add(userAnnex);
-        userAnnex.setInvitee(this);
+    public UserAnnex addUserStatusHistory(UserStatusHistory userStatusHistory) {
+        this.userStatusHistories.add(userStatusHistory);
+        userStatusHistory.setUserAnnex(this);
         return this;
     }
 
-    public UserAnnex removeInviter(UserAnnex userAnnex) {
-        this.inviters.remove(userAnnex);
-        userAnnex.setInvitee(null);
+    public UserAnnex removeUserStatusHistory(UserStatusHistory userStatusHistory) {
+        this.userStatusHistories.remove(userStatusHistory);
+        userStatusHistory.setUserAnnex(null);
         return this;
     }
 
-    public void setInviters(Set<UserAnnex> userAnnexes) {
-        this.inviters = userAnnexes;
-    }
-
-    public Set<UserType> getUserTypes() {
-        return userTypes;
-    }
-
-    public UserAnnex userTypes(Set<UserType> userTypes) {
-        this.userTypes = userTypes;
-        return this;
-    }
-
-    public UserAnnex addUserType(UserType userType) {
-        this.userTypes.add(userType);
-        return this;
-    }
-
-    public UserAnnex removeUserType(UserType userType) {
-        this.userTypes.remove(userType);
-        return this;
-    }
-
-    public void setUserTypes(Set<UserType> userTypes) {
-        this.userTypes = userTypes;
-    }
-
-    public UserAnnex getInvitee() {
-        return invitee;
-    }
-
-    public UserAnnex invitee(UserAnnex userAnnex) {
-        this.invitee = userAnnex;
-        return this;
-    }
-
-    public void setInvitee(UserAnnex userAnnex) {
-        this.invitee = userAnnex;
+    public void setUserStatusHistories(Set<UserStatusHistory> userStatusHistories) {
+        this.userStatusHistories = userStatusHistories;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -278,12 +251,15 @@ public class UserAnnex implements Serializable {
     public String toString() {
         return "UserAnnex{" +
             "id=" + getId() +
-            ", userId=" + getUserId() +
+            ", userid=" + getUserid() +
             ", name='" + getName() + "'" +
             ", email='" + getEmail() + "'" +
             ", phone='" + getPhone() + "'" +
             ", nickname='" + getNickname() + "'" +
             ", avatar='" + getAvatar() + "'" +
+            ", status=" + getStatus() +
+            ", createdTime='" + getCreatedTime() + "'" +
+            ", updatedTime='" + getUpdatedTime() + "'" +
             "}";
     }
 }

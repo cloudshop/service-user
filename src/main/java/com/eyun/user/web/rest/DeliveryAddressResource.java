@@ -4,10 +4,17 @@ import com.codahale.metrics.annotation.Timed;
 import com.eyun.user.service.DeliveryAddressService;
 import com.eyun.user.web.rest.errors.BadRequestAlertException;
 import com.eyun.user.web.rest.util.HeaderUtil;
+import com.eyun.user.web.rest.util.PaginationUtil;
 import com.eyun.user.service.dto.DeliveryAddressDTO;
+import com.eyun.user.service.dto.DeliveryAddressCriteria;
+import com.eyun.user.service.DeliveryAddressQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,8 +37,11 @@ public class DeliveryAddressResource {
 
     private final DeliveryAddressService deliveryAddressService;
 
-    public DeliveryAddressResource(DeliveryAddressService deliveryAddressService) {
+    private final DeliveryAddressQueryService deliveryAddressQueryService;
+
+    public DeliveryAddressResource(DeliveryAddressService deliveryAddressService, DeliveryAddressQueryService deliveryAddressQueryService) {
         this.deliveryAddressService = deliveryAddressService;
+        this.deliveryAddressQueryService = deliveryAddressQueryService;
     }
 
     /**
@@ -79,14 +89,18 @@ public class DeliveryAddressResource {
     /**
      * GET  /delivery-addresses : get all the deliveryAddresses.
      *
+     * @param pageable the pagination information
+     * @param criteria the criterias which the requested entities should match
      * @return the ResponseEntity with status 200 (OK) and the list of deliveryAddresses in body
      */
     @GetMapping("/delivery-addresses")
     @Timed
-    public List<DeliveryAddressDTO> getAllDeliveryAddresses() {
-        log.debug("REST request to get all DeliveryAddresses");
-        return deliveryAddressService.findAll();
-        }
+    public ResponseEntity<List<DeliveryAddressDTO>> getAllDeliveryAddresses(DeliveryAddressCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get DeliveryAddresses by criteria: {}", criteria);
+        Page<DeliveryAddressDTO> page = deliveryAddressQueryService.findByCriteria(criteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/delivery-addresses");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
 
     /**
      * GET  /delivery-addresses/:id : get the "id" deliveryAddress.

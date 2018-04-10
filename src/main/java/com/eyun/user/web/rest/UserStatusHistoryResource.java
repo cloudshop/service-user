@@ -4,10 +4,17 @@ import com.codahale.metrics.annotation.Timed;
 import com.eyun.user.service.UserStatusHistoryService;
 import com.eyun.user.web.rest.errors.BadRequestAlertException;
 import com.eyun.user.web.rest.util.HeaderUtil;
+import com.eyun.user.web.rest.util.PaginationUtil;
 import com.eyun.user.service.dto.UserStatusHistoryDTO;
+import com.eyun.user.service.dto.UserStatusHistoryCriteria;
+import com.eyun.user.service.UserStatusHistoryQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,8 +37,11 @@ public class UserStatusHistoryResource {
 
     private final UserStatusHistoryService userStatusHistoryService;
 
-    public UserStatusHistoryResource(UserStatusHistoryService userStatusHistoryService) {
+    private final UserStatusHistoryQueryService userStatusHistoryQueryService;
+
+    public UserStatusHistoryResource(UserStatusHistoryService userStatusHistoryService, UserStatusHistoryQueryService userStatusHistoryQueryService) {
         this.userStatusHistoryService = userStatusHistoryService;
+        this.userStatusHistoryQueryService = userStatusHistoryQueryService;
     }
 
     /**
@@ -79,14 +89,18 @@ public class UserStatusHistoryResource {
     /**
      * GET  /user-status-histories : get all the userStatusHistories.
      *
+     * @param pageable the pagination information
+     * @param criteria the criterias which the requested entities should match
      * @return the ResponseEntity with status 200 (OK) and the list of userStatusHistories in body
      */
     @GetMapping("/user-status-histories")
     @Timed
-    public List<UserStatusHistoryDTO> getAllUserStatusHistories() {
-        log.debug("REST request to get all UserStatusHistories");
-        return userStatusHistoryService.findAll();
-        }
+    public ResponseEntity<List<UserStatusHistoryDTO>> getAllUserStatusHistories(UserStatusHistoryCriteria criteria, Pageable pageable) {
+        log.debug("REST request to get UserStatusHistories by criteria: {}", criteria);
+        Page<UserStatusHistoryDTO> page = userStatusHistoryQueryService.findByCriteria(criteria, pageable);
+        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(page, "/api/user-status-histories");
+        return new ResponseEntity<>(page.getContent(), headers, HttpStatus.OK);
+    }
 
     /**
      * GET  /user-status-histories/:id : get the "id" userStatusHistory.

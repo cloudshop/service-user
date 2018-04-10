@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
+    <!--
+        Added the constraints for entity UserStatusHistory.
+    -->
+    <changeSet id="20180410082006-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="user_annex_id"
+                                 baseTableName="user_status_history"
+                                 constraintName="fk_user_status_history_user_annex_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="user_annex"/>
+
+    </changeSet>
+</databaseChangeLog>

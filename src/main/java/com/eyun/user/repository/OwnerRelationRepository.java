@@ -11,6 +11,6 @@ import org.springframework.data.jpa.repository.*;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface OwnerRelationRepository extends JpaRepository<OwnerRelation, Long> {
+public interface OwnerRelationRepository extends JpaRepository<OwnerRelation, Long>, JpaSpecificationExecutor<OwnerRelation> {
 
 }

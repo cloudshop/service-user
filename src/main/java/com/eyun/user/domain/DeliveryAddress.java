@@ -6,6 +6,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -42,6 +43,15 @@ public class DeliveryAddress implements Serializable {
 
     @Column(name = "postal_code")
     private String postalCode;
+
+    @Column(name = "default_address")
+    private Boolean defaultAddress;
+
+    @Column(name = "created_time")
+    private Instant createdTime;
+
+    @Column(name = "updated_time")
+    private Instant updatedTime;
 
     @ManyToOne
     private UserAnnex userAnnex;
@@ -146,6 +156,45 @@ public class DeliveryAddress implements Serializable {
         this.postalCode = postalCode;
     }
 
+    public Boolean isDefaultAddress() {
+        return defaultAddress;
+    }
+
+    public DeliveryAddress defaultAddress(Boolean defaultAddress) {
+        this.defaultAddress = defaultAddress;
+        return this;
+    }
+
+    public void setDefaultAddress(Boolean defaultAddress) {
+        this.defaultAddress = defaultAddress;
+    }
+
+    public Instant getCreatedTime() {
+        return createdTime;
+    }
+
+    public DeliveryAddress createdTime(Instant createdTime) {
+        this.createdTime = createdTime;
+        return this;
+    }
+
+    public void setCreatedTime(Instant createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public Instant getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public DeliveryAddress updatedTime(Instant updatedTime) {
+        this.updatedTime = updatedTime;
+        return this;
+    }
+
+    public void setUpdatedTime(Instant updatedTime) {
+        this.updatedTime = updatedTime;
+    }
+
     public UserAnnex getUserAnnex() {
         return userAnnex;
     }
@@ -191,6 +240,9 @@ public class DeliveryAddress implements Serializable {
             ", city='" + getCity() + "'" +
             ", streetAddress='" + getStreetAddress() + "'" +
             ", postalCode='" + getPostalCode() + "'" +
+            ", defaultAddress='" + isDefaultAddress() + "'" +
+            ", createdTime='" + getCreatedTime() + "'" +
+            ", updatedTime='" + getUpdatedTime() + "'" +
             "}";
     }
 }

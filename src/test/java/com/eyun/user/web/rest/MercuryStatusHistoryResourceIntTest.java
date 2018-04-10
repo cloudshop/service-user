@@ -5,11 +5,14 @@ import com.eyun.user.UserApp;
 import com.eyun.user.config.SecurityBeanOverrideConfiguration;
 
 import com.eyun.user.domain.MercuryStatusHistory;
+import com.eyun.user.domain.Mercury;
 import com.eyun.user.repository.MercuryStatusHistoryRepository;
 import com.eyun.user.service.MercuryStatusHistoryService;
 import com.eyun.user.service.dto.MercuryStatusHistoryDTO;
 import com.eyun.user.service.mapper.MercuryStatusHistoryMapper;
 import com.eyun.user.web.rest.errors.ExceptionTranslator;
+import com.eyun.user.service.dto.MercuryStatusHistoryCriteria;
+import com.eyun.user.service.MercuryStatusHistoryQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -51,6 +54,12 @@ public class MercuryStatusHistoryResourceIntTest {
     private static final Instant DEFAULT_MODIFIED_TIME = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_MODIFIED_TIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
+    private static final Integer DEFAULT_WITH_STATUS = 1;
+    private static final Integer UPDATED_WITH_STATUS = 2;
+
+    private static final Integer DEFAULT_TO_STATUS = 1;
+    private static final Integer UPDATED_TO_STATUS = 2;
+
     @Autowired
     private MercuryStatusHistoryRepository mercuryStatusHistoryRepository;
 
@@ -59,6 +68,9 @@ public class MercuryStatusHistoryResourceIntTest {
 
     @Autowired
     private MercuryStatusHistoryService mercuryStatusHistoryService;
+
+    @Autowired
+    private MercuryStatusHistoryQueryService mercuryStatusHistoryQueryService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -79,7 +91,7 @@ public class MercuryStatusHistoryResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final MercuryStatusHistoryResource mercuryStatusHistoryResource = new MercuryStatusHistoryResource(mercuryStatusHistoryService);
+        final MercuryStatusHistoryResource mercuryStatusHistoryResource = new MercuryStatusHistoryResource(mercuryStatusHistoryService, mercuryStatusHistoryQueryService);
         this.restMercuryStatusHistoryMockMvc = MockMvcBuilders.standaloneSetup(mercuryStatusHistoryResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -96,7 +108,9 @@ public class MercuryStatusHistoryResourceIntTest {
     public static MercuryStatusHistory createEntity(EntityManager em) {
         MercuryStatusHistory mercuryStatusHistory = new MercuryStatusHistory()
             .modifiedBy(DEFAULT_MODIFIED_BY)
-            .modifiedTime(DEFAULT_MODIFIED_TIME);
+            .modifiedTime(DEFAULT_MODIFIED_TIME)
+            .withStatus(DEFAULT_WITH_STATUS)
+            .toStatus(DEFAULT_TO_STATUS);
         return mercuryStatusHistory;
     }
 
@@ -123,6 +137,8 @@ public class MercuryStatusHistoryResourceIntTest {
         MercuryStatusHistory testMercuryStatusHistory = mercuryStatusHistoryList.get(mercuryStatusHistoryList.size() - 1);
         assertThat(testMercuryStatusHistory.getModifiedBy()).isEqualTo(DEFAULT_MODIFIED_BY);
         assertThat(testMercuryStatusHistory.getModifiedTime()).isEqualTo(DEFAULT_MODIFIED_TIME);
+        assertThat(testMercuryStatusHistory.getWithStatus()).isEqualTo(DEFAULT_WITH_STATUS);
+        assertThat(testMercuryStatusHistory.getToStatus()).isEqualTo(DEFAULT_TO_STATUS);
     }
 
     @Test
@@ -157,7 +173,9 @@ public class MercuryStatusHistoryResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(mercuryStatusHistory.getId().intValue())))
             .andExpect(jsonPath("$.[*].modifiedBy").value(hasItem(DEFAULT_MODIFIED_BY.intValue())))
-            .andExpect(jsonPath("$.[*].modifiedTime").value(hasItem(DEFAULT_MODIFIED_TIME.toString())));
+            .andExpect(jsonPath("$.[*].modifiedTime").value(hasItem(DEFAULT_MODIFIED_TIME.toString())))
+            .andExpect(jsonPath("$.[*].withStatus").value(hasItem(DEFAULT_WITH_STATUS)))
+            .andExpect(jsonPath("$.[*].toStatus").value(hasItem(DEFAULT_TO_STATUS)));
     }
 
     @Test
@@ -172,8 +190,291 @@ public class MercuryStatusHistoryResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(mercuryStatusHistory.getId().intValue()))
             .andExpect(jsonPath("$.modifiedBy").value(DEFAULT_MODIFIED_BY.intValue()))
-            .andExpect(jsonPath("$.modifiedTime").value(DEFAULT_MODIFIED_TIME.toString()));
+            .andExpect(jsonPath("$.modifiedTime").value(DEFAULT_MODIFIED_TIME.toString()))
+            .andExpect(jsonPath("$.withStatus").value(DEFAULT_WITH_STATUS))
+            .andExpect(jsonPath("$.toStatus").value(DEFAULT_TO_STATUS));
     }
+
+    @Test
+    @Transactional
+    public void getAllMercuryStatusHistoriesByModifiedByIsEqualToSomething() throws Exception {
+        // Initialize the database
+        mercuryStatusHistoryRepository.saveAndFlush(mercuryStatusHistory);
+
+        // Get all the mercuryStatusHistoryList where modifiedBy equals to DEFAULT_MODIFIED_BY
+        defaultMercuryStatusHistoryShouldBeFound("modifiedBy.equals=" + DEFAULT_MODIFIED_BY);
+
+        // Get all the mercuryStatusHistoryList where modifiedBy equals to UPDATED_MODIFIED_BY
+        defaultMercuryStatusHistoryShouldNotBeFound("modifiedBy.equals=" + UPDATED_MODIFIED_BY);
+    }
+
+    @Test
+    @Transactional
+    public void getAllMercuryStatusHistoriesByModifiedByIsInShouldWork() throws Exception {
+        // Initialize the database
+        mercuryStatusHistoryRepository.saveAndFlush(mercuryStatusHistory);
+
+        // Get all the mercuryStatusHistoryList where modifiedBy in DEFAULT_MODIFIED_BY or UPDATED_MODIFIED_BY
+        defaultMercuryStatusHistoryShouldBeFound("modifiedBy.in=" + DEFAULT_MODIFIED_BY + "," + UPDATED_MODIFIED_BY);
+
+        // Get all the mercuryStatusHistoryList where modifiedBy equals to UPDATED_MODIFIED_BY
+        defaultMercuryStatusHistoryShouldNotBeFound("modifiedBy.in=" + UPDATED_MODIFIED_BY);
+    }
+
+    @Test
+    @Transactional
+    public void getAllMercuryStatusHistoriesByModifiedByIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        mercuryStatusHistoryRepository.saveAndFlush(mercuryStatusHistory);
+
+        // Get all the mercuryStatusHistoryList where modifiedBy is not null
+        defaultMercuryStatusHistoryShouldBeFound("modifiedBy.specified=true");
+
+        // Get all the mercuryStatusHistoryList where modifiedBy is null
+        defaultMercuryStatusHistoryShouldNotBeFound("modifiedBy.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllMercuryStatusHistoriesByModifiedByIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        mercuryStatusHistoryRepository.saveAndFlush(mercuryStatusHistory);
+
+        // Get all the mercuryStatusHistoryList where modifiedBy greater than or equals to DEFAULT_MODIFIED_BY
+        defaultMercuryStatusHistoryShouldBeFound("modifiedBy.greaterOrEqualThan=" + DEFAULT_MODIFIED_BY);
+
+        // Get all the mercuryStatusHistoryList where modifiedBy greater than or equals to UPDATED_MODIFIED_BY
+        defaultMercuryStatusHistoryShouldNotBeFound("modifiedBy.greaterOrEqualThan=" + UPDATED_MODIFIED_BY);
+    }
+
+    @Test
+    @Transactional
+    public void getAllMercuryStatusHistoriesByModifiedByIsLessThanSomething() throws Exception {
+        // Initialize the database
+        mercuryStatusHistoryRepository.saveAndFlush(mercuryStatusHistory);
+
+        // Get all the mercuryStatusHistoryList where modifiedBy less than or equals to DEFAULT_MODIFIED_BY
+        defaultMercuryStatusHistoryShouldNotBeFound("modifiedBy.lessThan=" + DEFAULT_MODIFIED_BY);
+
+        // Get all the mercuryStatusHistoryList where modifiedBy less than or equals to UPDATED_MODIFIED_BY
+        defaultMercuryStatusHistoryShouldBeFound("modifiedBy.lessThan=" + UPDATED_MODIFIED_BY);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllMercuryStatusHistoriesByModifiedTimeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        mercuryStatusHistoryRepository.saveAndFlush(mercuryStatusHistory);
+
+        // Get all the mercuryStatusHistoryList where modifiedTime equals to DEFAULT_MODIFIED_TIME
+        defaultMercuryStatusHistoryShouldBeFound("modifiedTime.equals=" + DEFAULT_MODIFIED_TIME);
+
+        // Get all the mercuryStatusHistoryList where modifiedTime equals to UPDATED_MODIFIED_TIME
+        defaultMercuryStatusHistoryShouldNotBeFound("modifiedTime.equals=" + UPDATED_MODIFIED_TIME);
+    }
+
+    @Test
+    @Transactional
+    public void getAllMercuryStatusHistoriesByModifiedTimeIsInShouldWork() throws Exception {
+        // Initialize the database
+        mercuryStatusHistoryRepository.saveAndFlush(mercuryStatusHistory);
+
+        // Get all the mercuryStatusHistoryList where modifiedTime in DEFAULT_MODIFIED_TIME or UPDATED_MODIFIED_TIME
+        defaultMercuryStatusHistoryShouldBeFound("modifiedTime.in=" + DEFAULT_MODIFIED_TIME + "," + UPDATED_MODIFIED_TIME);
+
+        // Get all the mercuryStatusHistoryList where modifiedTime equals to UPDATED_MODIFIED_TIME
+        defaultMercuryStatusHistoryShouldNotBeFound("modifiedTime.in=" + UPDATED_MODIFIED_TIME);
+    }
+
+    @Test
+    @Transactional
+    public void getAllMercuryStatusHistoriesByModifiedTimeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        mercuryStatusHistoryRepository.saveAndFlush(mercuryStatusHistory);
+
+        // Get all the mercuryStatusHistoryList where modifiedTime is not null
+        defaultMercuryStatusHistoryShouldBeFound("modifiedTime.specified=true");
+
+        // Get all the mercuryStatusHistoryList where modifiedTime is null
+        defaultMercuryStatusHistoryShouldNotBeFound("modifiedTime.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllMercuryStatusHistoriesByWithStatusIsEqualToSomething() throws Exception {
+        // Initialize the database
+        mercuryStatusHistoryRepository.saveAndFlush(mercuryStatusHistory);
+
+        // Get all the mercuryStatusHistoryList where withStatus equals to DEFAULT_WITH_STATUS
+        defaultMercuryStatusHistoryShouldBeFound("withStatus.equals=" + DEFAULT_WITH_STATUS);
+
+        // Get all the mercuryStatusHistoryList where withStatus equals to UPDATED_WITH_STATUS
+        defaultMercuryStatusHistoryShouldNotBeFound("withStatus.equals=" + UPDATED_WITH_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllMercuryStatusHistoriesByWithStatusIsInShouldWork() throws Exception {
+        // Initialize the database
+        mercuryStatusHistoryRepository.saveAndFlush(mercuryStatusHistory);
+
+        // Get all the mercuryStatusHistoryList where withStatus in DEFAULT_WITH_STATUS or UPDATED_WITH_STATUS
+        defaultMercuryStatusHistoryShouldBeFound("withStatus.in=" + DEFAULT_WITH_STATUS + "," + UPDATED_WITH_STATUS);
+
+        // Get all the mercuryStatusHistoryList where withStatus equals to UPDATED_WITH_STATUS
+        defaultMercuryStatusHistoryShouldNotBeFound("withStatus.in=" + UPDATED_WITH_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllMercuryStatusHistoriesByWithStatusIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        mercuryStatusHistoryRepository.saveAndFlush(mercuryStatusHistory);
+
+        // Get all the mercuryStatusHistoryList where withStatus is not null
+        defaultMercuryStatusHistoryShouldBeFound("withStatus.specified=true");
+
+        // Get all the mercuryStatusHistoryList where withStatus is null
+        defaultMercuryStatusHistoryShouldNotBeFound("withStatus.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllMercuryStatusHistoriesByWithStatusIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        mercuryStatusHistoryRepository.saveAndFlush(mercuryStatusHistory);
+
+        // Get all the mercuryStatusHistoryList where withStatus greater than or equals to DEFAULT_WITH_STATUS
+        defaultMercuryStatusHistoryShouldBeFound("withStatus.greaterOrEqualThan=" + DEFAULT_WITH_STATUS);
+
+        // Get all the mercuryStatusHistoryList where withStatus greater than or equals to UPDATED_WITH_STATUS
+        defaultMercuryStatusHistoryShouldNotBeFound("withStatus.greaterOrEqualThan=" + UPDATED_WITH_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllMercuryStatusHistoriesByWithStatusIsLessThanSomething() throws Exception {
+        // Initialize the database
+        mercuryStatusHistoryRepository.saveAndFlush(mercuryStatusHistory);
+
+        // Get all the mercuryStatusHistoryList where withStatus less than or equals to DEFAULT_WITH_STATUS
+        defaultMercuryStatusHistoryShouldNotBeFound("withStatus.lessThan=" + DEFAULT_WITH_STATUS);
+
+        // Get all the mercuryStatusHistoryList where withStatus less than or equals to UPDATED_WITH_STATUS
+        defaultMercuryStatusHistoryShouldBeFound("withStatus.lessThan=" + UPDATED_WITH_STATUS);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllMercuryStatusHistoriesByToStatusIsEqualToSomething() throws Exception {
+        // Initialize the database
+        mercuryStatusHistoryRepository.saveAndFlush(mercuryStatusHistory);
+
+        // Get all the mercuryStatusHistoryList where toStatus equals to DEFAULT_TO_STATUS
+        defaultMercuryStatusHistoryShouldBeFound("toStatus.equals=" + DEFAULT_TO_STATUS);
+
+        // Get all the mercuryStatusHistoryList where toStatus equals to UPDATED_TO_STATUS
+        defaultMercuryStatusHistoryShouldNotBeFound("toStatus.equals=" + UPDATED_TO_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllMercuryStatusHistoriesByToStatusIsInShouldWork() throws Exception {
+        // Initialize the database
+        mercuryStatusHistoryRepository.saveAndFlush(mercuryStatusHistory);
+
+        // Get all the mercuryStatusHistoryList where toStatus in DEFAULT_TO_STATUS or UPDATED_TO_STATUS
+        defaultMercuryStatusHistoryShouldBeFound("toStatus.in=" + DEFAULT_TO_STATUS + "," + UPDATED_TO_STATUS);
+
+        // Get all the mercuryStatusHistoryList where toStatus equals to UPDATED_TO_STATUS
+        defaultMercuryStatusHistoryShouldNotBeFound("toStatus.in=" + UPDATED_TO_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllMercuryStatusHistoriesByToStatusIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        mercuryStatusHistoryRepository.saveAndFlush(mercuryStatusHistory);
+
+        // Get all the mercuryStatusHistoryList where toStatus is not null
+        defaultMercuryStatusHistoryShouldBeFound("toStatus.specified=true");
+
+        // Get all the mercuryStatusHistoryList where toStatus is null
+        defaultMercuryStatusHistoryShouldNotBeFound("toStatus.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllMercuryStatusHistoriesByToStatusIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        mercuryStatusHistoryRepository.saveAndFlush(mercuryStatusHistory);
+
+        // Get all the mercuryStatusHistoryList where toStatus greater than or equals to DEFAULT_TO_STATUS
+        defaultMercuryStatusHistoryShouldBeFound("toStatus.greaterOrEqualThan=" + DEFAULT_TO_STATUS);
+
+        // Get all the mercuryStatusHistoryList where toStatus greater than or equals to UPDATED_TO_STATUS
+        defaultMercuryStatusHistoryShouldNotBeFound("toStatus.greaterOrEqualThan=" + UPDATED_TO_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllMercuryStatusHistoriesByToStatusIsLessThanSomething() throws Exception {
+        // Initialize the database
+        mercuryStatusHistoryRepository.saveAndFlush(mercuryStatusHistory);
+
+        // Get all the mercuryStatusHistoryList where toStatus less than or equals to DEFAULT_TO_STATUS
+        defaultMercuryStatusHistoryShouldNotBeFound("toStatus.lessThan=" + DEFAULT_TO_STATUS);
+
+        // Get all the mercuryStatusHistoryList where toStatus less than or equals to UPDATED_TO_STATUS
+        defaultMercuryStatusHistoryShouldBeFound("toStatus.lessThan=" + UPDATED_TO_STATUS);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllMercuryStatusHistoriesByMercuryIsEqualToSomething() throws Exception {
+        // Initialize the database
+        Mercury mercury = MercuryResourceIntTest.createEntity(em);
+        em.persist(mercury);
+        em.flush();
+        mercuryStatusHistory.setMercury(mercury);
+        mercuryStatusHistoryRepository.saveAndFlush(mercuryStatusHistory);
+        Long mercuryId = mercury.getId();
+
+        // Get all the mercuryStatusHistoryList where mercury equals to mercuryId
+        defaultMercuryStatusHistoryShouldBeFound("mercuryId.equals=" + mercuryId);
+
+        // Get all the mercuryStatusHistoryList where mercury equals to mercuryId + 1
+        defaultMercuryStatusHistoryShouldNotBeFound("mercuryId.equals=" + (mercuryId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultMercuryStatusHistoryShouldBeFound(String filter) throws Exception {
+        restMercuryStatusHistoryMockMvc.perform(get("/api/mercury-status-histories?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(mercuryStatusHistory.getId().intValue())))
+            .andExpect(jsonPath("$.[*].modifiedBy").value(hasItem(DEFAULT_MODIFIED_BY.intValue())))
+            .andExpect(jsonPath("$.[*].modifiedTime").value(hasItem(DEFAULT_MODIFIED_TIME.toString())))
+            .andExpect(jsonPath("$.[*].withStatus").value(hasItem(DEFAULT_WITH_STATUS)))
+            .andExpect(jsonPath("$.[*].toStatus").value(hasItem(DEFAULT_TO_STATUS)));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultMercuryStatusHistoryShouldNotBeFound(String filter) throws Exception {
+        restMercuryStatusHistoryMockMvc.perform(get("/api/mercury-status-histories?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
 
     @Test
     @Transactional
@@ -196,7 +497,9 @@ public class MercuryStatusHistoryResourceIntTest {
         em.detach(updatedMercuryStatusHistory);
         updatedMercuryStatusHistory
             .modifiedBy(UPDATED_MODIFIED_BY)
-            .modifiedTime(UPDATED_MODIFIED_TIME);
+            .modifiedTime(UPDATED_MODIFIED_TIME)
+            .withStatus(UPDATED_WITH_STATUS)
+            .toStatus(UPDATED_TO_STATUS);
         MercuryStatusHistoryDTO mercuryStatusHistoryDTO = mercuryStatusHistoryMapper.toDto(updatedMercuryStatusHistory);
 
         restMercuryStatusHistoryMockMvc.perform(put("/api/mercury-status-histories")
@@ -210,6 +513,8 @@ public class MercuryStatusHistoryResourceIntTest {
         MercuryStatusHistory testMercuryStatusHistory = mercuryStatusHistoryList.get(mercuryStatusHistoryList.size() - 1);
         assertThat(testMercuryStatusHistory.getModifiedBy()).isEqualTo(UPDATED_MODIFIED_BY);
         assertThat(testMercuryStatusHistory.getModifiedTime()).isEqualTo(UPDATED_MODIFIED_TIME);
+        assertThat(testMercuryStatusHistory.getWithStatus()).isEqualTo(UPDATED_WITH_STATUS);
+        assertThat(testMercuryStatusHistory.getToStatus()).isEqualTo(UPDATED_TO_STATUS);
     }
 
     @Test

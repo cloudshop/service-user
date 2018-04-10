@@ -2,11 +2,16 @@
     "fluentMethods": true,
     "relationships": [
         {
+            "relationshipName": "mercuryStatusHistory",
+            "otherEntityName": "mercuryStatusHistory",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "mercury"
+        },
+        {
+            "relationshipName": "ownerRelation",
+            "otherEntityName": "ownerRelation",
             "relationshipType": "one-to-one",
-            "relationshipName": "status",
-            "otherEntityName": "mercuryStatus",
-            "otherEntityField": "name",
-            "ownerSide": true,
+            "ownerSide": false,
             "otherEntityRelationshipName": "mercury"
         }
     ],
@@ -33,11 +38,11 @@
         },
         {
             "fieldName": "langitude",
-            "fieldType": "Float"
+            "fieldType": "Double"
         },
         {
             "fieldName": "lantitude",
-            "fieldType": "Float"
+            "fieldType": "Double"
         },
         {
             "fieldName": "provice",
@@ -60,15 +65,24 @@
             "fieldType": "String"
         },
         {
-            "fieldName": "desc",
-            "fieldType": "String"
+            "fieldName": "status",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "createdTime",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "updatedTime",
+            "fieldType": "Instant"
         }
     ],
-    "changelogDate": "20180405065743",
-    "entityTableName": "mercury",
+    "changelogDate": "20180410084440",
     "dto": "mapstruct",
-    "pagination": "no",
-    "service": "serviceClass",
-    "jpaMetamodelFiltering": false,
-    "microserviceName": "user"
+    "service": "serviceImpl",
+    "entityTableName": "mercury",
+    "jpaMetamodelFiltering": true,
+    "pagination": "pagination",
+    "microserviceName": "user",
+    "searchEngine": false
 }

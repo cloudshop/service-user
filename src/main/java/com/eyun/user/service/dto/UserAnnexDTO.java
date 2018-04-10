@@ -1,6 +1,7 @@
 package com.eyun.user.service.dto;
 
 
+import java.time.Instant;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,7 +14,7 @@ public class UserAnnexDTO implements Serializable {
 
     private Long id;
 
-    private Long userId;
+    private Long userid;
 
     private String name;
 
@@ -25,15 +26,11 @@ public class UserAnnexDTO implements Serializable {
 
     private String avatar;
 
-    private Long statusId;
+    private Integer status;
 
-    private String statusName;
+    private Instant createdTime;
 
-    private Set<UserTypeDTO> userTypes = new HashSet<>();
-
-    private Long inviteeId;
-
-    private String inviteeName;
+    private Instant updatedTime;
 
     public Long getId() {
         return id;
@@ -43,12 +40,12 @@ public class UserAnnexDTO implements Serializable {
         this.id = id;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getUserid() {
+        return userid;
     }
 
-    public void setUserId(Long userId) {
-        this.userId = userId;
+    public void setUserid(Long userid) {
+        this.userid = userid;
     }
 
     public String getName() {
@@ -91,44 +88,28 @@ public class UserAnnexDTO implements Serializable {
         this.avatar = avatar;
     }
 
-    public Long getStatusId() {
-        return statusId;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setStatusId(Long userStatusId) {
-        this.statusId = userStatusId;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
-    public String getStatusName() {
-        return statusName;
+    public Instant getCreatedTime() {
+        return createdTime;
     }
 
-    public void setStatusName(String userStatusName) {
-        this.statusName = userStatusName;
+    public void setCreatedTime(Instant createdTime) {
+        this.createdTime = createdTime;
     }
 
-    public Set<UserTypeDTO> getUserTypes() {
-        return userTypes;
+    public Instant getUpdatedTime() {
+        return updatedTime;
     }
 
-    public void setUserTypes(Set<UserTypeDTO> userTypes) {
-        this.userTypes = userTypes;
-    }
-
-    public Long getInviteeId() {
-        return inviteeId;
-    }
-
-    public void setInviteeId(Long userAnnexId) {
-        this.inviteeId = userAnnexId;
-    }
-
-    public String getInviteeName() {
-        return inviteeName;
-    }
-
-    public void setInviteeName(String userAnnexName) {
-        this.inviteeName = userAnnexName;
+    public void setUpdatedTime(Instant updatedTime) {
+        this.updatedTime = updatedTime;
     }
 
     @Override
@@ -156,12 +137,15 @@ public class UserAnnexDTO implements Serializable {
     public String toString() {
         return "UserAnnexDTO{" +
             "id=" + getId() +
-            ", userId=" + getUserId() +
+            ", userid=" + getUserid() +
             ", name='" + getName() + "'" +
             ", email='" + getEmail() + "'" +
             ", phone='" + getPhone() + "'" +
             ", nickname='" + getNickname() + "'" +
             ", avatar='" + getAvatar() + "'" +
+            ", status=" + getStatus() +
+            ", createdTime='" + getCreatedTime() + "'" +
+            ", updatedTime='" + getUpdatedTime() + "'" +
             "}";
     }
 }

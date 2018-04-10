@@ -18,17 +18,13 @@ public class UserStatusHistoryDTO implements Serializable {
 
     private Instant modifiedTime;
 
-    private Long userId;
+    private Long userid;
 
-    private String userName;
+    private Integer withStatus;
 
-    private Long oldStatusId;
+    private Integer toStatus;
 
-    private String oldStatusName;
-
-    private Long newtatusId;
-
-    private String newtatusName;
+    private Long userAnnexId;
 
     public Long getId() {
         return id;
@@ -54,52 +50,36 @@ public class UserStatusHistoryDTO implements Serializable {
         this.modifiedTime = modifiedTime;
     }
 
-    public Long getUserId() {
-        return userId;
+    public Long getUserid() {
+        return userid;
     }
 
-    public void setUserId(Long userAnnexId) {
-        this.userId = userAnnexId;
+    public void setUserid(Long userid) {
+        this.userid = userid;
     }
 
-    public String getUserName() {
-        return userName;
+    public Integer getWithStatus() {
+        return withStatus;
     }
 
-    public void setUserName(String userAnnexName) {
-        this.userName = userAnnexName;
+    public void setWithStatus(Integer withStatus) {
+        this.withStatus = withStatus;
     }
 
-    public Long getOldStatusId() {
-        return oldStatusId;
+    public Integer getToStatus() {
+        return toStatus;
     }
 
-    public void setOldStatusId(Long userStatusId) {
-        this.oldStatusId = userStatusId;
+    public void setToStatus(Integer toStatus) {
+        this.toStatus = toStatus;
     }
 
-    public String getOldStatusName() {
-        return oldStatusName;
+    public Long getUserAnnexId() {
+        return userAnnexId;
     }
 
-    public void setOldStatusName(String userStatusName) {
-        this.oldStatusName = userStatusName;
-    }
-
-    public Long getNewtatusId() {
-        return newtatusId;
-    }
-
-    public void setNewtatusId(Long userStatusId) {
-        this.newtatusId = userStatusId;
-    }
-
-    public String getNewtatusName() {
-        return newtatusName;
-    }
-
-    public void setNewtatusName(String userStatusName) {
-        this.newtatusName = userStatusName;
+    public void setUserAnnexId(Long userAnnexId) {
+        this.userAnnexId = userAnnexId;
     }
 
     @Override
@@ -129,6 +109,9 @@ public class UserStatusHistoryDTO implements Serializable {
             "id=" + getId() +
             ", modifiedBy=" + getModifiedBy() +
             ", modifiedTime='" + getModifiedTime() + "'" +
+            ", userid=" + getUserid() +
+            ", withStatus=" + getWithStatus() +
+            ", toStatus=" + getToStatus() +
             "}";
     }
 }

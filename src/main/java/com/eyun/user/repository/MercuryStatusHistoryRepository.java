@@ -11,6 +11,6 @@ import org.springframework.data.jpa.repository.*;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface MercuryStatusHistoryRepository extends JpaRepository<MercuryStatusHistory, Long> {
+public interface MercuryStatusHistoryRepository extends JpaRepository<MercuryStatusHistory, Long>, JpaSpecificationExecutor<MercuryStatusHistory> {
 
 }

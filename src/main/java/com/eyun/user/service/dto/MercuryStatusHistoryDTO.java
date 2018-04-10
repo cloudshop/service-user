@@ -18,17 +18,11 @@ public class MercuryStatusHistoryDTO implements Serializable {
 
     private Instant modifiedTime;
 
+    private Integer withStatus;
+
+    private Integer toStatus;
+
     private Long mercuryId;
-
-    private String mercuryName;
-
-    private Long oldStatusId;
-
-    private String oldStatusName;
-
-    private Long newtatusId;
-
-    private String newtatusName;
 
     public Long getId() {
         return id;
@@ -54,52 +48,28 @@ public class MercuryStatusHistoryDTO implements Serializable {
         this.modifiedTime = modifiedTime;
     }
 
+    public Integer getWithStatus() {
+        return withStatus;
+    }
+
+    public void setWithStatus(Integer withStatus) {
+        this.withStatus = withStatus;
+    }
+
+    public Integer getToStatus() {
+        return toStatus;
+    }
+
+    public void setToStatus(Integer toStatus) {
+        this.toStatus = toStatus;
+    }
+
     public Long getMercuryId() {
         return mercuryId;
     }
 
     public void setMercuryId(Long mercuryId) {
         this.mercuryId = mercuryId;
-    }
-
-    public String getMercuryName() {
-        return mercuryName;
-    }
-
-    public void setMercuryName(String mercuryName) {
-        this.mercuryName = mercuryName;
-    }
-
-    public Long getOldStatusId() {
-        return oldStatusId;
-    }
-
-    public void setOldStatusId(Long mercuryStatusId) {
-        this.oldStatusId = mercuryStatusId;
-    }
-
-    public String getOldStatusName() {
-        return oldStatusName;
-    }
-
-    public void setOldStatusName(String mercuryStatusName) {
-        this.oldStatusName = mercuryStatusName;
-    }
-
-    public Long getNewtatusId() {
-        return newtatusId;
-    }
-
-    public void setNewtatusId(Long mercuryStatusId) {
-        this.newtatusId = mercuryStatusId;
-    }
-
-    public String getNewtatusName() {
-        return newtatusName;
-    }
-
-    public void setNewtatusName(String mercuryStatusName) {
-        this.newtatusName = mercuryStatusName;
     }
 
     @Override
@@ -129,6 +99,8 @@ public class MercuryStatusHistoryDTO implements Serializable {
             "id=" + getId() +
             ", modifiedBy=" + getModifiedBy() +
             ", modifiedTime='" + getModifiedTime() + "'" +
+            ", withStatus=" + getWithStatus() +
+            ", toStatus=" + getToStatus() +
             "}";
     }
 }

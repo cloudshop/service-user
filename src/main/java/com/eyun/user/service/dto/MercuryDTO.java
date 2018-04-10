@@ -1,6 +1,7 @@
 package com.eyun.user.service.dto;
 
 
+import java.time.Instant;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -23,9 +24,9 @@ public class MercuryDTO implements Serializable {
 
     private String imgIdcardHold;
 
-    private Float langitude;
+    private Double langitude;
 
-    private Float lantitude;
+    private Double lantitude;
 
     private String provice;
 
@@ -37,11 +38,11 @@ public class MercuryDTO implements Serializable {
 
     private String imgIntroduces;
 
-    private String desc;
+    private Integer status;
 
-    private Long statusId;
+    private Instant createdTime;
 
-    private String statusName;
+    private Instant updatedTime;
 
     public Long getId() {
         return id;
@@ -91,19 +92,19 @@ public class MercuryDTO implements Serializable {
         this.imgIdcardHold = imgIdcardHold;
     }
 
-    public Float getLangitude() {
+    public Double getLangitude() {
         return langitude;
     }
 
-    public void setLangitude(Float langitude) {
+    public void setLangitude(Double langitude) {
         this.langitude = langitude;
     }
 
-    public Float getLantitude() {
+    public Double getLantitude() {
         return lantitude;
     }
 
-    public void setLantitude(Float lantitude) {
+    public void setLantitude(Double lantitude) {
         this.lantitude = lantitude;
     }
 
@@ -147,28 +148,28 @@ public class MercuryDTO implements Serializable {
         this.imgIntroduces = imgIntroduces;
     }
 
-    public String getDesc() {
-        return desc;
+    public Integer getStatus() {
+        return status;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setStatus(Integer status) {
+        this.status = status;
     }
 
-    public Long getStatusId() {
-        return statusId;
+    public Instant getCreatedTime() {
+        return createdTime;
     }
 
-    public void setStatusId(Long mercuryStatusId) {
-        this.statusId = mercuryStatusId;
+    public void setCreatedTime(Instant createdTime) {
+        this.createdTime = createdTime;
     }
 
-    public String getStatusName() {
-        return statusName;
+    public Instant getUpdatedTime() {
+        return updatedTime;
     }
 
-    public void setStatusName(String mercuryStatusName) {
-        this.statusName = mercuryStatusName;
+    public void setUpdatedTime(Instant updatedTime) {
+        this.updatedTime = updatedTime;
     }
 
     @Override
@@ -208,7 +209,9 @@ public class MercuryDTO implements Serializable {
             ", street='" + getStreet() + "'" +
             ", imgFacade='" + getImgFacade() + "'" +
             ", imgIntroduces='" + getImgIntroduces() + "'" +
-            ", desc='" + getDesc() + "'" +
+            ", status=" + getStatus() +
+            ", createdTime='" + getCreatedTime() + "'" +
+            ", updatedTime='" + getUpdatedTime() + "'" +
             "}";
     }
 }

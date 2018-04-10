@@ -5,11 +5,14 @@ import com.eyun.user.UserApp;
 import com.eyun.user.config.SecurityBeanOverrideConfiguration;
 
 import com.eyun.user.domain.UserStatusHistory;
+import com.eyun.user.domain.UserAnnex;
 import com.eyun.user.repository.UserStatusHistoryRepository;
 import com.eyun.user.service.UserStatusHistoryService;
 import com.eyun.user.service.dto.UserStatusHistoryDTO;
 import com.eyun.user.service.mapper.UserStatusHistoryMapper;
 import com.eyun.user.web.rest.errors.ExceptionTranslator;
+import com.eyun.user.service.dto.UserStatusHistoryCriteria;
+import com.eyun.user.service.UserStatusHistoryQueryService;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -51,6 +54,15 @@ public class UserStatusHistoryResourceIntTest {
     private static final Instant DEFAULT_MODIFIED_TIME = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_MODIFIED_TIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
+    private static final Long DEFAULT_USERID = 1L;
+    private static final Long UPDATED_USERID = 2L;
+
+    private static final Integer DEFAULT_WITH_STATUS = 1;
+    private static final Integer UPDATED_WITH_STATUS = 2;
+
+    private static final Integer DEFAULT_TO_STATUS = 1;
+    private static final Integer UPDATED_TO_STATUS = 2;
+
     @Autowired
     private UserStatusHistoryRepository userStatusHistoryRepository;
 
@@ -59,6 +71,9 @@ public class UserStatusHistoryResourceIntTest {
 
     @Autowired
     private UserStatusHistoryService userStatusHistoryService;
+
+    @Autowired
+    private UserStatusHistoryQueryService userStatusHistoryQueryService;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -79,7 +94,7 @@ public class UserStatusHistoryResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final UserStatusHistoryResource userStatusHistoryResource = new UserStatusHistoryResource(userStatusHistoryService);
+        final UserStatusHistoryResource userStatusHistoryResource = new UserStatusHistoryResource(userStatusHistoryService, userStatusHistoryQueryService);
         this.restUserStatusHistoryMockMvc = MockMvcBuilders.standaloneSetup(userStatusHistoryResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -96,7 +111,10 @@ public class UserStatusHistoryResourceIntTest {
     public static UserStatusHistory createEntity(EntityManager em) {
         UserStatusHistory userStatusHistory = new UserStatusHistory()
             .modifiedBy(DEFAULT_MODIFIED_BY)
-            .modifiedTime(DEFAULT_MODIFIED_TIME);
+            .modifiedTime(DEFAULT_MODIFIED_TIME)
+            .userid(DEFAULT_USERID)
+            .withStatus(DEFAULT_WITH_STATUS)
+            .toStatus(DEFAULT_TO_STATUS);
         return userStatusHistory;
     }
 
@@ -123,6 +141,9 @@ public class UserStatusHistoryResourceIntTest {
         UserStatusHistory testUserStatusHistory = userStatusHistoryList.get(userStatusHistoryList.size() - 1);
         assertThat(testUserStatusHistory.getModifiedBy()).isEqualTo(DEFAULT_MODIFIED_BY);
         assertThat(testUserStatusHistory.getModifiedTime()).isEqualTo(DEFAULT_MODIFIED_TIME);
+        assertThat(testUserStatusHistory.getUserid()).isEqualTo(DEFAULT_USERID);
+        assertThat(testUserStatusHistory.getWithStatus()).isEqualTo(DEFAULT_WITH_STATUS);
+        assertThat(testUserStatusHistory.getToStatus()).isEqualTo(DEFAULT_TO_STATUS);
     }
 
     @Test
@@ -157,7 +178,10 @@ public class UserStatusHistoryResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(userStatusHistory.getId().intValue())))
             .andExpect(jsonPath("$.[*].modifiedBy").value(hasItem(DEFAULT_MODIFIED_BY.intValue())))
-            .andExpect(jsonPath("$.[*].modifiedTime").value(hasItem(DEFAULT_MODIFIED_TIME.toString())));
+            .andExpect(jsonPath("$.[*].modifiedTime").value(hasItem(DEFAULT_MODIFIED_TIME.toString())))
+            .andExpect(jsonPath("$.[*].userid").value(hasItem(DEFAULT_USERID.intValue())))
+            .andExpect(jsonPath("$.[*].withStatus").value(hasItem(DEFAULT_WITH_STATUS)))
+            .andExpect(jsonPath("$.[*].toStatus").value(hasItem(DEFAULT_TO_STATUS)));
     }
 
     @Test
@@ -172,8 +196,359 @@ public class UserStatusHistoryResourceIntTest {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(userStatusHistory.getId().intValue()))
             .andExpect(jsonPath("$.modifiedBy").value(DEFAULT_MODIFIED_BY.intValue()))
-            .andExpect(jsonPath("$.modifiedTime").value(DEFAULT_MODIFIED_TIME.toString()));
+            .andExpect(jsonPath("$.modifiedTime").value(DEFAULT_MODIFIED_TIME.toString()))
+            .andExpect(jsonPath("$.userid").value(DEFAULT_USERID.intValue()))
+            .andExpect(jsonPath("$.withStatus").value(DEFAULT_WITH_STATUS))
+            .andExpect(jsonPath("$.toStatus").value(DEFAULT_TO_STATUS));
     }
+
+    @Test
+    @Transactional
+    public void getAllUserStatusHistoriesByModifiedByIsEqualToSomething() throws Exception {
+        // Initialize the database
+        userStatusHistoryRepository.saveAndFlush(userStatusHistory);
+
+        // Get all the userStatusHistoryList where modifiedBy equals to DEFAULT_MODIFIED_BY
+        defaultUserStatusHistoryShouldBeFound("modifiedBy.equals=" + DEFAULT_MODIFIED_BY);
+
+        // Get all the userStatusHistoryList where modifiedBy equals to UPDATED_MODIFIED_BY
+        defaultUserStatusHistoryShouldNotBeFound("modifiedBy.equals=" + UPDATED_MODIFIED_BY);
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserStatusHistoriesByModifiedByIsInShouldWork() throws Exception {
+        // Initialize the database
+        userStatusHistoryRepository.saveAndFlush(userStatusHistory);
+
+        // Get all the userStatusHistoryList where modifiedBy in DEFAULT_MODIFIED_BY or UPDATED_MODIFIED_BY
+        defaultUserStatusHistoryShouldBeFound("modifiedBy.in=" + DEFAULT_MODIFIED_BY + "," + UPDATED_MODIFIED_BY);
+
+        // Get all the userStatusHistoryList where modifiedBy equals to UPDATED_MODIFIED_BY
+        defaultUserStatusHistoryShouldNotBeFound("modifiedBy.in=" + UPDATED_MODIFIED_BY);
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserStatusHistoriesByModifiedByIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        userStatusHistoryRepository.saveAndFlush(userStatusHistory);
+
+        // Get all the userStatusHistoryList where modifiedBy is not null
+        defaultUserStatusHistoryShouldBeFound("modifiedBy.specified=true");
+
+        // Get all the userStatusHistoryList where modifiedBy is null
+        defaultUserStatusHistoryShouldNotBeFound("modifiedBy.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserStatusHistoriesByModifiedByIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        userStatusHistoryRepository.saveAndFlush(userStatusHistory);
+
+        // Get all the userStatusHistoryList where modifiedBy greater than or equals to DEFAULT_MODIFIED_BY
+        defaultUserStatusHistoryShouldBeFound("modifiedBy.greaterOrEqualThan=" + DEFAULT_MODIFIED_BY);
+
+        // Get all the userStatusHistoryList where modifiedBy greater than or equals to UPDATED_MODIFIED_BY
+        defaultUserStatusHistoryShouldNotBeFound("modifiedBy.greaterOrEqualThan=" + UPDATED_MODIFIED_BY);
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserStatusHistoriesByModifiedByIsLessThanSomething() throws Exception {
+        // Initialize the database
+        userStatusHistoryRepository.saveAndFlush(userStatusHistory);
+
+        // Get all the userStatusHistoryList where modifiedBy less than or equals to DEFAULT_MODIFIED_BY
+        defaultUserStatusHistoryShouldNotBeFound("modifiedBy.lessThan=" + DEFAULT_MODIFIED_BY);
+
+        // Get all the userStatusHistoryList where modifiedBy less than or equals to UPDATED_MODIFIED_BY
+        defaultUserStatusHistoryShouldBeFound("modifiedBy.lessThan=" + UPDATED_MODIFIED_BY);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllUserStatusHistoriesByModifiedTimeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        userStatusHistoryRepository.saveAndFlush(userStatusHistory);
+
+        // Get all the userStatusHistoryList where modifiedTime equals to DEFAULT_MODIFIED_TIME
+        defaultUserStatusHistoryShouldBeFound("modifiedTime.equals=" + DEFAULT_MODIFIED_TIME);
+
+        // Get all the userStatusHistoryList where modifiedTime equals to UPDATED_MODIFIED_TIME
+        defaultUserStatusHistoryShouldNotBeFound("modifiedTime.equals=" + UPDATED_MODIFIED_TIME);
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserStatusHistoriesByModifiedTimeIsInShouldWork() throws Exception {
+        // Initialize the database
+        userStatusHistoryRepository.saveAndFlush(userStatusHistory);
+
+        // Get all the userStatusHistoryList where modifiedTime in DEFAULT_MODIFIED_TIME or UPDATED_MODIFIED_TIME
+        defaultUserStatusHistoryShouldBeFound("modifiedTime.in=" + DEFAULT_MODIFIED_TIME + "," + UPDATED_MODIFIED_TIME);
+
+        // Get all the userStatusHistoryList where modifiedTime equals to UPDATED_MODIFIED_TIME
+        defaultUserStatusHistoryShouldNotBeFound("modifiedTime.in=" + UPDATED_MODIFIED_TIME);
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserStatusHistoriesByModifiedTimeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        userStatusHistoryRepository.saveAndFlush(userStatusHistory);
+
+        // Get all the userStatusHistoryList where modifiedTime is not null
+        defaultUserStatusHistoryShouldBeFound("modifiedTime.specified=true");
+
+        // Get all the userStatusHistoryList where modifiedTime is null
+        defaultUserStatusHistoryShouldNotBeFound("modifiedTime.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserStatusHistoriesByUseridIsEqualToSomething() throws Exception {
+        // Initialize the database
+        userStatusHistoryRepository.saveAndFlush(userStatusHistory);
+
+        // Get all the userStatusHistoryList where userid equals to DEFAULT_USERID
+        defaultUserStatusHistoryShouldBeFound("userid.equals=" + DEFAULT_USERID);
+
+        // Get all the userStatusHistoryList where userid equals to UPDATED_USERID
+        defaultUserStatusHistoryShouldNotBeFound("userid.equals=" + UPDATED_USERID);
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserStatusHistoriesByUseridIsInShouldWork() throws Exception {
+        // Initialize the database
+        userStatusHistoryRepository.saveAndFlush(userStatusHistory);
+
+        // Get all the userStatusHistoryList where userid in DEFAULT_USERID or UPDATED_USERID
+        defaultUserStatusHistoryShouldBeFound("userid.in=" + DEFAULT_USERID + "," + UPDATED_USERID);
+
+        // Get all the userStatusHistoryList where userid equals to UPDATED_USERID
+        defaultUserStatusHistoryShouldNotBeFound("userid.in=" + UPDATED_USERID);
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserStatusHistoriesByUseridIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        userStatusHistoryRepository.saveAndFlush(userStatusHistory);
+
+        // Get all the userStatusHistoryList where userid is not null
+        defaultUserStatusHistoryShouldBeFound("userid.specified=true");
+
+        // Get all the userStatusHistoryList where userid is null
+        defaultUserStatusHistoryShouldNotBeFound("userid.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserStatusHistoriesByUseridIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        userStatusHistoryRepository.saveAndFlush(userStatusHistory);
+
+        // Get all the userStatusHistoryList where userid greater than or equals to DEFAULT_USERID
+        defaultUserStatusHistoryShouldBeFound("userid.greaterOrEqualThan=" + DEFAULT_USERID);
+
+        // Get all the userStatusHistoryList where userid greater than or equals to UPDATED_USERID
+        defaultUserStatusHistoryShouldNotBeFound("userid.greaterOrEqualThan=" + UPDATED_USERID);
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserStatusHistoriesByUseridIsLessThanSomething() throws Exception {
+        // Initialize the database
+        userStatusHistoryRepository.saveAndFlush(userStatusHistory);
+
+        // Get all the userStatusHistoryList where userid less than or equals to DEFAULT_USERID
+        defaultUserStatusHistoryShouldNotBeFound("userid.lessThan=" + DEFAULT_USERID);
+
+        // Get all the userStatusHistoryList where userid less than or equals to UPDATED_USERID
+        defaultUserStatusHistoryShouldBeFound("userid.lessThan=" + UPDATED_USERID);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllUserStatusHistoriesByWithStatusIsEqualToSomething() throws Exception {
+        // Initialize the database
+        userStatusHistoryRepository.saveAndFlush(userStatusHistory);
+
+        // Get all the userStatusHistoryList where withStatus equals to DEFAULT_WITH_STATUS
+        defaultUserStatusHistoryShouldBeFound("withStatus.equals=" + DEFAULT_WITH_STATUS);
+
+        // Get all the userStatusHistoryList where withStatus equals to UPDATED_WITH_STATUS
+        defaultUserStatusHistoryShouldNotBeFound("withStatus.equals=" + UPDATED_WITH_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserStatusHistoriesByWithStatusIsInShouldWork() throws Exception {
+        // Initialize the database
+        userStatusHistoryRepository.saveAndFlush(userStatusHistory);
+
+        // Get all the userStatusHistoryList where withStatus in DEFAULT_WITH_STATUS or UPDATED_WITH_STATUS
+        defaultUserStatusHistoryShouldBeFound("withStatus.in=" + DEFAULT_WITH_STATUS + "," + UPDATED_WITH_STATUS);
+
+        // Get all the userStatusHistoryList where withStatus equals to UPDATED_WITH_STATUS
+        defaultUserStatusHistoryShouldNotBeFound("withStatus.in=" + UPDATED_WITH_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserStatusHistoriesByWithStatusIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        userStatusHistoryRepository.saveAndFlush(userStatusHistory);
+
+        // Get all the userStatusHistoryList where withStatus is not null
+        defaultUserStatusHistoryShouldBeFound("withStatus.specified=true");
+
+        // Get all the userStatusHistoryList where withStatus is null
+        defaultUserStatusHistoryShouldNotBeFound("withStatus.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserStatusHistoriesByWithStatusIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        userStatusHistoryRepository.saveAndFlush(userStatusHistory);
+
+        // Get all the userStatusHistoryList where withStatus greater than or equals to DEFAULT_WITH_STATUS
+        defaultUserStatusHistoryShouldBeFound("withStatus.greaterOrEqualThan=" + DEFAULT_WITH_STATUS);
+
+        // Get all the userStatusHistoryList where withStatus greater than or equals to UPDATED_WITH_STATUS
+        defaultUserStatusHistoryShouldNotBeFound("withStatus.greaterOrEqualThan=" + UPDATED_WITH_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserStatusHistoriesByWithStatusIsLessThanSomething() throws Exception {
+        // Initialize the database
+        userStatusHistoryRepository.saveAndFlush(userStatusHistory);
+
+        // Get all the userStatusHistoryList where withStatus less than or equals to DEFAULT_WITH_STATUS
+        defaultUserStatusHistoryShouldNotBeFound("withStatus.lessThan=" + DEFAULT_WITH_STATUS);
+
+        // Get all the userStatusHistoryList where withStatus less than or equals to UPDATED_WITH_STATUS
+        defaultUserStatusHistoryShouldBeFound("withStatus.lessThan=" + UPDATED_WITH_STATUS);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllUserStatusHistoriesByToStatusIsEqualToSomething() throws Exception {
+        // Initialize the database
+        userStatusHistoryRepository.saveAndFlush(userStatusHistory);
+
+        // Get all the userStatusHistoryList where toStatus equals to DEFAULT_TO_STATUS
+        defaultUserStatusHistoryShouldBeFound("toStatus.equals=" + DEFAULT_TO_STATUS);
+
+        // Get all the userStatusHistoryList where toStatus equals to UPDATED_TO_STATUS
+        defaultUserStatusHistoryShouldNotBeFound("toStatus.equals=" + UPDATED_TO_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserStatusHistoriesByToStatusIsInShouldWork() throws Exception {
+        // Initialize the database
+        userStatusHistoryRepository.saveAndFlush(userStatusHistory);
+
+        // Get all the userStatusHistoryList where toStatus in DEFAULT_TO_STATUS or UPDATED_TO_STATUS
+        defaultUserStatusHistoryShouldBeFound("toStatus.in=" + DEFAULT_TO_STATUS + "," + UPDATED_TO_STATUS);
+
+        // Get all the userStatusHistoryList where toStatus equals to UPDATED_TO_STATUS
+        defaultUserStatusHistoryShouldNotBeFound("toStatus.in=" + UPDATED_TO_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserStatusHistoriesByToStatusIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        userStatusHistoryRepository.saveAndFlush(userStatusHistory);
+
+        // Get all the userStatusHistoryList where toStatus is not null
+        defaultUserStatusHistoryShouldBeFound("toStatus.specified=true");
+
+        // Get all the userStatusHistoryList where toStatus is null
+        defaultUserStatusHistoryShouldNotBeFound("toStatus.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserStatusHistoriesByToStatusIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        userStatusHistoryRepository.saveAndFlush(userStatusHistory);
+
+        // Get all the userStatusHistoryList where toStatus greater than or equals to DEFAULT_TO_STATUS
+        defaultUserStatusHistoryShouldBeFound("toStatus.greaterOrEqualThan=" + DEFAULT_TO_STATUS);
+
+        // Get all the userStatusHistoryList where toStatus greater than or equals to UPDATED_TO_STATUS
+        defaultUserStatusHistoryShouldNotBeFound("toStatus.greaterOrEqualThan=" + UPDATED_TO_STATUS);
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserStatusHistoriesByToStatusIsLessThanSomething() throws Exception {
+        // Initialize the database
+        userStatusHistoryRepository.saveAndFlush(userStatusHistory);
+
+        // Get all the userStatusHistoryList where toStatus less than or equals to DEFAULT_TO_STATUS
+        defaultUserStatusHistoryShouldNotBeFound("toStatus.lessThan=" + DEFAULT_TO_STATUS);
+
+        // Get all the userStatusHistoryList where toStatus less than or equals to UPDATED_TO_STATUS
+        defaultUserStatusHistoryShouldBeFound("toStatus.lessThan=" + UPDATED_TO_STATUS);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllUserStatusHistoriesByUserAnnexIsEqualToSomething() throws Exception {
+        // Initialize the database
+        UserAnnex userAnnex = UserAnnexResourceIntTest.createEntity(em);
+        em.persist(userAnnex);
+        em.flush();
+        userStatusHistory.setUserAnnex(userAnnex);
+        userStatusHistoryRepository.saveAndFlush(userStatusHistory);
+        Long userAnnexId = userAnnex.getId();
+
+        // Get all the userStatusHistoryList where userAnnex equals to userAnnexId
+        defaultUserStatusHistoryShouldBeFound("userAnnexId.equals=" + userAnnexId);
+
+        // Get all the userStatusHistoryList where userAnnex equals to userAnnexId + 1
+        defaultUserStatusHistoryShouldNotBeFound("userAnnexId.equals=" + (userAnnexId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned
+     */
+    private void defaultUserStatusHistoryShouldBeFound(String filter) throws Exception {
+        restUserStatusHistoryMockMvc.perform(get("/api/user-status-histories?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(userStatusHistory.getId().intValue())))
+            .andExpect(jsonPath("$.[*].modifiedBy").value(hasItem(DEFAULT_MODIFIED_BY.intValue())))
+            .andExpect(jsonPath("$.[*].modifiedTime").value(hasItem(DEFAULT_MODIFIED_TIME.toString())))
+            .andExpect(jsonPath("$.[*].userid").value(hasItem(DEFAULT_USERID.intValue())))
+            .andExpect(jsonPath("$.[*].withStatus").value(hasItem(DEFAULT_WITH_STATUS)))
+            .andExpect(jsonPath("$.[*].toStatus").value(hasItem(DEFAULT_TO_STATUS)));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned
+     */
+    private void defaultUserStatusHistoryShouldNotBeFound(String filter) throws Exception {
+        restUserStatusHistoryMockMvc.perform(get("/api/user-status-histories?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+    }
+
 
     @Test
     @Transactional
@@ -196,7 +571,10 @@ public class UserStatusHistoryResourceIntTest {
         em.detach(updatedUserStatusHistory);
         updatedUserStatusHistory
             .modifiedBy(UPDATED_MODIFIED_BY)
-            .modifiedTime(UPDATED_MODIFIED_TIME);
+            .modifiedTime(UPDATED_MODIFIED_TIME)
+            .userid(UPDATED_USERID)
+            .withStatus(UPDATED_WITH_STATUS)
+            .toStatus(UPDATED_TO_STATUS);
         UserStatusHistoryDTO userStatusHistoryDTO = userStatusHistoryMapper.toDto(updatedUserStatusHistory);
 
         restUserStatusHistoryMockMvc.perform(put("/api/user-status-histories")
@@ -210,6 +588,9 @@ public class UserStatusHistoryResourceIntTest {
         UserStatusHistory testUserStatusHistory = userStatusHistoryList.get(userStatusHistoryList.size() - 1);
         assertThat(testUserStatusHistory.getModifiedBy()).isEqualTo(UPDATED_MODIFIED_BY);
         assertThat(testUserStatusHistory.getModifiedTime()).isEqualTo(UPDATED_MODIFIED_TIME);
+        assertThat(testUserStatusHistory.getUserid()).isEqualTo(UPDATED_USERID);
+        assertThat(testUserStatusHistory.getWithStatus()).isEqualTo(UPDATED_WITH_STATUS);
+        assertThat(testUserStatusHistory.getToStatus()).isEqualTo(UPDATED_TO_STATUS);
     }
 
     @Test

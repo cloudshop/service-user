@@ -29,17 +29,17 @@ public class UserStatusHistory implements Serializable {
     @Column(name = "modified_time")
     private Instant modifiedTime;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private UserAnnex user;
+    @Column(name = "userid")
+    private Long userid;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private UserStatus oldStatus;
+    @Column(name = "with_status")
+    private Integer withStatus;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private UserStatus newtatus;
+    @Column(name = "to_status")
+    private Integer toStatus;
+
+    @ManyToOne
+    private UserAnnex userAnnex;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -76,43 +76,56 @@ public class UserStatusHistory implements Serializable {
         this.modifiedTime = modifiedTime;
     }
 
-    public UserAnnex getUser() {
-        return user;
+    public Long getUserid() {
+        return userid;
     }
 
-    public UserStatusHistory user(UserAnnex userAnnex) {
-        this.user = userAnnex;
+    public UserStatusHistory userid(Long userid) {
+        this.userid = userid;
         return this;
     }
 
-    public void setUser(UserAnnex userAnnex) {
-        this.user = userAnnex;
+    public void setUserid(Long userid) {
+        this.userid = userid;
     }
 
-    public UserStatus getOldStatus() {
-        return oldStatus;
+    public Integer getWithStatus() {
+        return withStatus;
     }
 
-    public UserStatusHistory oldStatus(UserStatus userStatus) {
-        this.oldStatus = userStatus;
+    public UserStatusHistory withStatus(Integer withStatus) {
+        this.withStatus = withStatus;
         return this;
     }
 
-    public void setOldStatus(UserStatus userStatus) {
-        this.oldStatus = userStatus;
+    public void setWithStatus(Integer withStatus) {
+        this.withStatus = withStatus;
     }
 
-    public UserStatus getNewtatus() {
-        return newtatus;
+    public Integer getToStatus() {
+        return toStatus;
     }
 
-    public UserStatusHistory newtatus(UserStatus userStatus) {
-        this.newtatus = userStatus;
+    public UserStatusHistory toStatus(Integer toStatus) {
+        this.toStatus = toStatus;
         return this;
     }
 
-    public void setNewtatus(UserStatus userStatus) {
-        this.newtatus = userStatus;
+    public void setToStatus(Integer toStatus) {
+        this.toStatus = toStatus;
+    }
+
+    public UserAnnex getUserAnnex() {
+        return userAnnex;
+    }
+
+    public UserStatusHistory userAnnex(UserAnnex userAnnex) {
+        this.userAnnex = userAnnex;
+        return this;
+    }
+
+    public void setUserAnnex(UserAnnex userAnnex) {
+        this.userAnnex = userAnnex;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -142,6 +155,9 @@ public class UserStatusHistory implements Serializable {
             "id=" + getId() +
             ", modifiedBy=" + getModifiedBy() +
             ", modifiedTime='" + getModifiedTime() + "'" +
+            ", userid=" + getUserid() +
+            ", withStatus=" + getWithStatus() +
+            ", toStatus=" + getToStatus() +
             "}";
     }
 }

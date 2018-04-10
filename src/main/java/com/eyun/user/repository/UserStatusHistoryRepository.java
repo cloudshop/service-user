@@ -11,6 +11,6 @@ import org.springframework.data.jpa.repository.*;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface UserStatusHistoryRepository extends JpaRepository<UserStatusHistory, Long> {
+public interface UserStatusHistoryRepository extends JpaRepository<UserStatusHistory, Long>, JpaSpecificationExecutor<UserStatusHistory> {
 
 }

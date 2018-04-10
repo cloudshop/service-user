@@ -36,13 +36,26 @@
         {
             "fieldName": "postalCode",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "defaultAddress",
+            "fieldType": "Boolean"
+        },
+        {
+            "fieldName": "createdTime",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "updatedTime",
+            "fieldType": "Instant"
         }
     ],
-    "changelogDate": "20180405065742",
-    "entityTableName": "delivery_address",
+    "changelogDate": "20180410082623",
     "dto": "mapstruct",
-    "pagination": "no",
-    "service": "serviceClass",
-    "jpaMetamodelFiltering": false,
-    "microserviceName": "user"
+    "service": "serviceImpl",
+    "entityTableName": "delivery_address",
+    "jpaMetamodelFiltering": true,
+    "pagination": "pagination",
+    "microserviceName": "user",
+    "searchEngine": false
 }

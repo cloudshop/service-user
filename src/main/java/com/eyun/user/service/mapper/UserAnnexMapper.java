@@ -8,19 +8,12 @@ import org.mapstruct.*;
 /**
  * Mapper for the entity UserAnnex and its DTO UserAnnexDTO.
  */
-@Mapper(componentModel = "spring", uses = {UserStatusMapper.class, UserTypeMapper.class})
+@Mapper(componentModel = "spring", uses = {})
 public interface UserAnnexMapper extends EntityMapper<UserAnnexDTO, UserAnnex> {
 
-    @Mapping(source = "status.id", target = "statusId")
-    @Mapping(source = "status.name", target = "statusName")
-    @Mapping(source = "invitee.id", target = "inviteeId")
-    @Mapping(source = "invitee.name", target = "inviteeName")
-    UserAnnexDTO toDto(UserAnnex userAnnex);
 
-    @Mapping(source = "statusId", target = "status")
-    @Mapping(target = "deliveryAddresses", ignore = true)
-    @Mapping(target = "inviters", ignore = true)
-    @Mapping(source = "inviteeId", target = "invitee")
+    @Mapping(target = "ownerRelation", ignore = true)
+    @Mapping(target = "userStatusHistories", ignore = true)
     UserAnnex toEntity(UserAnnexDTO userAnnexDTO);
 
     default UserAnnex fromId(Long id) {

@@ -1,6 +1,7 @@
 package com.eyun.user.service.dto;
 
 
+import java.time.Instant;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -26,6 +27,12 @@ public class DeliveryAddressDTO implements Serializable {
     private String streetAddress;
 
     private String postalCode;
+
+    private Boolean defaultAddress;
+
+    private Instant createdTime;
+
+    private Instant updatedTime;
 
     private Long userAnnexId;
 
@@ -93,6 +100,30 @@ public class DeliveryAddressDTO implements Serializable {
         this.postalCode = postalCode;
     }
 
+    public Boolean isDefaultAddress() {
+        return defaultAddress;
+    }
+
+    public void setDefaultAddress(Boolean defaultAddress) {
+        this.defaultAddress = defaultAddress;
+    }
+
+    public Instant getCreatedTime() {
+        return createdTime;
+    }
+
+    public void setCreatedTime(Instant createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public Instant getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public void setUpdatedTime(Instant updatedTime) {
+        this.updatedTime = updatedTime;
+    }
+
     public Long getUserAnnexId() {
         return userAnnexId;
     }
@@ -133,6 +164,9 @@ public class DeliveryAddressDTO implements Serializable {
             ", city='" + getCity() + "'" +
             ", streetAddress='" + getStreetAddress() + "'" +
             ", postalCode='" + getPostalCode() + "'" +
+            ", defaultAddress='" + isDefaultAddress() + "'" +
+            ", createdTime='" + getCreatedTime() + "'" +
+            ", updatedTime='" + getUpdatedTime() + "'" +
             "}";
     }
 }

@@ -6,6 +6,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.time.Instant;
 import java.util.Objects;
 
 /**
@@ -22,13 +23,21 @@ public class OwnerRelation implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @OneToOne
-    @JoinColumn(unique = true)
-    private OwnerType ownerType;
+    @Column(name = "role_name")
+    private String roleName;
+
+    @Column(name = "description")
+    private String description;
+
+    @Column(name = "created_time")
+    private Instant createdTime;
+
+    @Column(name = "updated_time")
+    private Instant updatedTime;
 
     @OneToOne
     @JoinColumn(unique = true)
-    private UserAnnex owner;
+    private UserAnnex userAnnex;
 
     @OneToOne
     @JoinColumn(unique = true)
@@ -43,30 +52,69 @@ public class OwnerRelation implements Serializable {
         this.id = id;
     }
 
-    public OwnerType getOwnerType() {
-        return ownerType;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public OwnerRelation ownerType(OwnerType ownerType) {
-        this.ownerType = ownerType;
+    public OwnerRelation roleName(String roleName) {
+        this.roleName = roleName;
         return this;
     }
 
-    public void setOwnerType(OwnerType ownerType) {
-        this.ownerType = ownerType;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
-    public UserAnnex getOwner() {
-        return owner;
+    public String getDescription() {
+        return description;
     }
 
-    public OwnerRelation owner(UserAnnex userAnnex) {
-        this.owner = userAnnex;
+    public OwnerRelation description(String description) {
+        this.description = description;
         return this;
     }
 
-    public void setOwner(UserAnnex userAnnex) {
-        this.owner = userAnnex;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Instant getCreatedTime() {
+        return createdTime;
+    }
+
+    public OwnerRelation createdTime(Instant createdTime) {
+        this.createdTime = createdTime;
+        return this;
+    }
+
+    public void setCreatedTime(Instant createdTime) {
+        this.createdTime = createdTime;
+    }
+
+    public Instant getUpdatedTime() {
+        return updatedTime;
+    }
+
+    public OwnerRelation updatedTime(Instant updatedTime) {
+        this.updatedTime = updatedTime;
+        return this;
+    }
+
+    public void setUpdatedTime(Instant updatedTime) {
+        this.updatedTime = updatedTime;
+    }
+
+    public UserAnnex getUserAnnex() {
+        return userAnnex;
+    }
+
+    public OwnerRelation userAnnex(UserAnnex userAnnex) {
+        this.userAnnex = userAnnex;
+        return this;
+    }
+
+    public void setUserAnnex(UserAnnex userAnnex) {
+        this.userAnnex = userAnnex;
     }
 
     public Mercury getMercury() {
@@ -107,6 +155,10 @@ public class OwnerRelation implements Serializable {
     public String toString() {
         return "OwnerRelation{" +
             "id=" + getId() +
+            ", roleName='" + getRoleName() + "'" +
+            ", description='" + getDescription() + "'" +
+            ", createdTime='" + getCreatedTime() + "'" +
+            ", updatedTime='" + getUpdatedTime() + "'" +
             "}";
     }
 }

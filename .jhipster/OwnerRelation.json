@@ -2,36 +2,46 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "one-to-one",
-            "relationshipName": "ownerType",
-            "otherEntityName": "ownerType",
-            "otherEntityField": "name",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "ownerRelation"
-        },
-        {
-            "relationshipType": "one-to-one",
-            "relationshipName": "owner",
+            "relationshipName": "userAnnex",
             "otherEntityName": "userAnnex",
-            "otherEntityField": "name",
+            "relationshipType": "one-to-one",
+            "otherEntityField": "id",
             "ownerSide": true,
             "otherEntityRelationshipName": "ownerRelation"
         },
         {
-            "relationshipType": "one-to-one",
             "relationshipName": "mercury",
             "otherEntityName": "mercury",
-            "otherEntityField": "name",
+            "relationshipType": "one-to-one",
+            "otherEntityField": "id",
             "ownerSide": true,
             "otherEntityRelationshipName": "ownerRelation"
         }
     ],
-    "fields": [],
-    "changelogDate": "20180405065747",
-    "entityTableName": "owner_relation",
+    "fields": [
+        {
+            "fieldName": "roleName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "createdTime",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "updatedTime",
+            "fieldType": "Instant"
+        }
+    ],
+    "changelogDate": "20180410090839",
     "dto": "mapstruct",
-    "pagination": "no",
-    "service": "serviceClass",
-    "jpaMetamodelFiltering": false,
-    "microserviceName": "user"
+    "service": "serviceImpl",
+    "entityTableName": "owner_relation",
+    "jpaMetamodelFiltering": true,
+    "pagination": "pagination",
+    "microserviceName": "user",
+    "searchEngine": false
 }

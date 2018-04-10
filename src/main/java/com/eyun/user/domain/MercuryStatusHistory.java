@@ -29,17 +29,14 @@ public class MercuryStatusHistory implements Serializable {
     @Column(name = "modified_time")
     private Instant modifiedTime;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @Column(name = "with_status")
+    private Integer withStatus;
+
+    @Column(name = "to_status")
+    private Integer toStatus;
+
+    @ManyToOne
     private Mercury mercury;
-
-    @OneToOne
-    @JoinColumn(unique = true)
-    private MercuryStatus oldStatus;
-
-    @OneToOne
-    @JoinColumn(unique = true)
-    private MercuryStatus newtatus;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -76,6 +73,32 @@ public class MercuryStatusHistory implements Serializable {
         this.modifiedTime = modifiedTime;
     }
 
+    public Integer getWithStatus() {
+        return withStatus;
+    }
+
+    public MercuryStatusHistory withStatus(Integer withStatus) {
+        this.withStatus = withStatus;
+        return this;
+    }
+
+    public void setWithStatus(Integer withStatus) {
+        this.withStatus = withStatus;
+    }
+
+    public Integer getToStatus() {
+        return toStatus;
+    }
+
+    public MercuryStatusHistory toStatus(Integer toStatus) {
+        this.toStatus = toStatus;
+        return this;
+    }
+
+    public void setToStatus(Integer toStatus) {
+        this.toStatus = toStatus;
+    }
+
     public Mercury getMercury() {
         return mercury;
     }
@@ -87,32 +110,6 @@ public class MercuryStatusHistory implements Serializable {
 
     public void setMercury(Mercury mercury) {
         this.mercury = mercury;
-    }
-
-    public MercuryStatus getOldStatus() {
-        return oldStatus;
-    }
-
-    public MercuryStatusHistory oldStatus(MercuryStatus mercuryStatus) {
-        this.oldStatus = mercuryStatus;
-        return this;
-    }
-
-    public void setOldStatus(MercuryStatus mercuryStatus) {
-        this.oldStatus = mercuryStatus;
-    }
-
-    public MercuryStatus getNewtatus() {
-        return newtatus;
-    }
-
-    public MercuryStatusHistory newtatus(MercuryStatus mercuryStatus) {
-        this.newtatus = mercuryStatus;
-        return this;
-    }
-
-    public void setNewtatus(MercuryStatus mercuryStatus) {
-        this.newtatus = mercuryStatus;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -142,6 +139,8 @@ public class MercuryStatusHistory implements Serializable {
             "id=" + getId() +
             ", modifiedBy=" + getModifiedBy() +
             ", modifiedTime='" + getModifiedTime() + "'" +
+            ", withStatus=" + getWithStatus() +
+            ", toStatus=" + getToStatus() +
             "}";
     }
 }

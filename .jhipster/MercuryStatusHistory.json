@@ -2,28 +2,10 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "one-to-one",
             "relationshipName": "mercury",
             "otherEntityName": "mercury",
-            "otherEntityField": "name",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "mercuryStatusHistory"
-        },
-        {
-            "relationshipType": "one-to-one",
-            "relationshipName": "oldStatus",
-            "otherEntityName": "mercuryStatus",
-            "otherEntityField": "name",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "mercuryStatusHistory"
-        },
-        {
-            "relationshipType": "one-to-one",
-            "relationshipName": "newtatus",
-            "otherEntityName": "mercuryStatus",
-            "otherEntityField": "name",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "mercuryStatusHistory"
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
         }
     ],
     "fields": [
@@ -34,13 +16,22 @@
         {
             "fieldName": "modifiedTime",
             "fieldType": "Instant"
+        },
+        {
+            "fieldName": "withStatus",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "toStatus",
+            "fieldType": "Integer"
         }
     ],
-    "changelogDate": "20180405065745",
-    "entityTableName": "mercury_status_history",
+    "changelogDate": "20180410085657",
     "dto": "mapstruct",
-    "pagination": "no",
-    "service": "serviceClass",
-    "jpaMetamodelFiltering": false,
-    "microserviceName": "user"
+    "service": "serviceImpl",
+    "entityTableName": "mercury_status_history",
+    "jpaMetamodelFiltering": true,
+    "pagination": "pagination",
+    "microserviceName": "user",
+    "searchEngine": false
 }

@@ -2,28 +2,10 @@
     "fluentMethods": true,
     "relationships": [
         {
-            "relationshipType": "one-to-one",
-            "relationshipName": "user",
+            "relationshipName": "userAnnex",
             "otherEntityName": "userAnnex",
-            "otherEntityField": "name",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "userStatusHistory"
-        },
-        {
-            "relationshipType": "one-to-one",
-            "relationshipName": "oldStatus",
-            "otherEntityName": "userStatus",
-            "otherEntityField": "name",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "userStatusHistory"
-        },
-        {
-            "relationshipType": "one-to-one",
-            "relationshipName": "newtatus",
-            "otherEntityName": "userStatus",
-            "otherEntityField": "name",
-            "ownerSide": true,
-            "otherEntityRelationshipName": "userStatusHistory"
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
         }
     ],
     "fields": [
@@ -34,13 +16,26 @@
         {
             "fieldName": "modifiedTime",
             "fieldType": "Instant"
+        },
+        {
+            "fieldName": "userid",
+            "fieldType": "Long"
+        },
+        {
+            "fieldName": "withStatus",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "toStatus",
+            "fieldType": "Integer"
         }
     ],
-    "changelogDate": "20180405065740",
-    "entityTableName": "user_status_history",
+    "changelogDate": "20180410082006",
     "dto": "mapstruct",
-    "pagination": "no",
-    "service": "serviceClass",
-    "jpaMetamodelFiltering": false,
-    "microserviceName": "user"
+    "service": "serviceImpl",
+    "entityTableName": "user_status_history",
+    "jpaMetamodelFiltering": true,
+    "pagination": "pagination",
+    "microserviceName": "user",
+    "searchEngine": false
 }

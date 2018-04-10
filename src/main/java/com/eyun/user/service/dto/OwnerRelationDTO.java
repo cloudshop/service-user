@@ -1,6 +1,7 @@
 package com.eyun.user.service.dto;
 
 
+import java.time.Instant;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,17 +14,17 @@ public class OwnerRelationDTO implements Serializable {
 
     private Long id;
 
-    private Long ownerTypeId;
+    private String roleName;
 
-    private String ownerTypeName;
+    private String description;
 
-    private Long ownerId;
+    private Instant createdTime;
 
-    private String ownerName;
+    private Instant updatedTime;
+
+    private Long userAnnexId;
 
     private Long mercuryId;
-
-    private String mercuryName;
 
     public Long getId() {
         return id;
@@ -33,36 +34,44 @@ public class OwnerRelationDTO implements Serializable {
         this.id = id;
     }
 
-    public Long getOwnerTypeId() {
-        return ownerTypeId;
+    public String getRoleName() {
+        return roleName;
     }
 
-    public void setOwnerTypeId(Long ownerTypeId) {
-        this.ownerTypeId = ownerTypeId;
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 
-    public String getOwnerTypeName() {
-        return ownerTypeName;
+    public String getDescription() {
+        return description;
     }
 
-    public void setOwnerTypeName(String ownerTypeName) {
-        this.ownerTypeName = ownerTypeName;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
-    public Long getOwnerId() {
-        return ownerId;
+    public Instant getCreatedTime() {
+        return createdTime;
     }
 
-    public void setOwnerId(Long userAnnexId) {
-        this.ownerId = userAnnexId;
+    public void setCreatedTime(Instant createdTime) {
+        this.createdTime = createdTime;
     }
 
-    public String getOwnerName() {
-        return ownerName;
+    public Instant getUpdatedTime() {
+        return updatedTime;
     }
 
-    public void setOwnerName(String userAnnexName) {
-        this.ownerName = userAnnexName;
+    public void setUpdatedTime(Instant updatedTime) {
+        this.updatedTime = updatedTime;
+    }
+
+    public Long getUserAnnexId() {
+        return userAnnexId;
+    }
+
+    public void setUserAnnexId(Long userAnnexId) {
+        this.userAnnexId = userAnnexId;
     }
 
     public Long getMercuryId() {
@@ -71,14 +80,6 @@ public class OwnerRelationDTO implements Serializable {
 
     public void setMercuryId(Long mercuryId) {
         this.mercuryId = mercuryId;
-    }
-
-    public String getMercuryName() {
-        return mercuryName;
-    }
-
-    public void setMercuryName(String mercuryName) {
-        this.mercuryName = mercuryName;
     }
 
     @Override
@@ -106,6 +107,10 @@ public class OwnerRelationDTO implements Serializable {
     public String toString() {
         return "OwnerRelationDTO{" +
             "id=" + getId() +
+            ", roleName='" + getRoleName() + "'" +
+            ", description='" + getDescription() + "'" +
+            ", createdTime='" + getCreatedTime() + "'" +
+            ", updatedTime='" + getUpdatedTime() + "'" +
             "}";
     }
 }

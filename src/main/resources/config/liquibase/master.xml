@@ -5,22 +5,16 @@
     xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.5.xsd">
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20180405065738_added_entity_UserAnnex.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20180405065739_added_entity_UserStatus.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20180405065740_added_entity_UserStatusHistory.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20180405065741_added_entity_UserType.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20180405065742_added_entity_DeliveryAddress.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20180405065743_added_entity_Mercury.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20180405065744_added_entity_MercuryStatus.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20180405065745_added_entity_MercuryStatusHistory.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20180405065746_added_entity_OwnerType.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20180405065747_added_entity_OwnerRelation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180410080002_added_entity_UserAnnex.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180410082006_added_entity_UserStatusHistory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180410082623_added_entity_DeliveryAddress.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180410084440_added_entity_Mercury.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180410085657_added_entity_MercuryStatusHistory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180410090839_added_entity_OwnerRelation.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
-    <include file="config/liquibase/changelog/20180405065738_added_entity_constraints_UserAnnex.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20180405065740_added_entity_constraints_UserStatusHistory.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20180405065742_added_entity_constraints_DeliveryAddress.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20180405065743_added_entity_constraints_Mercury.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20180405065745_added_entity_constraints_MercuryStatusHistory.xml" relativeToChangelogFile="false"/>
-    <include file="config/liquibase/changelog/20180405065747_added_entity_constraints_OwnerRelation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180410082006_added_entity_constraints_UserStatusHistory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180410090839_added_entity_constraints_OwnerRelation.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180410085657_added_entity_constraints_MercuryStatusHistory.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20180410082623_added_entity_constraints_DeliveryAddress.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
 </databaseChangeLog>
