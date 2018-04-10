@@ -109,6 +109,7 @@ public class UserAnnexResource {
      * @param id the id of the userAnnexDTO to retrieve
      * @return the ResponseEntity with status 200 (OK) and with body the userAnnexDTO, or with status 404 (Not Found)
      */
+
     @GetMapping("/user-annexes/{id}")
     @Timed
     public ResponseEntity<UserAnnexDTO> getUserAnnex(@PathVariable Long id) {
@@ -118,16 +119,83 @@ public class UserAnnexResource {
     }
 
     /**
+     * 修改用户名称
+     * @param id
+     * @param name
+     * @return
+     */
+    @PostMapping("/user-annexes-name/{id}/{name}")
+    @Timed
+    public ResponseEntity<UserAnnexDTO> updateUserAnnexName(@PathVariable Long id, @PathVariable String name) {
+        UserAnnexDTO userAnnexDTO = new UserAnnexDTO();
+        userAnnexDTO.setId(id);
+        userAnnexDTO.setName(name);
+        userAnnexService.updataUserName(userAnnexDTO);
+        return null;
+    }
+
+
+    /**
+     *
+     * @param id
+     * @param phone
+     * @return
+     */
+    @PostMapping("/user-annexes-phone/{id}/{phone}")
+    @Timed
+    public ResponseEntity<UserAnnexDTO> updateUserAnnexPhone(@PathVariable Long id, @PathVariable String phone) {
+        UserAnnexDTO userAnnexDTO = new UserAnnexDTO();
+        userAnnexDTO.setId(id);
+        userAnnexDTO.setPhone(phone);
+        userAnnexService.updataUserPhone(userAnnexDTO);
+        return null;
+    }
+
+
+    /**
+     *
+     * @param id
+     * @param nickname
+     * @return
+     */
+    @PostMapping("/user-annexes-nickname/{id}/{nickname}")
+    @Timed
+    public ResponseEntity<UserAnnexDTO> updateUserAnnexNickname(@PathVariable Long id, @PathVariable String nickname) {
+        UserAnnexDTO userAnnexDTO = new UserAnnexDTO();
+        userAnnexDTO.setId(id);
+        userAnnexDTO.setNickname(nickname);
+        userAnnexService.updataUserNickname(userAnnexDTO);
+        return null;
+    }
+
+
+    /**
+     *
+     * @param id
+     * @param avatar
+     * @return
+     */
+    @PostMapping("/user-annexes-avatar/{id}/{avatar}")
+    @Timed
+    public ResponseEntity<UserAnnexDTO> updateUserAnnexAvatar(@PathVariable Long id, @PathVariable String avatar) {
+        UserAnnexDTO userAnnexDTO = new UserAnnexDTO();
+        userAnnexDTO.setId(id);
+        userAnnexDTO.setAvatar(avatar);
+        userAnnexService.updataUserAvatar(userAnnexDTO);
+        return null;
+    }
+
+    /**
      * DELETE  /user-annexes/:id : delete the "id" userAnnex.
      *
      * @param id the id of the userAnnexDTO to delete
      * @return the ResponseEntity with status 200 (OK)
-     */
+
     @DeleteMapping("/user-annexes/{id}")
     @Timed
     public ResponseEntity<Void> deleteUserAnnex(@PathVariable Long id) {
         log.debug("REST request to delete UserAnnex : {}", id);
         userAnnexService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }
+    }*/
 }
