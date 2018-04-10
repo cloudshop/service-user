@@ -46,4 +46,33 @@ public interface UserAnnexService {
      * @param id the id of the entity
      */
     void delete(Long id);
+
+
+    /**
+     * 修改用户姓名
+     * 穿着西装敲代码 文亮
+     * @param
+     */
+    void updataUserName(UserAnnexDTO userAnnexDTO);
+
+    /**修改用户昵称
+     * 穿着西装敲代码 文亮
+     * @param
+     */
+    void updataUserNickname(UserAnnexDTO userAnnexDTO);
+
+    /**
+     * 修改用户电话号码
+     * 穿着西装敲代码 文亮
+     * @param
+     */
+    void updataUserPhone(UserAnnexDTO userAnnexDTO);
+
+
+    /**
+     * 修改用户头像
+     * 穿着西装敲代码 文亮
+     * @param
+     */
+    void updataUserAvatar(UserAnnexDTO userAnnexDTO);
 }
