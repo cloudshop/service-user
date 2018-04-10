@@ -5,8 +5,10 @@ import com.eyun.user.domain.UserAnnex;
 import com.eyun.user.repository.UserAnnexRepository;
 import com.eyun.user.service.dto.UserAnnexDTO;
 import com.eyun.user.service.mapper.UserAnnexMapper;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -65,10 +67,11 @@ public class UserAnnexServiceImpl implements UserAnnexService {
 
 
     /**
-     *  get all the userAnnexes where OwnerRelation is null.
-     *  @return the list of entities
+     * get all the userAnnexes where OwnerRelation is null.
+     *
+     * @return the list of entities
      */
-    @Transactional(readOnly = true) 
+    @Transactional(readOnly = true)
     public List<UserAnnexDTO> findAllWhereOwnerRelationIsNull() {
         log.debug("Request to get all userAnnexes where OwnerRelation is null");
         return StreamSupport
@@ -101,5 +104,55 @@ public class UserAnnexServiceImpl implements UserAnnexService {
     public void delete(Long id) {
         log.debug("Request to delete UserAnnex : {}", id);
         userAnnexRepository.delete(id);
+    }
+
+
+    /**
+     * @param userAnnexDTO
+     */
+    @Override
+    @Transactional
+    public void updataUserName(UserAnnexDTO userAnnexDTO) {
+        UserAnnex userAnnex = new UserAnnex();
+        BeanUtils.copyProperties(userAnnexDTO, userAnnex);
+        userAnnexRepository.saveAndFlush(userAnnex);
+
+    }
+
+    /**
+     * @param userAnnexDTO
+     */
+    @Override
+    @Transactional
+    public void updataUserNickname(UserAnnexDTO userAnnexDTO) {
+        UserAnnex userAnnex = new UserAnnex();
+        BeanUtils.copyProperties(userAnnexDTO, userAnnex);
+        userAnnexRepository.saveAndFlush(userAnnex);
+
+    }
+
+
+    /**
+     * @param userAnnexDTO
+     */
+    @Override
+    @Transactional
+    public void updataUserPhone(UserAnnexDTO userAnnexDTO) {
+        UserAnnex userAnnex = new UserAnnex();
+        BeanUtils.copyProperties(userAnnexDTO, userAnnex);
+        userAnnexRepository.saveAndFlush(userAnnex);
+
+    }
+
+
+    /**
+     * @param userAnnexDTO
+     */
+    @Override
+    @Transactional
+    public void updataUserAvatar(UserAnnexDTO userAnnexDTO) {
+        UserAnnex userAnnex = new UserAnnex();
+        BeanUtils.copyProperties(userAnnexDTO, userAnnex);
+        userAnnexRepository.saveAndFlush(userAnnex);
     }
 }
