@@ -131,7 +131,7 @@ public class UserAnnexResource {
         userAnnexDTO.setId(id);
         userAnnexDTO.setName(name);
         userAnnexService.updataUserName(userAnnexDTO);
-        return null;
+        return ResponseEntity.ok().body(null);
     }
 
 
@@ -148,7 +148,8 @@ public class UserAnnexResource {
         userAnnexDTO.setId(id);
         userAnnexDTO.setPhone(phone);
         userAnnexService.updataUserPhone(userAnnexDTO);
-        return null;
+        return ResponseEntity.ok().body(null);
+
     }
 
 
@@ -165,7 +166,7 @@ public class UserAnnexResource {
         userAnnexDTO.setId(id);
         userAnnexDTO.setNickname(nickname);
         userAnnexService.updataUserNickname(userAnnexDTO);
-        return null;
+        return ResponseEntity.ok().body(null);
     }
 
 
@@ -182,7 +183,9 @@ public class UserAnnexResource {
         userAnnexDTO.setId(id);
         userAnnexDTO.setAvatar(avatar);
         userAnnexService.updataUserAvatar(userAnnexDTO);
-        return null;
+        return ResponseEntity.ok().body(null);
+
+
     }
 
     /**
