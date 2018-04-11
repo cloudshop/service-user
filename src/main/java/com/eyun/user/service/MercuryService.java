@@ -46,4 +46,12 @@ public interface MercuryService {
      * @param id the id of the entity
      */
     void delete(Long id);
+
+
+    /**
+     * 附近商户查询
+     * @param mercuryDTO
+     * @return
+     */
+    List<MercuryDTO> findNearMerchants(MercuryDTO mercuryDTO);
 }
