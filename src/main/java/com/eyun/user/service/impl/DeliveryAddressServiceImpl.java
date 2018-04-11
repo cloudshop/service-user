@@ -7,10 +7,13 @@ import com.eyun.user.service.dto.DeliveryAddressDTO;
 import com.eyun.user.service.mapper.DeliveryAddressMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 
 /**
@@ -43,6 +46,16 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
         DeliveryAddress deliveryAddress = deliveryAddressMapper.toEntity(deliveryAddressDTO);
         deliveryAddress = deliveryAddressRepository.save(deliveryAddress);
         return deliveryAddressMapper.toDto(deliveryAddress);
+    }
+
+    /**
+     * 
+     * @param id
+     * @return
+     */
+    @Override
+    public List<DeliveryAddressDTO> findByIdList(Long id) {
+        return deliveryAddressRepository.findDeliveryAddressList(id);
     }
 
     /**
