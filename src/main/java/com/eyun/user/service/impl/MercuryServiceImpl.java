@@ -138,7 +138,7 @@ public class MercuryServiceImpl implements MercuryService {
         double maxlat = lantitude+dlat;
         double minlng = langitude -dlng;
         double maxlng = langitude + dlng;
-        List<MercuryDTO> nearMerchantsList = mercuryRepository.findNearMerchantsList();
+        List<MercuryDTO> nearMerchantsList = mercuryRepository.findNearMerchantsList(minlng,maxlng,minlat,maxlat);
         return nearMerchantsList;
     }
 
