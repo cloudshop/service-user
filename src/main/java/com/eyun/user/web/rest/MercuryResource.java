@@ -130,4 +130,28 @@ public class MercuryResource {
         mercuryService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+
+    /**
+     * 穿着西装敲代码 文亮
+     * 根据经纬度查询附近的商家
+     *
+     * @param longitude 经度
+     * @param latitude  纬度
+     * @return
+     */
+    @PostMapping("/mercuries/info-list/{longitude}/{latitude}")
+    @Timed
+    public ResponseEntity<List<MercuryDTO>> getMercuryInfoList(@PathVariable Double longitude, @PathVariable Double latitude) {
+        MercuryDTO mercuryDTO = new MercuryDTO();
+        //经度
+        mercuryDTO.setLangitude(longitude);
+        //纬度
+        mercuryDTO.setLantitude(latitude);
+        List<MercuryDTO> MercuryInfoList = mercuryService.findNearMerchants(mercuryDTO);
+
+        return (ResponseEntity<List<MercuryDTO>>) MercuryInfoList;
+
+    }
 }
+
