@@ -1,8 +1,11 @@
 package com.eyun.user.service;
 
+import com.eyun.user.domain.DeliveryAddress;
 import com.eyun.user.service.dto.DeliveryAddressDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 /**
  * Service Interface for managing DeliveryAddress.
@@ -39,4 +42,12 @@ public interface DeliveryAddressService {
      * @param id the id of the entity
      */
     void delete(Long id);
+
+
+    /**
+     *
+     * @param id
+     * @return
+     */
+    List<DeliveryAddressDTO> findByIdList(Long id);
 }
