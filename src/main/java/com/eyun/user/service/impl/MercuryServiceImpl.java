@@ -68,7 +68,8 @@ public class MercuryServiceImpl implements MercuryService {
      *  get all the mercuries where OwnerRelation is null.
      *  @return the list of entities
      */
-    @Transactional(readOnly = true) 
+    @Override
+    @Transactional(readOnly = true)
     public List<MercuryDTO> findAllWhereOwnerRelationIsNull() {
         log.debug("Request to get all mercuries where OwnerRelation is null");
         return StreamSupport
@@ -102,4 +103,44 @@ public class MercuryServiceImpl implements MercuryService {
         log.debug("Request to delete Mercury : {}", id);
         mercuryRepository.delete(id);
     }
+
+
+
+    @Override
+    public List<MercuryDTO> findNearMerchants(MercuryDTO mercuryDTO) {
+        //经度
+        Double langitude = mercuryDTO.getLangitude();
+        //维度
+        Double lantitude = mercuryDTO.getLantitude();
+        //1.把经纬度转换成附近的位置
+         List<MercuryDTO> MercuryInfoList= this.findNeighPosition(lantitude, langitude);
+        return MercuryInfoList;
+
+    }
+
+    private List<MercuryDTO> findNeighPosition(Double lantitude, Double langitude) {
+        //先计算查询点的经纬度范围
+
+        //地球半径千米
+        double r = 6371;
+
+        //0.5千米距离
+        double dis = 0.5;
+
+        double dlng =  2*Math.asin(Math.sin(dis/(2*r))/Math.cos(lantitude*Math.PI/180));
+        //角度转为弧度
+        dlng = dlng*180/Math.PI;
+
+        double dlat = dis/r;
+
+        dlat = dlat*180/Math.PI;
+        double minlat =lantitude-dlat;
+        double maxlat = lantitude+dlat;
+        double minlng = langitude -dlng;
+        double maxlng = langitude + dlng;
+        List<MercuryDTO> nearMerchantsList = mercuryRepository.findNearMerchantsList();
+        return nearMerchantsList;
+    }
+
+
 }
