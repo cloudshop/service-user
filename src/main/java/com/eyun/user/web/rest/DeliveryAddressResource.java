@@ -1,6 +1,7 @@
 package com.eyun.user.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.eyun.user.domain.DeliveryAddress;
 import com.eyun.user.service.DeliveryAddressService;
 import com.eyun.user.web.rest.errors.BadRequestAlertException;
 import com.eyun.user.web.rest.util.HeaderUtil;
@@ -129,4 +130,17 @@ public class DeliveryAddressResource {
         deliveryAddressService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    @GetMapping("/delivery-addresses-list/{id}")
+    @Timed
+    public ResponseEntity<List<DeliveryAddressDTO>> getAddressList(@PathVariable Long id){
+        List<DeliveryAddressDTO> delverList = deliveryAddressService.findByIdList(id);
+        return ResponseEntity.ok().body(delverList);
+
+    }
+
+
+
+
+
 }
