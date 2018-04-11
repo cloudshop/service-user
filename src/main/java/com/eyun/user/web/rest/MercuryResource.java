@@ -150,7 +150,8 @@ public class MercuryResource {
         mercuryDTO.setLantitude(latitude);
         List<MercuryDTO> MercuryInfoList = mercuryService.findNearMerchants(mercuryDTO);
 
-        return (ResponseEntity<List<MercuryDTO>>) MercuryInfoList;
+        return ResponseEntity.ok()
+            .body(MercuryInfoList);
 
     }
 }
