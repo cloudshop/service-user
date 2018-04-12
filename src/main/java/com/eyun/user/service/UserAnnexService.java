@@ -75,4 +75,7 @@ public interface UserAnnexService {
      * @param
      */
     void updataUserAvatar(UserAnnexDTO userAnnexDTO);
+
+
+    void userRegis(UserAnnexDTO userAnnexDTO);
 }
