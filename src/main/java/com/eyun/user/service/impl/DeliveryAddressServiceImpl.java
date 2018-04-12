@@ -37,6 +37,33 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
     }
 
     /**
+     * 创建地址
+     * @param deliveryAddressDTO
+     */
+    @Override
+    public void createAddress(DeliveryAddressDTO deliveryAddressDTO) {
+        DeliveryAddress deliveryAddress = new DeliveryAddress();
+        BeanUtils.copyProperties(deliveryAddressDTO,deliveryAddress);
+        deliveryAddressRepository.save(deliveryAddress);
+
+
+
+    }
+
+    /**
+     * 修改地址
+     * @param deliveryAddressDTO
+     */
+    @Override
+    @Transactional
+    public void updateAddress(DeliveryAddressDTO deliveryAddressDTO) {
+        DeliveryAddress deliveryAddress = new DeliveryAddress();
+        BeanUtils.copyProperties(deliveryAddressDTO,deliveryAddress);
+        deliveryAddressRepository.saveAndFlush(deliveryAddress);
+
+    }
+
+    /**
      * Save a deliveryAddress.
      *
      * @param deliveryAddressDTO the entity to save
