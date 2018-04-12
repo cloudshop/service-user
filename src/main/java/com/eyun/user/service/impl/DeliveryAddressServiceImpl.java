@@ -13,7 +13,9 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 /**
@@ -49,13 +51,16 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
     }
 
     /**
-     * 
+     *
      * @param id
      * @return
      */
     @Override
-    public List<DeliveryAddressDTO> findByIdList(Long id) {
-        return deliveryAddressRepository.findDeliveryAddressList(id);
+    public Map findByIdList(Long id) {
+        Map result=new HashMap();
+        Map DeliveryAddress = deliveryAddressRepository.findDeliveryAddressList(id);
+        result.put("deliveryAddress", DeliveryAddress);
+        return result;
     }
 
     /**
