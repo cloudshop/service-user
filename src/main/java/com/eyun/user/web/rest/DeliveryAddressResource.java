@@ -3,6 +3,7 @@ package com.eyun.user.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.eyun.user.domain.DeliveryAddress;
 import com.eyun.user.service.DeliveryAddressService;
+import com.eyun.user.service.dto.UserAnnexDTO;
 import com.eyun.user.web.rest.errors.BadRequestAlertException;
 import com.eyun.user.web.rest.util.HeaderUtil;
 import com.eyun.user.web.rest.util.PaginationUtil;
@@ -139,6 +140,43 @@ public class DeliveryAddressResource {
         return ResponseEntity.ok().body(result);
 
     }
+
+
+    /**
+     * 添加地址
+     * @param deliveryAddressDTO
+     * @return
+     */
+    @PostMapping("/user-annexes-createAddress/")
+    @Timed
+    public ResponseEntity createAddress(@RequestBody DeliveryAddressDTO deliveryAddressDTO){
+         deliveryAddressService.createAddress(deliveryAddressDTO);
+        return ResponseEntity.ok().body(null);
+    }
+
+
+    /**
+     * 修改地址
+     * @param deliveryAddressDTO
+     * @return
+     */
+    @PostMapping("/user-annexes-updateAddress/")
+    @Timed
+    public ResponseEntity updateAddress(@RequestBody DeliveryAddressDTO deliveryAddressDTO){
+        deliveryAddressService.updateAddress(deliveryAddressDTO);
+        return ResponseEntity.ok().body(null);
+
+    }
+
+
+
+
+
+
+
+
+
+
 
 
 
