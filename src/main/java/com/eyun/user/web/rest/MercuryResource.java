@@ -140,7 +140,7 @@ public class MercuryResource {
      * @param latitude  纬度
      * @return
      */
-    @PostMapping("/mercuries/info-list/{longitude}/{latitude}")
+    @GetMapping("/mercuries/info-list/{longitude}/{latitude}")
     @Timed
     public ResponseEntity<List<MercuryDTO>> getMercuryInfoList(@PathVariable Double longitude, @PathVariable Double latitude) {
         MercuryDTO mercuryDTO = new MercuryDTO();
