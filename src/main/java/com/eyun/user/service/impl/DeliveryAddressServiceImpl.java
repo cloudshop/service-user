@@ -56,11 +56,12 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
      * @return
      */
     @Override
-    public Map findByIdList(Long id) {
+    public List<Map> findByIdList(Long id) {
         Map result=new HashMap();
-        Map DeliveryAddress = deliveryAddressRepository.findDeliveryAddressList(id);
-        result.put("deliveryAddress", DeliveryAddress);
-        return result;
+        List<Map> deliveryAddressList = deliveryAddressRepository.findDeliveryAddressList(id);
+        return deliveryAddressList;
+
+
     }
 
     /**
