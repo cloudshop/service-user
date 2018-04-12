@@ -23,6 +23,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -133,9 +134,9 @@ public class DeliveryAddressResource {
 
     @GetMapping("/delivery-addresses-list/{id}")
     @Timed
-    public ResponseEntity<List<DeliveryAddressDTO>> getAddressList(@PathVariable Long id){
-        List<DeliveryAddressDTO> delverList = deliveryAddressService.findByIdList(id);
-        return ResponseEntity.ok().body(delverList);
+    public ResponseEntity getAddressList(@PathVariable Long id){
+        Map result = deliveryAddressService.findByIdList(id);
+        return ResponseEntity.ok().body(result);
 
     }
 
