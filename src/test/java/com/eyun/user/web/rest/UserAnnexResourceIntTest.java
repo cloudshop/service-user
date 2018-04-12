@@ -76,6 +76,9 @@ public class UserAnnexResourceIntTest {
     private static final Instant DEFAULT_UPDATED_TIME = Instant.ofEpochMilli(0L);
     private static final Instant UPDATED_UPDATED_TIME = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
+    private static final Integer DEFAULT_TYPE = 1;
+    private static final Integer UPDATED_TYPE = 2;
+
     @Autowired
     private UserAnnexRepository userAnnexRepository;
 
@@ -131,7 +134,8 @@ public class UserAnnexResourceIntTest {
             .avatar(DEFAULT_AVATAR)
             .status(DEFAULT_STATUS)
             .createdTime(DEFAULT_CREATED_TIME)
-            .updatedTime(DEFAULT_UPDATED_TIME);
+            .updatedTime(DEFAULT_UPDATED_TIME)
+            .type(DEFAULT_TYPE);
         return userAnnex;
     }
 
@@ -165,6 +169,7 @@ public class UserAnnexResourceIntTest {
         assertThat(testUserAnnex.getStatus()).isEqualTo(DEFAULT_STATUS);
         assertThat(testUserAnnex.getCreatedTime()).isEqualTo(DEFAULT_CREATED_TIME);
         assertThat(testUserAnnex.getUpdatedTime()).isEqualTo(DEFAULT_UPDATED_TIME);
+        assertThat(testUserAnnex.getType()).isEqualTo(DEFAULT_TYPE);
     }
 
     @Test
@@ -206,7 +211,8 @@ public class UserAnnexResourceIntTest {
             .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)))
             .andExpect(jsonPath("$.[*].createdTime").value(hasItem(DEFAULT_CREATED_TIME.toString())))
-            .andExpect(jsonPath("$.[*].updatedTime").value(hasItem(DEFAULT_UPDATED_TIME.toString())));
+            .andExpect(jsonPath("$.[*].updatedTime").value(hasItem(DEFAULT_UPDATED_TIME.toString())))
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)));
     }
 
     @Test
@@ -228,7 +234,8 @@ public class UserAnnexResourceIntTest {
             .andExpect(jsonPath("$.avatar").value(DEFAULT_AVATAR.toString()))
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS))
             .andExpect(jsonPath("$.createdTime").value(DEFAULT_CREATED_TIME.toString()))
-            .andExpect(jsonPath("$.updatedTime").value(DEFAULT_UPDATED_TIME.toString()));
+            .andExpect(jsonPath("$.updatedTime").value(DEFAULT_UPDATED_TIME.toString()))
+            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE));
     }
 
     @Test
@@ -638,6 +645,72 @@ public class UserAnnexResourceIntTest {
 
     @Test
     @Transactional
+    public void getAllUserAnnexesByTypeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        userAnnexRepository.saveAndFlush(userAnnex);
+
+        // Get all the userAnnexList where type equals to DEFAULT_TYPE
+        defaultUserAnnexShouldBeFound("type.equals=" + DEFAULT_TYPE);
+
+        // Get all the userAnnexList where type equals to UPDATED_TYPE
+        defaultUserAnnexShouldNotBeFound("type.equals=" + UPDATED_TYPE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserAnnexesByTypeIsInShouldWork() throws Exception {
+        // Initialize the database
+        userAnnexRepository.saveAndFlush(userAnnex);
+
+        // Get all the userAnnexList where type in DEFAULT_TYPE or UPDATED_TYPE
+        defaultUserAnnexShouldBeFound("type.in=" + DEFAULT_TYPE + "," + UPDATED_TYPE);
+
+        // Get all the userAnnexList where type equals to UPDATED_TYPE
+        defaultUserAnnexShouldNotBeFound("type.in=" + UPDATED_TYPE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserAnnexesByTypeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        userAnnexRepository.saveAndFlush(userAnnex);
+
+        // Get all the userAnnexList where type is not null
+        defaultUserAnnexShouldBeFound("type.specified=true");
+
+        // Get all the userAnnexList where type is null
+        defaultUserAnnexShouldNotBeFound("type.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserAnnexesByTypeIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        userAnnexRepository.saveAndFlush(userAnnex);
+
+        // Get all the userAnnexList where type greater than or equals to DEFAULT_TYPE
+        defaultUserAnnexShouldBeFound("type.greaterOrEqualThan=" + DEFAULT_TYPE);
+
+        // Get all the userAnnexList where type greater than or equals to UPDATED_TYPE
+        defaultUserAnnexShouldNotBeFound("type.greaterOrEqualThan=" + UPDATED_TYPE);
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserAnnexesByTypeIsLessThanSomething() throws Exception {
+        // Initialize the database
+        userAnnexRepository.saveAndFlush(userAnnex);
+
+        // Get all the userAnnexList where type less than or equals to DEFAULT_TYPE
+        defaultUserAnnexShouldNotBeFound("type.lessThan=" + DEFAULT_TYPE);
+
+        // Get all the userAnnexList where type less than or equals to UPDATED_TYPE
+        defaultUserAnnexShouldBeFound("type.lessThan=" + UPDATED_TYPE);
+    }
+
+
+    @Test
+    @Transactional
     public void getAllUserAnnexesByOwnerRelationIsEqualToSomething() throws Exception {
         // Initialize the database
         OwnerRelation ownerRelation = OwnerRelationResourceIntTest.createEntity(em);
@@ -690,7 +763,8 @@ public class UserAnnexResourceIntTest {
             .andExpect(jsonPath("$.[*].avatar").value(hasItem(DEFAULT_AVATAR.toString())))
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)))
             .andExpect(jsonPath("$.[*].createdTime").value(hasItem(DEFAULT_CREATED_TIME.toString())))
-            .andExpect(jsonPath("$.[*].updatedTime").value(hasItem(DEFAULT_UPDATED_TIME.toString())));
+            .andExpect(jsonPath("$.[*].updatedTime").value(hasItem(DEFAULT_UPDATED_TIME.toString())))
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)));
     }
 
     /**
@@ -733,7 +807,8 @@ public class UserAnnexResourceIntTest {
             .avatar(UPDATED_AVATAR)
             .status(UPDATED_STATUS)
             .createdTime(UPDATED_CREATED_TIME)
-            .updatedTime(UPDATED_UPDATED_TIME);
+            .updatedTime(UPDATED_UPDATED_TIME)
+            .type(UPDATED_TYPE);
         UserAnnexDTO userAnnexDTO = userAnnexMapper.toDto(updatedUserAnnex);
 
         restUserAnnexMockMvc.perform(put("/api/user-annexes")
@@ -754,6 +829,7 @@ public class UserAnnexResourceIntTest {
         assertThat(testUserAnnex.getStatus()).isEqualTo(UPDATED_STATUS);
         assertThat(testUserAnnex.getCreatedTime()).isEqualTo(UPDATED_CREATED_TIME);
         assertThat(testUserAnnex.getUpdatedTime()).isEqualTo(UPDATED_UPDATED_TIME);
+        assertThat(testUserAnnex.getType()).isEqualTo(UPDATED_TYPE);
     }
 
     @Test

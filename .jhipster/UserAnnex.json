@@ -51,6 +51,10 @@
         {
             "fieldName": "updatedTime",
             "fieldType": "Instant"
+        },
+        {
+            "fieldName": "type",
+            "fieldType": "Integer"
         }
     ],
     "changelogDate": "20180410080002",

@@ -105,6 +105,9 @@ public class UserAnnexQueryService extends QueryService<UserAnnex> {
             if (criteria.getUpdatedTime() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getUpdatedTime(), UserAnnex_.updatedTime));
             }
+            if (criteria.getType() != null) {
+                specification = specification.and(buildRangeSpecification(criteria.getType(), UserAnnex_.type));
+            }
             if (criteria.getOwnerRelationId() != null) {
                 specification = specification.and(buildReferringEntitySpecification(criteria.getOwnerRelationId(), UserAnnex_.ownerRelation, OwnerRelation_.id));
             }

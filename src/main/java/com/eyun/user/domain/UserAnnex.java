@@ -53,6 +53,9 @@ public class UserAnnex implements Serializable {
     @Column(name = "updated_time")
     private Instant updatedTime;
 
+    @Column(name = "jhi_type")
+    private Integer type;
+
     @OneToOne(mappedBy = "userAnnex")
     @JsonIgnore
     private OwnerRelation ownerRelation;
@@ -188,6 +191,19 @@ public class UserAnnex implements Serializable {
         this.updatedTime = updatedTime;
     }
 
+    public Integer getType() {
+        return type;
+    }
+
+    public UserAnnex type(Integer type) {
+        this.type = type;
+        return this;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     public OwnerRelation getOwnerRelation() {
         return ownerRelation;
     }
@@ -260,6 +276,7 @@ public class UserAnnex implements Serializable {
             ", status=" + getStatus() +
             ", createdTime='" + getCreatedTime() + "'" +
             ", updatedTime='" + getUpdatedTime() + "'" +
+            ", type=" + getType() +
             "}";
     }
 }

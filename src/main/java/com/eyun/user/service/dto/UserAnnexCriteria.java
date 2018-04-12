@@ -46,6 +46,8 @@ public class UserAnnexCriteria implements Serializable {
 
     private InstantFilter updatedTime;
 
+    private IntegerFilter type;
+
     private LongFilter ownerRelationId;
 
     private LongFilter userStatusHistoryId;
@@ -133,6 +135,14 @@ public class UserAnnexCriteria implements Serializable {
         this.updatedTime = updatedTime;
     }
 
+    public IntegerFilter getType() {
+        return type;
+    }
+
+    public void setType(IntegerFilter type) {
+        this.type = type;
+    }
+
     public LongFilter getOwnerRelationId() {
         return ownerRelationId;
     }
@@ -162,6 +172,7 @@ public class UserAnnexCriteria implements Serializable {
                 (status != null ? "status=" + status + ", " : "") +
                 (createdTime != null ? "createdTime=" + createdTime + ", " : "") +
                 (updatedTime != null ? "updatedTime=" + updatedTime + ", " : "") +
+                (type != null ? "type=" + type + ", " : "") +
                 (ownerRelationId != null ? "ownerRelationId=" + ownerRelationId + ", " : "") +
                 (userStatusHistoryId != null ? "userStatusHistoryId=" + userStatusHistoryId + ", " : "") +
             "}";

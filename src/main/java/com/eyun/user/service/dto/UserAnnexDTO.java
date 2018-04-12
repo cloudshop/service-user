@@ -32,6 +32,8 @@ public class UserAnnexDTO implements Serializable {
 
     private Instant updatedTime;
 
+    private Integer type;
+
     public Long getId() {
         return id;
     }
@@ -112,6 +114,14 @@ public class UserAnnexDTO implements Serializable {
         this.updatedTime = updatedTime;
     }
 
+    public Integer getType() {
+        return type;
+    }
+
+    public void setType(Integer type) {
+        this.type = type;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -146,6 +156,7 @@ public class UserAnnexDTO implements Serializable {
             ", status=" + getStatus() +
             ", createdTime='" + getCreatedTime() + "'" +
             ", updatedTime='" + getUpdatedTime() + "'" +
+            ", type=" + getType() +
             "}";
     }
 }
