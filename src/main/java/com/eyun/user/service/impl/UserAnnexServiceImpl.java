@@ -71,6 +71,7 @@ public class UserAnnexServiceImpl implements UserAnnexService {
      *
      * @return the list of entities
      */
+    @Override
     @Transactional(readOnly = true)
     public List<UserAnnexDTO> findAllWhereOwnerRelationIsNull() {
         log.debug("Request to get all userAnnexes where OwnerRelation is null");
@@ -154,5 +155,21 @@ public class UserAnnexServiceImpl implements UserAnnexService {
         UserAnnex userAnnex = new UserAnnex();
         BeanUtils.copyProperties(userAnnexDTO, userAnnex);
         userAnnexRepository.saveAndFlush(userAnnex);
+    }
+
+
+    /**
+     * 用户注册
+     * @param userAnnexDTO
+     */
+    @Override
+    public void userRegis(UserAnnexDTO userAnnexDTO) {
+        UserAnnex userAnnex = new UserAnnex();
+        userAnnex.setStatus(1);
+        //0，默认为普通会员 1,增值会员
+        userAnnex.setType(0);
+        BeanUtils.copyProperties(userAnnexDTO,userAnnex);
+        this.userAnnexRepository.save(userAnnex);
+
     }
 }
