@@ -118,35 +118,28 @@ public class UserAnnexResource {
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(userAnnexDTO));
     }
 
+
     /**
-     * 修改用户名称
-     * @param id
-     * @param name
+     *
+     * @param userAnnexDTO
      * @return
      */
-    @PostMapping("/user-annexes-name/{id}/{name}")
+    @PostMapping("/user-annexes-name/")
     @Timed
-    public ResponseEntity<UserAnnexDTO> updateUserAnnexName(@PathVariable Long id, @PathVariable String name) {
-        UserAnnexDTO userAnnexDTO = new UserAnnexDTO();
-        userAnnexDTO.setId(id);
-        userAnnexDTO.setName(name);
+    public ResponseEntity<UserAnnexDTO> updateUserAnnexName(@RequestBody UserAnnexDTO userAnnexDTO) {
         userAnnexService.updataUserName(userAnnexDTO);
         return ResponseEntity.ok().body(null);
     }
 
 
     /**
-     *
-     * @param id
-     * @param phone
+     *修改电话
+     * @param userAnnexDTO
      * @return
      */
-    @PostMapping("/user-annexes-phone/{id}/{phone}")
+    @PostMapping("/user-annexes-phone/")
     @Timed
-    public ResponseEntity<UserAnnexDTO> updateUserAnnexPhone(@PathVariable Long id, @PathVariable String phone) {
-        UserAnnexDTO userAnnexDTO = new UserAnnexDTO();
-        userAnnexDTO.setId(id);
-        userAnnexDTO.setPhone(phone);
+    public ResponseEntity<UserAnnexDTO> updateUserAnnexPhone(@RequestBody UserAnnexDTO userAnnexDTO) {
         userAnnexService.updataUserPhone(userAnnexDTO);
         return ResponseEntity.ok().body(null);
 
@@ -154,39 +147,63 @@ public class UserAnnexResource {
 
 
     /**
-     *
-     * @param id
-     * @param nickname
+     *修改昵称
+     * @param userAnnexDTO
      * @return
      */
-    @PostMapping("/user-annexes-nickname/{id}/{nickname}")
+    @PostMapping("/user-annexes-nickname/")
     @Timed
-    public ResponseEntity<UserAnnexDTO> updateUserAnnexNickname(@PathVariable Long id, @PathVariable String nickname) {
-        UserAnnexDTO userAnnexDTO = new UserAnnexDTO();
-        userAnnexDTO.setId(id);
-        userAnnexDTO.setNickname(nickname);
+    public ResponseEntity<UserAnnexDTO> updateUserAnnexNickname(@RequestBody UserAnnexDTO userAnnexDTO) {
         userAnnexService.updataUserNickname(userAnnexDTO);
         return ResponseEntity.ok().body(null);
     }
 
 
     /**
-     *
-     * @param id
-     * @param avatar
+     *修改用户的头像
+     * @param userAnnexDTO
      * @return
      */
-    @PostMapping("/user-annexes-avatar/{id}/{avatar}")
+    @PostMapping("/user-annexes-avatar/")
     @Timed
-    public ResponseEntity<UserAnnexDTO> updateUserAnnexAvatar(@PathVariable Long id, @PathVariable String avatar) {
-        UserAnnexDTO userAnnexDTO = new UserAnnexDTO();
-        userAnnexDTO.setId(id);
-        userAnnexDTO.setAvatar(avatar);
+    public ResponseEntity<UserAnnexDTO> updateUserAnnexAvatar(@RequestBody UserAnnexDTO userAnnexDTO) {
         userAnnexService.updataUserAvatar(userAnnexDTO);
         return ResponseEntity.ok().body(null);
-
-
     }
+
+    /**
+     * 用户注册接口
+     * @param userAnnexDTO
+     * @return
+     */
+     @PostMapping("/user-annexes-useregis/")
+     @Timed
+    public ResponseEntity<UserAnnexDTO> userRegis(@RequestBody UserAnnexDTO userAnnexDTO){
+         UserAnnexDTO save = userAnnexService.save(userAnnexDTO);
+         return ResponseEntity.ok().body(save);
+
+     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
     /**
      * DELETE  /user-annexes/:id : delete the "id" userAnnex.
