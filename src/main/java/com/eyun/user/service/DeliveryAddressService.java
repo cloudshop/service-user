@@ -51,4 +51,17 @@ public interface DeliveryAddressService {
      * @return
      */
     List<Map> findByIdList(Long id);
+
+
+    /**
+     * 修改地址
+     * @param deliveryAddressDTO
+     */
+    void updateAddress(DeliveryAddressDTO deliveryAddressDTO);
+
+
+    void createAddress(DeliveryAddressDTO deliveryAddressDTO);
+
+
+
 }
