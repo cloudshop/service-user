@@ -135,7 +135,7 @@ public class DeliveryAddressResource {
     @GetMapping("/delivery-addresses-list/{id}")
     @Timed
     public ResponseEntity getAddressList(@PathVariable Long id){
-        Map result = deliveryAddressService.findByIdList(id);
+        List<Map> result = deliveryAddressService.findByIdList(id);
         return ResponseEntity.ok().body(result);
 
     }
