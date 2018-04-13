@@ -149,6 +149,7 @@ public class MercuryServiceImpl implements MercuryService {
         List<MercuryDTO> nearMerchantsList = mercuryRepository.findNearMerchantsList(minlng,maxlng,minlat,maxlat);
         MercuryDTO mercuryDTO = new MercuryDTO();
         mercuryDTO.setCity("北京");
+        mercuryDTO.setName("北京烤鸭");
         mercuryDTO.setImgLicense("wjkjwkjwwj");
         nearMerchantsList.add(mercuryDTO);
 
