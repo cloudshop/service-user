@@ -152,6 +152,8 @@ public class MercuryServiceImpl implements MercuryService {
         //经度最大值
 
 
+
+
         System.out.println(maxlng);
         List<MercuryDTO> nearMerchantsList = mercuryRepository.findNearMerchantsList(minlng,maxlng,minlat,maxlat);
         MercuryDTO mercuryDTO = new MercuryDTO();
