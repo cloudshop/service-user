@@ -136,14 +136,19 @@ public class MercuryServiceImpl implements MercuryService {
         dlat = dlat*180/Math.PI;
         //维度最小值
         double minlat =lantitude-dlat;
+        int minlatInt  = new Double(minlat).intValue();
+        System.out.println(minlatInt+"*******************************");
         System.out.println(minlat);
         //维度最大值
         double maxlat = lantitude+dlat;
+        int maxlatInt = new Double(maxlat).intValue();
         System.out.println(maxlat);
         //经度最小值
         double minlng = langitude -dlng;
+        int minlngInt= new Double(minlng).intValue();
         System.out.println(minlng );
         double maxlng = langitude + dlng;
+        int maxlngInt = new Double(maxlng).intValue();
         //经度最大值
         System.out.println(maxlng);
         List<MercuryDTO> nearMerchantsList = mercuryRepository.findNearMerchantsList(minlng,maxlng,minlat,maxlat);
