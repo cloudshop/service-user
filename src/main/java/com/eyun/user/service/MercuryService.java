@@ -1,5 +1,6 @@
 package com.eyun.user.service;
 
+import com.eyun.user.domain.Mercury;
 import com.eyun.user.service.dto.MercuryDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -54,4 +55,29 @@ public interface MercuryService {
      * @return
      */
     List<MercuryDTO> findNearMerchants(MercuryDTO mercuryDTO);
+
+
+
+
+
+    /**
+     * 检查商户申请状态
+     * @param
+     * @return
+     */
+    MercuryDTO checkMercuryStatus(Long id);
+
+
+    /**
+     * 添加商户的申请
+     * @param mercuryDTO
+     */
+    void addMercury(MercuryDTO mercuryDTO);
+
+
+
+
+
+
+
 }
