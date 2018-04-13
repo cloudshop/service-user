@@ -7,6 +7,7 @@ import com.eyun.user.service.dto.MercuryDTO;
 import com.eyun.user.service.mapper.MercuryMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -118,6 +119,32 @@ public class MercuryServiceImpl implements MercuryService {
 
     }
 
+
+    /**
+     * 添加商户的申请
+     * @param mercuryDTO
+     */
+    @Override
+    public void addMercury(MercuryDTO mercuryDTO) {
+        Mercury mercury = new Mercury();
+        BeanUtils.copyProperties(mercuryDTO,mercury);
+        mercuryRepository.save(mercury);
+
+
+
+
+    }
+
+    /**
+     * 检查商户申请状态 默认0 未申请
+     * @param
+     * @return
+     */
+    @Override
+    public MercuryDTO checkMercuryStatus(Long id) {
+       return mercuryRepository.checkMercuryStatus(id);
+    }
+
     private List<MercuryDTO> findNeighPosition(Double lantitude, Double langitude) {
         //先计算查询点的经纬度范围
 
@@ -148,15 +175,13 @@ public class MercuryServiceImpl implements MercuryService {
         int minlngInt= new Double(minlng).intValue();
         System.out.println(minlng );
         double maxlng = langitude + dlng;
-        int maxlngInt = new Double(maxlng).intValue();
+        int maxlngInt = new Double(maxlng).intValue() + 1;
         //经度最大值
 
 
-
-
         System.out.println(maxlng);
-        List<MercuryDTO> nearMerchantsList = mercuryRepository.findNearMerchantsList(minlng,maxlng,minlat,maxlat);
-        MercuryDTO mercuryDTO = new MercuryDTO();
+        List<MercuryDTO> nearMerchantsList = mercuryRepository.findNearMerchantsList(minlngInt,maxlngInt,minlatInt,maxlatInt);
+       MercuryDTO mercuryDTO = new MercuryDTO();
         mercuryDTO.setCity("北京");
         mercuryDTO.setName("北京烤鸭");
         mercuryDTO.setImgLicense("wjkjwkjwwj");
