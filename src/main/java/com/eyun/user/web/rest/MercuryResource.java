@@ -152,7 +152,41 @@ public class MercuryResource {
 
         return ResponseEntity.ok()
             .body(MercuryInfoList);
-
     }
+
+
+    /**
+     * 查询用户申请状态
+     * @param id
+     * @return
+     */
+    @GetMapping("/mercuries/checkMercuryStatus/{id}")
+    @Timed
+    public ResponseEntity<MercuryDTO> checkMercuryStatus(@PathVariable Long id){
+        log.info("{}",id);
+        MercuryDTO mercuryDTO = mercuryService.checkMercuryStatus(id);
+        return ResponseEntity.ok().body(mercuryDTO);
+    }
+
+
+    /**
+     * 添加商户申请
+     * @param mercuryDTO
+     * @return
+     */
+    @PostMapping("/mercuries/addMercury")
+    @Timed
+    public ResponseEntity addMercury(@RequestBody MercuryDTO mercuryDTO){
+        log.info("{}",mercuryDTO);
+        mercuryService.addMercury(mercuryDTO);
+        return ResponseEntity.ok().body(null);
+    }
+
+
+
+
+
+
+
 }
 
