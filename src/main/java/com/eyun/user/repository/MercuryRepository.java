@@ -19,7 +19,14 @@ import java.util.Map;
 public interface MercuryRepository extends JpaRepository<Mercury, Long>, JpaSpecificationExecutor<Mercury>{
 
 
-    @Query(nativeQuery = true, value = " SELECT  name,city from  mercury where langitude > :minlng and langitude < :maxlng  and lantitude > :minlat  and  lantitude < :maxlat")
-    List<MercuryDTO> findNearMerchantsList(@Param("minlat")double minlat, @Param("maxlat")double maxlat,
-                                    @Param("minlng")double minlng, @Param("maxlng")double maxlng);
+    @Query(nativeQuery = true, value = " SELECT  m.city,m.provice,m.img_license,m.img_facade ,m.img_introduces from  mercury AS m where langitude > :minlngInt and langitude < :maxlngInt  OR lantitude > :minlatInt  and  lantitude < :maxlatInt")
+    List<MercuryDTO> findNearMerchantsList(@Param("minlngInt")double minlngInt, @Param("maxlngInt")double maxlngInt,
+                                           @Param("minlatInt")double minlatInt, @Param("maxlatInt")double maxlatInt);
+
+
+
+
+
+    @Query(nativeQuery = true,value = "SELECT m.status FROM mercury AS m LEFT JOIN owner_relation o ON m.id=o.user_annex_id  LEFT JOIN user_annex u ON u.id=o.user_annex_id where u.id=:id")
+    MercuryDTO checkMercuryStatus(@Param("id")Long id);
 }
