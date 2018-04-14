@@ -19,14 +19,15 @@ import java.util.Map;
 public interface MercuryRepository extends JpaRepository<Mercury, Long>, JpaSpecificationExecutor<Mercury>{
 
 
-    @Query(nativeQuery = true, value = " SELECT  m.city,m.provice,m.img_license,m.img_facade ,m.img_introduces from  mercury AS m where langitude > :minlngInt and langitude < :maxlngInt  OR lantitude > :minlatInt  and  lantitude < :maxlatInt")
-    List<MercuryDTO> findNearMerchantsList(@Param("minlngInt")double minlngInt, @Param("maxlngInt")double maxlngInt,
-                                           @Param("minlatInt")double minlatInt, @Param("maxlatInt")double maxlatInt);
-
-
-
+    @Query(nativeQuery = true, value = " SELECT  m.city from  mercury AS m where langitude > :minlng and langitude < :maxlng  OR lantitude > :minlat  and  lantitude < :maxlat")
+    List<MercuryDTO> findNearMerchantsList(@Param("minlng")double minlng, @Param("maxlng")double maxlng,
+                                           @Param("minlat")double minlat, @Param("maxlat")double maxlat);
 
 
     @Query(nativeQuery = true,value = "SELECT m.status FROM mercury AS m LEFT JOIN owner_relation o ON m.id=o.user_annex_id  LEFT JOIN user_annex u ON u.id=o.user_annex_id where u.id=:id")
     MercuryDTO checkMercuryStatus(@Param("id")Long id);
+
+
+    @Query(nativeQuery = true, value = "SELECT m.name,m.city,m.img_license,SQRT( POW(111.2 * (lantitude - :Lantitude ), 2) + POW(111.2 * (:Langitude - langitude) * COS(lantitude / 57.3), 2))   AS distance FROM mercury AS m HAVING distance < 25 ORDER BY distance")
+    List<Map> findNearMerchants(@Param("Langitude")Double Langitude, @Param("Lantitude")Double Lantitude);
 }
