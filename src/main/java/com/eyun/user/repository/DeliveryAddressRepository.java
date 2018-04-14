@@ -24,4 +24,10 @@ public interface DeliveryAddressRepository extends JpaRepository<DeliveryAddress
     @Query(value = " SELECT d.city,d.phone,d.contact,d.aliases  FROM delivery_address AS d LEFT JOIN user_annex u ON d.user_annex_id=u.id WHERE u.id=:id",nativeQuery = true)
     List<Map> findDeliveryAddressList(@Param("id")Long id);
 
+
+
+
+    @Query(value = "DELETE FROM delivery_address WHERE id = :id AND user_annex_id= :userId",nativeQuery = true)
+    void deleteAddress(@Param("id")Long id,@Param("id")Long userId);
+
 }
