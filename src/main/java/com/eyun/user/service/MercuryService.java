@@ -5,6 +5,7 @@ import com.eyun.user.service.dto.MercuryDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Service Interface for managing Mercury.
@@ -75,9 +76,5 @@ public interface MercuryService {
     void addMercury(MercuryDTO mercuryDTO);
 
 
-
-
-
-
-
+    List<Map> findNearList(MercuryDTO mercuryDTO);
 }
