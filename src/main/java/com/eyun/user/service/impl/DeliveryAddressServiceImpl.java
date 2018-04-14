@@ -36,11 +36,25 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
         this.deliveryAddressMapper = deliveryAddressMapper;
     }
 
+
+    /**
+     * 删除单个地址
+     * @param
+     */
+    @Override
+    public void deleteAddress(DeliveryAddressDTO deliveryAddressDTO) {
+
+        DeliveryAddress deliveryAddress = new DeliveryAddress();
+        BeanUtils.copyProperties(deliveryAddressDTO,deliveryAddress);
+        deliveryAddressRepository.delete(deliveryAddress);
+    }
+
     /**
      * 创建地址
      * @param deliveryAddressDTO
      */
     @Override
+    @Transactional
     public void createAddress(DeliveryAddressDTO deliveryAddressDTO) {
         DeliveryAddress deliveryAddress = new DeliveryAddress();
         BeanUtils.copyProperties(deliveryAddressDTO,deliveryAddress);
@@ -50,17 +64,13 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
 
     }
 
-    /**
-     * 修改地址
-     * @param deliveryAddressDTO
-     */
-    @Override
-    @Transactional
+
+   @Override
+   @Transactional
     public void updateAddress(DeliveryAddressDTO deliveryAddressDTO) {
         DeliveryAddress deliveryAddress = new DeliveryAddress();
-        BeanUtils.copyProperties(deliveryAddressDTO,deliveryAddress);
+        BeanUtils.copyProperties(deliveryAddressDTO, deliveryAddress);
         deliveryAddressRepository.saveAndFlush(deliveryAddress);
-
     }
 
     /**
@@ -86,7 +96,11 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
     public List<Map> findByIdList(Long id) {
         Map result=new HashMap();
         List<Map> deliveryAddressList = deliveryAddressRepository.findDeliveryAddressList(id);
-        return deliveryAddressList;
+            return deliveryAddressList;
+
+
+
+
 
 
     }
