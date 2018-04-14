@@ -3,7 +3,9 @@ package com.eyun.user.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.eyun.user.domain.DeliveryAddress;
 import com.eyun.user.service.DeliveryAddressService;
+import com.eyun.user.service.UaaService;
 import com.eyun.user.service.dto.UserAnnexDTO;
+import com.eyun.user.service.dto.UserDTO;
 import com.eyun.user.web.rest.errors.BadRequestAlertException;
 import com.eyun.user.web.rest.util.HeaderUtil;
 import com.eyun.user.web.rest.util.PaginationUtil;
@@ -13,6 +15,7 @@ import com.eyun.user.service.DeliveryAddressQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -41,6 +44,10 @@ public class DeliveryAddressResource {
     private final DeliveryAddressService deliveryAddressService;
 
     private final DeliveryAddressQueryService deliveryAddressQueryService;
+
+    @Autowired
+    UaaService uaaService;
+
 
     public DeliveryAddressResource(DeliveryAddressService deliveryAddressService, DeliveryAddressQueryService deliveryAddressQueryService) {
         this.deliveryAddressService = deliveryAddressService;
@@ -133,12 +140,12 @@ public class DeliveryAddressResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
-    @GetMapping("/delivery-addresses-list/{id}")
+    @GetMapping("/delivery-addresses-list/")
     @Timed
-    public ResponseEntity getAddressList(@PathVariable Long id){
-        List<Map> result = deliveryAddressService.findByIdList(id);
+    public ResponseEntity getAddressList(){
+        UserDTO account = uaaService.getAccount();
+        List<Map> result = deliveryAddressService.findByIdList(account.getId());
         return ResponseEntity.ok().body(result);
-
     }
 
 
@@ -150,7 +157,11 @@ public class DeliveryAddressResource {
     @PostMapping("/user-annexes-createAddress/")
     @Timed
     public ResponseEntity createAddress(@RequestBody DeliveryAddressDTO deliveryAddressDTO){
-         deliveryAddressService.createAddress(deliveryAddressDTO);
+
+        UserDTO account = uaaService.getAccount();
+        log.info("{}",account.getId());
+        deliveryAddressDTO.setUserAnnexId(account.getId());
+        deliveryAddressService.createAddress(deliveryAddressDTO);
         return ResponseEntity.ok().body(null);
     }
 
@@ -163,10 +174,34 @@ public class DeliveryAddressResource {
     @PostMapping("/user-annexes-updateAddress/")
     @Timed
     public ResponseEntity updateAddress(@RequestBody DeliveryAddressDTO deliveryAddressDTO){
+        UserDTO account = uaaService.getAccount();
+        deliveryAddressDTO.setUserAnnexId(account.getId());
         deliveryAddressService.updateAddress(deliveryAddressDTO);
         return ResponseEntity.ok().body(null);
-
     }
+
+
+    /**
+     * 根据用户ID删除数据
+     * @param deliveryAddressDTO
+     * @return
+     */
+    @PostMapping("/user-annexes-deleteAddress/")
+    @Timed
+    public ResponseEntity deleteAddress(@RequestBody DeliveryAddressDTO deliveryAddressDTO){
+        UserDTO account = uaaService.getAccount();
+        deliveryAddressDTO.setUserAnnexId(account.getId());
+        deliveryAddressService.deleteAddress(deliveryAddressDTO);
+        return ResponseEntity.ok().body(null);
+    }
+
+
+
+
+
+
+
+
 
 
 
