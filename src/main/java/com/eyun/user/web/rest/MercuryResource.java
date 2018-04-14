@@ -18,10 +18,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.stream.StreamSupport;
 
@@ -135,21 +137,14 @@ public class MercuryResource {
     /**
      * 穿着西装敲代码 文亮
      * 根据经纬度查询附近的商家
+
      *
-     * @param longitude 经度
-     * @param latitude  纬度
      * @return
      */
-    @GetMapping("/mercuries/info-list/{longitude}/{latitude}")
+    @PostMapping("/mercuries/info-list/index")
     @Timed
-    public ResponseEntity<List<MercuryDTO>> getMercuryInfoList(@PathVariable Double longitude, @PathVariable Double latitude) {
-        MercuryDTO mercuryDTO = new MercuryDTO();
-        //经度
-        mercuryDTO.setLangitude(longitude);
-        //纬度
-        mercuryDTO.setLantitude(latitude);
+    public ResponseEntity<List<MercuryDTO>> getMercuryInfoList(@RequestBody MercuryDTO mercuryDTO) {
         List<MercuryDTO> MercuryInfoList = mercuryService.findNearMerchants(mercuryDTO);
-
         return ResponseEntity.ok()
             .body(MercuryInfoList);
     }
@@ -181,6 +176,24 @@ public class MercuryResource {
         mercuryService.addMercury(mercuryDTO);
         return ResponseEntity.ok().body(null);
     }
+
+
+
+
+    /**
+     * 穿着西装敲代码 文亮
+     * 根据经纬度查询附近的商家
+     *
+     * @return
+     */
+    @PostMapping("/mercuries/info-list/MercuryInfo")
+    @Timed
+    public ResponseEntity getMercuryInfo(@RequestBody MercuryDTO mercuryDTO) {
+        List<Map> MercuryInfoList = mercuryService.findNearList(mercuryDTO);
+        return ResponseEntity.ok()
+            .body(MercuryInfoList);
+    }
+
 
 
 
