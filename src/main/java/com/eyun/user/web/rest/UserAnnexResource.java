@@ -1,7 +1,9 @@
 package com.eyun.user.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.eyun.user.service.UaaService;
 import com.eyun.user.service.UserAnnexService;
+import com.eyun.user.service.dto.UserDTO;
 import com.eyun.user.web.rest.errors.BadRequestAlertException;
 import com.eyun.user.web.rest.util.HeaderUtil;
 import com.eyun.user.web.rest.util.PaginationUtil;
@@ -11,6 +13,7 @@ import com.eyun.user.service.UserAnnexQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -39,6 +42,10 @@ public class UserAnnexResource {
     private final UserAnnexService userAnnexService;
 
     private final UserAnnexQueryService userAnnexQueryService;
+
+    @Autowired
+    private UaaService uaaService;
+
 
     public UserAnnexResource(UserAnnexService userAnnexService, UserAnnexQueryService userAnnexQueryService) {
         this.userAnnexService = userAnnexService;
@@ -120,7 +127,6 @@ public class UserAnnexResource {
 
 
     /**
-     *
      * @param userAnnexDTO
      * @return
      */
@@ -133,13 +139,16 @@ public class UserAnnexResource {
 
 
     /**
-     *修改电话
+     * 修改电话
+     *
      * @param userAnnexDTO
      * @return
      */
     @PostMapping("/user-annexes-phone/")
     @Timed
     public ResponseEntity<UserAnnexDTO> updateUserAnnexPhone(@RequestBody UserAnnexDTO userAnnexDTO) {
+        UserDTO account = uaaService.getAccount();
+        userAnnexDTO.setUserid(account.getId());
         userAnnexService.updataUserPhone(userAnnexDTO);
         return ResponseEntity.ok().body(null);
 
@@ -147,62 +156,48 @@ public class UserAnnexResource {
 
 
     /**
-     *修改昵称
+     * 修改昵称
+     *
      * @param userAnnexDTO
      * @return
      */
     @PostMapping("/user-annexes-nickname/")
     @Timed
     public ResponseEntity<UserAnnexDTO> updateUserAnnexNickname(@RequestBody UserAnnexDTO userAnnexDTO) {
+        UserDTO account = uaaService.getAccount();
+        userAnnexDTO.setUserid(account.getId());
         userAnnexService.updataUserNickname(userAnnexDTO);
         return ResponseEntity.ok().body(null);
     }
 
 
     /**
-     *修改用户的头像
+     * 修改用户的头像
+     *
      * @param userAnnexDTO
      * @return
      */
     @PostMapping("/user-annexes-avatar/")
     @Timed
     public ResponseEntity<UserAnnexDTO> updateUserAnnexAvatar(@RequestBody UserAnnexDTO userAnnexDTO) {
+        UserDTO account = uaaService.getAccount();
+        userAnnexDTO.setUserid(account.getId());
         userAnnexService.updataUserAvatar(userAnnexDTO);
         return ResponseEntity.ok().body(null);
     }
 
     /**
      * 用户注册接口
+     *
      * @param userAnnexDTO
      * @return
      */
-     @PostMapping("/user-annexes-useregis/")
-     @Timed
-    public ResponseEntity<UserAnnexDTO> userRegis(@RequestBody UserAnnexDTO userAnnexDTO){
-         UserAnnexDTO save = userAnnexService.save(userAnnexDTO);
-         return ResponseEntity.ok().body(save);
-
-     }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    @PostMapping("/user-annexes-useregis/")
+    @Timed
+    public ResponseEntity<UserAnnexDTO> userRegis(@RequestBody UserAnnexDTO userAnnexDTO) {
+        UserAnnexDTO save = userAnnexService.save(userAnnexDTO);
+        return ResponseEntity.ok().body(save);
+    }
 
 
     /**
@@ -211,11 +206,10 @@ public class UserAnnexResource {
      * @param id the id of the userAnnexDTO to delete
      * @return the ResponseEntity with status 200 (OK)
 
-    @DeleteMapping("/user-annexes/{id}")
-    @Timed
-    public ResponseEntity<Void> deleteUserAnnex(@PathVariable Long id) {
-        log.debug("REST request to delete UserAnnex : {}", id);
-        userAnnexService.delete(id);
-        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-    }*/
+     @DeleteMapping("/user-annexes/{id}")
+     @Timed public ResponseEntity<Void> deleteUserAnnex(@PathVariable Long id) {
+     log.debug("REST request to delete UserAnnex : {}", id);
+     userAnnexService.delete(id);
+     return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
+     }*/
 }
