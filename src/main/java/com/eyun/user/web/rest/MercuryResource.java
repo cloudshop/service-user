@@ -151,6 +151,7 @@ public class MercuryResource {
 
 
     /**
+     *
      * 查询用户申请状态
      * @param id
      * @return
