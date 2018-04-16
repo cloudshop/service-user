@@ -162,10 +162,12 @@ public class DeliveryAddressResource {
      */
     @PostMapping("/user-annexes-createAddress/")
     @Timed
-    public ResponseEntity createAddress(@RequestBody DeliveryAddressDTO deliveryAddress){
+    public ResponseEntity createAddress(@RequestBody DeliveryAddress deliveryAddress){
         UserDTO account = uaaService.getAccount();
         log.info("{}",account.getId());
-        deliveryAddress.setUserAnnexId(account.getId());
+        UserAnnex userAnnex = deliveryAddress.getUserAnnex();
+        userAnnex.setId(account.getId());
+        userAnnex.setUserid(account.getId());
         deliveryAddressService.createAddress(deliveryAddress);
         return ResponseEntity.ok().body(null);
     }
@@ -178,9 +180,11 @@ public class DeliveryAddressResource {
      */
     @PostMapping("/user-annexes-updateAddress/")
     @Timed
-    public ResponseEntity updateAddress(@RequestBody DeliveryAddressDTO deliveryAddressDTO){
+    public ResponseEntity updateAddress(@RequestBody DeliveryAddress deliveryAddressDTO){
         UserDTO account = uaaService.getAccount();
-        deliveryAddressDTO.setUserAnnexId(account.getId());
+        UserAnnex userAnnex = deliveryAddressDTO.getUserAnnex();
+        userAnnex.setId(account.getId());
+        userAnnex.setUserid(account.getId());
         deliveryAddressService.updateAddress(deliveryAddressDTO);
         return ResponseEntity.ok().body(null);
     }
