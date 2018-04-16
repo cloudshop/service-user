@@ -112,12 +112,12 @@ public class UserAnnexServiceImpl implements UserAnnexService {
 
 
     @Override
-    public Map userInfo(Long id) {
+    public UserAnnex  userInfo(Long id) {
        /* Map result = new HashMap();*/
-        Map map = userAnnexRepository.userInfo(id);
+     /*   Map map = userAnnexRepository.userInfo(id);*/
       /*  result.put("map",map);*/
-        return map;
-
+        UserAnnex one = userAnnexRepository.findOne(id);
+        return one;
     }
 
     /**
