@@ -4,6 +4,7 @@ import com.eyun.user.service.UserAnnexService;
 import com.eyun.user.domain.UserAnnex;
 import com.eyun.user.repository.UserAnnexRepository;
 import com.eyun.user.service.dto.UserAnnexDTO;
+import com.eyun.user.service.dto.UserParamDTO;
 import com.eyun.user.service.mapper.UserAnnexMapper;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -108,68 +109,45 @@ public class UserAnnexServiceImpl implements UserAnnexService {
     }
 
 
-    /**
-     * @param userAnnexDTO
-     */
-    @Override
-    @Transactional
-    public void updataUserName(UserAnnexDTO userAnnexDTO) {
-        UserAnnex userAnnex = new UserAnnex();
-        BeanUtils.copyProperties(userAnnexDTO, userAnnex);
-        userAnnexRepository.saveAndFlush(userAnnex);
-
-    }
-
-    /**
-     * @param userAnnexDTO
-     */
-    @Override
-    @Transactional
-    public void updataUserNickname(UserAnnexDTO userAnnexDTO) {
-        UserAnnex userAnnex = new UserAnnex();
-        BeanUtils.copyProperties(userAnnexDTO, userAnnex);
-        userAnnexRepository.saveAndFlush(userAnnex);
-
-    }
 
 
     /**
-     * @param userAnnexDTO
+     * 修改用户相关的信息
+     * @param userParamDTO
      */
     @Override
-    @Transactional
-    public void updataUserPhone(UserAnnexDTO userAnnexDTO) {
-        UserAnnex userAnnex = new UserAnnex();
-        BeanUtils.copyProperties(userAnnexDTO, userAnnex);
-        userAnnexRepository.saveAndFlush(userAnnex);
+    public void updataUserInfo(UserParamDTO userParamDTO) {
+
+        //修改用户的头像
+        if (userParamDTO.getType()==0){
+            UserAnnex userAnnex = new UserAnnex();
+            userAnnex.setAvatar(userParamDTO.getAvatar());
+            userAnnex.setId(userParamDTO.getId());
+            userAnnex.setUserid(userParamDTO.getUserid());
+            userAnnexRepository.saveAndFlush(userAnnex);
+
+            //修改用户电话
+        } else if (userParamDTO.getType()==1) {
+            UserAnnex userAnnex = new UserAnnex();
+            userAnnex.setPhone(userParamDTO.getPhone());
+            userAnnex.setId(userParamDTO.getId());
+            userAnnex.setUserid(userParamDTO.getUserid());
+            userAnnexRepository.saveAndFlush(userAnnex);
+
+            //修改用户昵称
+        }else  if (userParamDTO.getType()==2) {
+            UserAnnex userAnnex = new UserAnnex();
+            userAnnex.setNickname(userParamDTO.getNickname());
+            userAnnex.setId(userParamDTO.getId());
+            userAnnex.setUserid(userParamDTO.getUserid());
+            userAnnexRepository.saveAndFlush(userAnnex);
+
+
+
+        }
+
 
     }
 
 
-    /**
-     * @param userAnnexDTO
-     */
-    @Override
-    @Transactional
-    public void updataUserAvatar(UserAnnexDTO userAnnexDTO) {
-        UserAnnex userAnnex = new UserAnnex();
-        BeanUtils.copyProperties(userAnnexDTO, userAnnex);
-        userAnnexRepository.saveAndFlush(userAnnex);
-    }
-
-
-    /**
-     * 用户注册
-     * @param userAnnexDTO
-     */
-    @Override
-    public void userRegis(UserAnnexDTO userAnnexDTO) {
-        UserAnnex userAnnex = new UserAnnex();
-        userAnnex.setStatus(1);
-        //0，默认为普通会员 1,增值会员
-        userAnnex.setType(0);
-        BeanUtils.copyProperties(userAnnexDTO,userAnnex);
-        this.userAnnexRepository.save(userAnnex);
-
-    }
 }
