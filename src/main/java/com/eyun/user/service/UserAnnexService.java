@@ -4,6 +4,7 @@ import com.eyun.user.service.dto.UserAnnexDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Service Interface for managing UserAnnex.
@@ -51,4 +52,6 @@ public interface UserAnnexService {
 
 
     void updataUserInfo(UserAnnexDTO userAnnexDTO);
+
+    Map userInfo(Long id);
 }
