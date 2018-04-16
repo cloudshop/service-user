@@ -1,5 +1,6 @@
 package com.eyun.user.service.impl;
 
+import com.eyun.user.domain.UserAnnex;
 import com.eyun.user.service.DeliveryAddressService;
 import com.eyun.user.domain.DeliveryAddress;
 import com.eyun.user.repository.DeliveryAddressRepository;
