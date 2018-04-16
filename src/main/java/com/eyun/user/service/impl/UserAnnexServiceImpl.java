@@ -4,12 +4,9 @@ import com.eyun.user.service.UserAnnexService;
 import com.eyun.user.domain.UserAnnex;
 import com.eyun.user.repository.UserAnnexRepository;
 import com.eyun.user.service.dto.UserAnnexDTO;
-import com.eyun.user.service.dto.UserParamDTO;
 import com.eyun.user.service.mapper.UserAnnexMapper;
-import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -118,7 +115,7 @@ public class UserAnnexServiceImpl implements UserAnnexService {
      * @param userParamDTO
      */
     @Override
-    public void updataUserInfo(UserParamDTO userParamDTO) {
+    public void updataUserInfo(UserAnnexDTO userParamDTO) {
 
         //修改用户的头像
         if (userParamDTO.getType()==0){
