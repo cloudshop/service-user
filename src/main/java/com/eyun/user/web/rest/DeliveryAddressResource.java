@@ -2,6 +2,7 @@ package com.eyun.user.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.eyun.user.domain.DeliveryAddress;
+import com.eyun.user.domain.UserAnnex;
 import com.eyun.user.service.DeliveryAddressService;
 import com.eyun.user.service.UaaService;
 import com.eyun.user.service.dto.UserAnnexDTO;
@@ -140,6 +141,11 @@ public class DeliveryAddressResource {
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
 
+
+    /**
+     * 地址列表
+     * @return
+     */
     @GetMapping("/delivery-addresses-list/")
     @Timed
     public ResponseEntity getAddressList(){
@@ -151,17 +157,18 @@ public class DeliveryAddressResource {
 
     /**
      * 添加地址
-     * @param deliveryAddressDTO
+     * @param
      * @return
      */
     @PostMapping("/user-annexes-createAddress/")
     @Timed
-    public ResponseEntity createAddress(@RequestBody DeliveryAddressDTO deliveryAddressDTO){
-
+    public ResponseEntity createAddress(@RequestBody DeliveryAddress deliveryAddress){
         UserDTO account = uaaService.getAccount();
         log.info("{}",account.getId());
-        deliveryAddressDTO.setUserAnnexId(account.getId());
-        deliveryAddressService.createAddress(deliveryAddressDTO);
+        UserAnnex userAnnex = deliveryAddress.getUserAnnex();
+        userAnnex.setId(account.getId());
+        userAnnex.setUserid(account.getId());
+        deliveryAddressService.createAddress(deliveryAddress);
         return ResponseEntity.ok().body(null);
     }
 
