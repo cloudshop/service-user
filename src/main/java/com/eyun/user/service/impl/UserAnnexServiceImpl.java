@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -108,9 +109,10 @@ public class UserAnnexServiceImpl implements UserAnnexService {
     }
 
 
-
-
-
+    @Override
+    public Map userInfo(Long id) {
+        return userAnnexRepository.userInfo(id);
+    }
 
     /**
      * 修改用户相关的信息
@@ -144,6 +146,8 @@ public class UserAnnexServiceImpl implements UserAnnexService {
             userAnnexRepository.saveAndFlush(userAnnex);
 
         }
+
+
 
 
     }
