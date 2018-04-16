@@ -33,6 +33,8 @@ public interface UserAnnexService {
      */
     List<UserAnnexDTO> findAllWhereOwnerRelationIsNull();
 
+
+
     /**
      * Get the "id" userAnnex.
      *
