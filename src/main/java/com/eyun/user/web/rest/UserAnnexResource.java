@@ -4,6 +4,7 @@ import com.codahale.metrics.annotation.Timed;
 import com.eyun.user.service.UaaService;
 import com.eyun.user.service.UserAnnexService;
 import com.eyun.user.service.dto.UserDTO;
+import com.eyun.user.service.dto.UserParamDTO;
 import com.eyun.user.web.rest.errors.BadRequestAlertException;
 import com.eyun.user.web.rest.util.HeaderUtil;
 import com.eyun.user.web.rest.util.PaginationUtil;
@@ -42,6 +43,8 @@ public class UserAnnexResource {
     private final UserAnnexService userAnnexService;
 
     private final UserAnnexQueryService userAnnexQueryService;
+
+
 
     @Autowired
     private UaaService uaaService;
@@ -126,78 +129,18 @@ public class UserAnnexResource {
     }
 
 
-    /**
-     * @param userAnnexDTO
-     * @return
-     */
-    @PostMapping("/user-annexes-name/")
-    @Timed
-    public ResponseEntity<UserAnnexDTO> updateUserAnnexName(@RequestBody UserAnnexDTO userAnnexDTO) {
-        userAnnexService.updataUserName(userAnnexDTO);
-        return ResponseEntity.ok().body(null);
-    }
 
 
-    /**
-     * 修改电话
-     *
-     * @param userAnnexDTO
-     * @return
-     */
-    @PostMapping("/user-annexes-phone/")
+
+
+    @PostMapping("/user-annexes-useregis/updaUserInfo/")
     @Timed
-    public ResponseEntity<UserAnnexDTO> updateUserAnnexPhone(@RequestBody UserAnnexDTO userAnnexDTO) {
+    public ResponseEntity updaUserInfo(@RequestBody  UserParamDTO userParamDTO){
         UserDTO account = uaaService.getAccount();
-        userAnnexDTO.setUserid(account.getId());
-        userAnnexService.updataUserPhone(userAnnexDTO);
+        userParamDTO.setUserid(account.getId());
+        userAnnexService.updataUserInfo(userParamDTO);
         return ResponseEntity.ok().body(null);
 
-    }
-
-
-    /**
-     * 修改昵称
-     *
-     * @param userAnnexDTO
-     * @return
-     */
-    @PostMapping("/user-annexes-nickname/")
-    @Timed
-    public ResponseEntity<UserAnnexDTO> updateUserAnnexNickname(@RequestBody UserAnnexDTO userAnnexDTO) {
-        UserDTO account = uaaService.getAccount();
-        userAnnexDTO.setUserid(account.getId());
-        userAnnexService.updataUserNickname(userAnnexDTO);
-        return ResponseEntity.ok().body(null);
-    }
-
-
-    /**
-     * 修改用户的头像
-     *
-     * @param userAnnexDTO
-     * @return
-     */
-    @PostMapping("/user-annexes-avatar/")
-    @Timed
-    public ResponseEntity<UserAnnexDTO> updateUserAnnexAvatar(@RequestBody UserAnnexDTO userAnnexDTO) {
-        UserDTO account = uaaService.getAccount();
-        userAnnexDTO.setUserid(account.getId());
-        userAnnexService.updataUserAvatar(userAnnexDTO);
-        return ResponseEntity.ok().body(null);
-    }
-
-    /**
-     * 用户注册接口
-     *
-     * @param userAnnexDTO
-     * @return
-     *
-     */
-    @PostMapping("/user-annexes-useregis/")
-    @Timed
-    public ResponseEntity<UserAnnexDTO> userRegis(@RequestBody UserAnnexDTO userAnnexDTO) {
-        UserAnnexDTO save = userAnnexService.save(userAnnexDTO);
-        return ResponseEntity.ok().body(save);
     }
 
 
