@@ -144,11 +144,11 @@ public class UserAnnexResource {
         return ResponseEntity.ok().body(null);
     }
 
-    @GetMapping("/user-annexes/userInfo/")
+    @GetMapping("/user-annexes/userInfo/{id}/")
     @Timed
-    public ResponseEntity userInfo(){
-        UserDTO account = uaaService.getAccount();
-        UserAnnex userAnnex = userAnnexService.userInfo(account.getId());
+    public ResponseEntity userInfo(@PathVariable Long id){
+        //UserDTO account = uaaService.getAccount();
+        UserAnnex userAnnex = userAnnexService.userInfo(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(userAnnex));
 
     }
