@@ -133,6 +133,7 @@ public class UserAnnexResource {
 
 
 
+
     @PostMapping("/user-annexes-useregis/updaUserInfo/")
     @Timed
     public ResponseEntity updaUserInfo(@RequestBody  UserParamDTO userParamDTO){
