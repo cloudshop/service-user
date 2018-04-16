@@ -55,11 +55,10 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
      * @param deliveryAddressDTO
      */
     @Override
-    @Transactional
-    public void createAddress(DeliveryAddressDTO deliveryAddressDTO) {
+    public void createAddress(DeliveryAddress deliveryAddressDTO) {
         DeliveryAddress deliveryAddress = new DeliveryAddress();
         BeanUtils.copyProperties(deliveryAddressDTO,deliveryAddress);
-        deliveryAddressRepository.save(deliveryAddress);
+        deliveryAddressRepository.save(deliveryAddress );
 
 
 
@@ -67,10 +66,8 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
 
 
    @Override
-   @Transactional
-    public void updateAddress(DeliveryAddressDTO deliveryAddressDTO) {
-        DeliveryAddress deliveryAddress = new DeliveryAddress();
-        BeanUtils.copyProperties(deliveryAddressDTO, deliveryAddress);
+    public void updateAddress(DeliveryAddress  deliveryAddress) {
+
         deliveryAddressRepository.saveAndFlush(deliveryAddress);
     }
 
