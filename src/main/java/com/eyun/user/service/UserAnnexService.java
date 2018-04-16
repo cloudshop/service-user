@@ -1,5 +1,6 @@
 package com.eyun.user.service;
 
+import com.eyun.user.domain.UserAnnex;
 import com.eyun.user.service.dto.UserAnnexDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
