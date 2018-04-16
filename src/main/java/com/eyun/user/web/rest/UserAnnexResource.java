@@ -25,6 +25,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 /**
@@ -139,6 +140,14 @@ public class UserAnnexResource {
         userParamDTO.setUserid(account.getId());
         userAnnexService.updataUserInfo(userParamDTO);
         return ResponseEntity.ok().body(null);
+    }
+
+    @GetMapping("/user-annexes/userInfo")
+    @Timed
+    public ResponseEntity userInfo(){
+        UserDTO account = uaaService.getAccount();
+        Map map = userAnnexService.userInfo(account.getId());
+        return ResponseEntity.ok().body(map);
 
     }
 
