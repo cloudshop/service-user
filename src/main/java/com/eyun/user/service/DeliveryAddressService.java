@@ -57,10 +57,10 @@ public interface DeliveryAddressService {
      * 修改地址
      * @param deliveryAddressDTO
      */
-   void updateAddress(DeliveryAddressDTO deliveryAddressDTO);
+   void updateAddress(DeliveryAddress deliveryAddressDTO);
 
 
-    void createAddress(DeliveryAddressDTO  deliveryAddressDTO);
+    void createAddress(DeliveryAddress deliveryAddressDTO);
 
 
     /**
