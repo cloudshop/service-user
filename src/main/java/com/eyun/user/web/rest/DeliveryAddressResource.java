@@ -162,12 +162,10 @@ public class DeliveryAddressResource {
      */
     @PostMapping("/user-annexes-createAddress/")
     @Timed
-    public ResponseEntity createAddress(@RequestBody DeliveryAddress deliveryAddress){
+    public ResponseEntity createAddress(@RequestBody DeliveryAddressDTO deliveryAddress){
         UserDTO account = uaaService.getAccount();
         log.info("{}",account.getId());
-        UserAnnex userAnnex = deliveryAddress.getUserAnnex();
-        userAnnex.setId(account.getId());
-        userAnnex.setUserid(account.getId());
+        deliveryAddress.setUserAnnexId(account.getId());
         deliveryAddressService.createAddress(deliveryAddress);
         return ResponseEntity.ok().body(null);
     }
