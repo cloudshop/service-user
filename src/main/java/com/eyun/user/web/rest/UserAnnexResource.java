@@ -4,7 +4,6 @@ import com.codahale.metrics.annotation.Timed;
 import com.eyun.user.service.UaaService;
 import com.eyun.user.service.UserAnnexService;
 import com.eyun.user.service.dto.UserDTO;
-import com.eyun.user.service.dto.UserParamDTO;
 import com.eyun.user.web.rest.errors.BadRequestAlertException;
 import com.eyun.user.web.rest.util.HeaderUtil;
 import com.eyun.user.web.rest.util.PaginationUtil;
@@ -27,7 +26,6 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
 
 /**
  * REST controller for managing UserAnnex.
@@ -136,7 +134,7 @@ public class UserAnnexResource {
 
     @PostMapping("/user-annexes-useregis/updaUserInfo/")
     @Timed
-    public ResponseEntity updaUserInfo(@RequestBody  UserParamDTO userParamDTO){
+    public ResponseEntity updaUserInfo(@RequestBody  UserAnnexDTO userParamDTO){
         UserDTO account = uaaService.getAccount();
         userParamDTO.setUserid(account.getId());
         userAnnexService.updataUserInfo(userParamDTO);
