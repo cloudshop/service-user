@@ -1,6 +1,7 @@
 package com.eyun.user.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.eyun.user.domain.UserAnnex;
 import com.eyun.user.service.UaaService;
 import com.eyun.user.service.UserAnnexService;
 import com.eyun.user.service.dto.UserDTO;
@@ -148,7 +149,7 @@ public class UserAnnexResource {
     public ResponseEntity userInfo(){
         UserDTO account = uaaService.getAccount();
         Map map = userAnnexService.userInfo(account.getId());
-        return ResponseEntity.ok().body(map);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(map));
 
     }
 
