@@ -11,6 +11,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -111,7 +113,11 @@ public class UserAnnexServiceImpl implements UserAnnexService {
 
     @Override
     public Map userInfo(Long id) {
-        return userAnnexRepository.userInfo(id);
+        Map result = new HashMap();
+        Map map = userAnnexRepository.userInfo(id);
+        result.put("map",map);
+        return result;
+
     }
 
     /**
