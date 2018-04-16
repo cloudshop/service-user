@@ -51,5 +51,5 @@ public interface UserAnnexService {
     void delete(Long id);
 
 
-    void updataUserInfo(UserParamDTO userParamDTO);
+    void updataUserInfo(UserAnnexDTO userAnnexDTO);
 }
