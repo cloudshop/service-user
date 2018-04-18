@@ -149,9 +149,9 @@ public class DeliveryAddressResource {
     @GetMapping("/delivery-addresses-list/")
     @Timed
     public ResponseEntity getAddressList(){
-        UserDTO account = uaaService.getAccount();
+       UserDTO account = uaaService.getAccount();
         List<Map> result = deliveryAddressService.findByIdList(account.getId());
-        return ResponseEntity.ok().body(result);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(result));
     }
 
 
