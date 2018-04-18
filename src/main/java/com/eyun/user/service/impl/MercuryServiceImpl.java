@@ -3,11 +3,13 @@ package com.eyun.user.service.impl;
 import com.eyun.user.service.MercuryService;
 import com.eyun.user.domain.Mercury;
 import com.eyun.user.repository.MercuryRepository;
+import com.eyun.user.service.ProductService;
 import com.eyun.user.service.dto.MercuryDTO;
 import com.eyun.user.service.mapper.MercuryMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -31,6 +33,10 @@ public class MercuryServiceImpl implements MercuryService {
     private final MercuryRepository mercuryRepository;
 
     private final MercuryMapper mercuryMapper;
+
+    @Autowired
+    private ProductService productService;
+
 
     public MercuryServiceImpl(MercuryRepository mercuryRepository, MercuryMapper mercuryMapper) {
         this.mercuryRepository = mercuryRepository;
@@ -153,6 +159,18 @@ public class MercuryServiceImpl implements MercuryService {
     public List<Map> findNearList(MercuryDTO mercuryDTO) {
       return   mercuryRepository.findNearMerchants(mercuryDTO.getLangitude(),mercuryDTO.getLantitude());
 
+    }
+
+
+    /**
+     * 根据商户ID查询商户列表
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Map> getMercuryInfoProductList(Long id) {
+        List<Map> maps = productService.ProductList(id);
+        return maps;
     }
 
     private List<MercuryDTO> findNeighPosition(Double lantitude, Double langitude) {
