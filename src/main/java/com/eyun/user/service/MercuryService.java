@@ -77,4 +77,13 @@ public interface MercuryService {
 
 
     List<Map> findNearList(MercuryDTO mercuryDTO);
+
+
+    /**
+     * 根据商户ID查询商品列表
+     * @param id
+     * @return
+     */
+    List<Map> getMercuryInfoProductList(Long id);
+
 }
