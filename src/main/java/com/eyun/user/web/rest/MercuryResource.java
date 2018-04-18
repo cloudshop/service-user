@@ -197,6 +197,16 @@ public class MercuryResource {
 
 
 
+    @PostMapping("/mercuries/getMercuryInfoProductList/{id}/")
+    @Timed
+    public ResponseEntity getMercuryInfoProductList(@PathVariable Long id){
+        List<Map> relult = mercuryService.getMercuryInfoProductList(id);
+        return ResponseEntity.ok().body(relult);
+
+    }
+
+
+
 
 
 
