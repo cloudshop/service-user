@@ -28,6 +28,6 @@ public interface MercuryRepository extends JpaRepository<Mercury, Long>, JpaSpec
     MercuryDTO checkMercuryStatus(@Param("id")Long id);
 
 
-    @Query(nativeQuery = true, value = "SELECT m.name,m.city,m.img_license,SQRT( POW(111.2 * (lantitude - :Lantitude ), 2) + POW(111.2 * (:Langitude - langitude) * COS(lantitude / 57.3), 2))   AS distance FROM mercury AS m HAVING distance < 25 ORDER BY distance")
+    @Query(nativeQuery = true, value = "SELECT m.name,m.city,m.img_license,m.id,SQRT( POW(111.2 * (lantitude - :Lantitude ), 2) + POW(111.2 * (:Langitude - langitude) * COS(lantitude / 57.3), 2))   AS distance FROM mercury AS m HAVING distance < 25 ORDER BY distance")
     List<Map> findNearMerchants(@Param("Langitude")Double Langitude, @Param("Lantitude")Double Lantitude);
 }
