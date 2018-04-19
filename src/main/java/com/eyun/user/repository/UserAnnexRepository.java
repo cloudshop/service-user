@@ -18,7 +18,7 @@ import java.util.Map;
 @Repository
 public interface UserAnnexRepository extends JpaRepository<UserAnnex, Long>, JpaSpecificationExecutor<UserAnnex> {
 
-    @Query(value = " select u.phone,u.avatar,u.nickname from user_annex AS u where userid=:id",nativeQuery = true)
+    @Query(value = " select ifnull(u.phone,\"\") AS phone,ifnull(u.avatar,\"\") AS avatar,ifnull(u.nickname,\"\") AS nickname from user_annex AS u where userid=:id",nativeQuery = true)
     Map userInfo(@Param("id")Long id);
 
 }
