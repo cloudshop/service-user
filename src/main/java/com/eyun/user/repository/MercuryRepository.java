@@ -19,7 +19,7 @@ import java.util.Map;
 public interface MercuryRepository extends JpaRepository<Mercury, Long>, JpaSpecificationExecutor<Mercury>{
 
 
-    @Query(nativeQuery = true, value = " SELECT  m.city from  mercury AS m where langitude > :minlng and langitude < :maxlng  OR lantitude > :minlat  and  lantitude < :maxlat")
+    @Query(nativeQuery = true, value = " SELECT ifnull(m.city,\"\")  from  mercury AS m where langitude > :minlng and langitude < :maxlng  OR lantitude > :minlat  and  lantitude < :maxlat")
     List<MercuryDTO> findNearMerchantsList(@Param("minlng")double minlng, @Param("maxlng")double maxlng,
                                            @Param("minlat")double minlat, @Param("maxlat")double maxlat);
 
