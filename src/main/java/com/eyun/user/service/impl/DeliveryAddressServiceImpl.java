@@ -11,6 +11,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -36,7 +37,6 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
         this.deliveryAddressRepository = deliveryAddressRepository;
         this.deliveryAddressMapper = deliveryAddressMapper;
     }
-
 
     /**
      * 删除单个地址
@@ -92,9 +92,13 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
      */
     @Override
     public List<Map> findByIdList(Long id) {
-        Map result=new HashMap();
         List<Map> deliveryAddressList = deliveryAddressRepository.findDeliveryAddressList(id);
+        if (deliveryAddressList.size()>0){
             return deliveryAddressList;
+        }
+
+        return null;
+
 
 
 
