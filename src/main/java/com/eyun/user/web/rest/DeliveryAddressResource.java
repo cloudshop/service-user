@@ -15,6 +15,7 @@ import com.eyun.user.service.dto.DeliveryAddressCriteria;
 import com.eyun.user.service.DeliveryAddressQueryService;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -147,7 +148,8 @@ public class DeliveryAddressResource {
      * 地址列表
      * @return
      */
-    @GetMapping("/delivery-addresses-list/")
+    @ApiOperation("地址列表")
+    @GetMapping("/delivery-addresses-list")
     @Timed
     public ResponseEntity getAddressList(){
        UserDTO account = uaaService.getAccount();
@@ -161,7 +163,8 @@ public class DeliveryAddressResource {
      * @param
      * @return
      */
-    @PostMapping("/user-annexes-createAddress/")
+    @ApiOperation("添加地址")
+    @PostMapping("/user-annexes-createAddress")
     @Timed
     public ResponseEntity createAddress(@RequestBody DeliveryAddress deliveryAddress){
         UserDTO account = uaaService.getAccount();
@@ -179,7 +182,8 @@ public class DeliveryAddressResource {
      * @param deliveryAddressDTO
      * @return
      */
-    @PostMapping("/user-annexes-updateAddress/")
+    @ApiOperation("修改地址")
+    @PostMapping("/user-annexes-updateAddress")
     @Timed
     public ResponseEntity updateAddress(@RequestBody DeliveryAddress deliveryAddressDTO){
         UserDTO account = uaaService.getAccount();
@@ -196,7 +200,8 @@ public class DeliveryAddressResource {
      * @param deliveryAddressDTO
      * @return
      */
-    @PostMapping("/user-annexes-deleteAddress/")
+    @ApiOperation("删除数据地址")
+    @PostMapping("/user-annexes-deleteAddress")
     @Timed
     public ResponseEntity deleteAddress(@RequestBody DeliveryAddressDTO deliveryAddressDTO){
         UserDTO account = uaaService.getAccount();
