@@ -7,6 +7,7 @@ import com.eyun.user.service.dto.UserAnnexDTO;
 import com.eyun.user.service.mapper.UserAnnexMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -118,6 +119,20 @@ public class UserAnnexServiceImpl implements UserAnnexService {
       /*  result.put("map",map);*/
         UserAnnex one = userAnnexRepository.findOne(id);
         return one;
+    }
+
+
+
+    /**
+     * 用户关系绑定
+     * @param
+     */
+    @Override
+    public void userBinding(Long id) {
+        UserAnnex userAnnex = new UserAnnex();
+        userAnnex.setUserid(id);
+        userAnnexRepository.save(userAnnex);
+
     }
 
     /**
