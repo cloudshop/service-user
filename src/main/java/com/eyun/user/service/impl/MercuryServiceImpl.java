@@ -134,15 +134,21 @@ public class MercuryServiceImpl implements MercuryService {
      * @return
      */
     @Override
-    public MercuryDTO checkMercuryStatus(Long id) {
+    public Map checkMercuryStatus(Long id) {
        return mercuryRepository.checkMercuryStatus(id);
     }
 
 
+    /**
+     * 商户申请
+     * @param file
+     * @param mercuryName
+     */
+    @Override
+    public void uploadMercuryImages(String[] file, String mercuryName) {
 
 
-
-
+    }
 
     @Override
     public List<MercuryDTO> findNearMerchants(MercuryDTO mercuryDTO) {
@@ -171,6 +177,21 @@ public class MercuryServiceImpl implements MercuryService {
     public List<Map> getMercuryInfoProductList(Long id) {
         List<Map> maps = productService.ProductList(id);
         return maps;
+    }
+
+
+    /**
+     * 变更商户状态
+     * @param
+     */
+    @Override
+    public void mercuryChangeStatus(Long id) {
+        Mercury mercury = new Mercury();
+        mercury.setId(id);
+        //增值商户
+        mercury.setStatus(2);
+        mercuryRepository.saveAndFlush(mercury);
+
     }
 
     private List<MercuryDTO> findNeighPosition(Double lantitude, Double langitude) {
