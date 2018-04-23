@@ -12,6 +12,9 @@ import com.eyun.user.service.dto.UserAnnexDTO;
 import com.eyun.user.service.dto.UserAnnexCriteria;
 import com.eyun.user.service.UserAnnexQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -134,8 +137,8 @@ public class UserAnnexResource {
 
 
 
-
-    @PostMapping("/user-annexes-useregis/updaUserInfo/")
+    @ApiOperation("修改用户信息")
+    @PostMapping("/user-annexes-useregis/updaUserInfo")
     @Timed
     public ResponseEntity updaUserInfo(@RequestBody  UserAnnexDTO userParamDTO){
         UserDTO account = uaaService.getAccount();
@@ -144,13 +147,12 @@ public class UserAnnexResource {
         return ResponseEntity.ok().body(null);
     }
 
-    @GetMapping("/user-annexes/userInfo/")
+    @GetMapping("/user-annexes/userInfo")
     @Timed
     public ResponseEntity userInfo(){
         UserDTO account = uaaService.getAccount();
         UserAnnex userAnnex = userAnnexService.userInfo(account.getId());
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(userAnnex));
-
     }
 
 
@@ -166,4 +168,24 @@ public class UserAnnexResource {
      userAnnexService.delete(id);
      return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
      }*/
+
+
+
+
+
+
+    /**
+     * 用户分享关系绑定接口
+     * @param
+     * @return
+     */
+    @ApiOperation("用户关系绑定")
+    @PostMapping("/user-annexes-userBinding")
+    @Timed
+    public ResponseEntity userBinding(){
+
+        UserDTO account = uaaService.getAccount();
+        userAnnexService.userBinding(account.getId());
+        return ResponseEntity.ok().body(null);
+    }
 }
