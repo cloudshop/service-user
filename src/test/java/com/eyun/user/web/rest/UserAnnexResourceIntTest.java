@@ -79,6 +79,9 @@ public class UserAnnexResourceIntTest {
     private static final Integer DEFAULT_TYPE = 1;
     private static final Integer UPDATED_TYPE = 2;
 
+    private static final Long DEFAULT_INVITER_ID = 1L;
+    private static final Long UPDATED_INVITER_ID = 2L;
+
     @Autowired
     private UserAnnexRepository userAnnexRepository;
 
@@ -135,7 +138,8 @@ public class UserAnnexResourceIntTest {
             .status(DEFAULT_STATUS)
             .createdTime(DEFAULT_CREATED_TIME)
             .updatedTime(DEFAULT_UPDATED_TIME)
-            .type(DEFAULT_TYPE);
+            .type(DEFAULT_TYPE)
+            .inviterId(DEFAULT_INVITER_ID);
         return userAnnex;
     }
 
@@ -170,6 +174,7 @@ public class UserAnnexResourceIntTest {
         assertThat(testUserAnnex.getCreatedTime()).isEqualTo(DEFAULT_CREATED_TIME);
         assertThat(testUserAnnex.getUpdatedTime()).isEqualTo(DEFAULT_UPDATED_TIME);
         assertThat(testUserAnnex.getType()).isEqualTo(DEFAULT_TYPE);
+        assertThat(testUserAnnex.getInviterId()).isEqualTo(DEFAULT_INVITER_ID);
     }
 
     @Test
@@ -212,7 +217,8 @@ public class UserAnnexResourceIntTest {
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)))
             .andExpect(jsonPath("$.[*].createdTime").value(hasItem(DEFAULT_CREATED_TIME.toString())))
             .andExpect(jsonPath("$.[*].updatedTime").value(hasItem(DEFAULT_UPDATED_TIME.toString())))
-            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)));
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)))
+            .andExpect(jsonPath("$.[*].inviterId").value(hasItem(DEFAULT_INVITER_ID.intValue())));
     }
 
     @Test
@@ -235,7 +241,8 @@ public class UserAnnexResourceIntTest {
             .andExpect(jsonPath("$.status").value(DEFAULT_STATUS))
             .andExpect(jsonPath("$.createdTime").value(DEFAULT_CREATED_TIME.toString()))
             .andExpect(jsonPath("$.updatedTime").value(DEFAULT_UPDATED_TIME.toString()))
-            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE));
+            .andExpect(jsonPath("$.type").value(DEFAULT_TYPE))
+            .andExpect(jsonPath("$.inviterId").value(DEFAULT_INVITER_ID.intValue()));
     }
 
     @Test
@@ -711,6 +718,72 @@ public class UserAnnexResourceIntTest {
 
     @Test
     @Transactional
+    public void getAllUserAnnexesByInviterIdIsEqualToSomething() throws Exception {
+        // Initialize the database
+        userAnnexRepository.saveAndFlush(userAnnex);
+
+        // Get all the userAnnexList where inviterId equals to DEFAULT_INVITER_ID
+        defaultUserAnnexShouldBeFound("inviterId.equals=" + DEFAULT_INVITER_ID);
+
+        // Get all the userAnnexList where inviterId equals to UPDATED_INVITER_ID
+        defaultUserAnnexShouldNotBeFound("inviterId.equals=" + UPDATED_INVITER_ID);
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserAnnexesByInviterIdIsInShouldWork() throws Exception {
+        // Initialize the database
+        userAnnexRepository.saveAndFlush(userAnnex);
+
+        // Get all the userAnnexList where inviterId in DEFAULT_INVITER_ID or UPDATED_INVITER_ID
+        defaultUserAnnexShouldBeFound("inviterId.in=" + DEFAULT_INVITER_ID + "," + UPDATED_INVITER_ID);
+
+        // Get all the userAnnexList where inviterId equals to UPDATED_INVITER_ID
+        defaultUserAnnexShouldNotBeFound("inviterId.in=" + UPDATED_INVITER_ID);
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserAnnexesByInviterIdIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        userAnnexRepository.saveAndFlush(userAnnex);
+
+        // Get all the userAnnexList where inviterId is not null
+        defaultUserAnnexShouldBeFound("inviterId.specified=true");
+
+        // Get all the userAnnexList where inviterId is null
+        defaultUserAnnexShouldNotBeFound("inviterId.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserAnnexesByInviterIdIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        userAnnexRepository.saveAndFlush(userAnnex);
+
+        // Get all the userAnnexList where inviterId greater than or equals to DEFAULT_INVITER_ID
+        defaultUserAnnexShouldBeFound("inviterId.greaterOrEqualThan=" + DEFAULT_INVITER_ID);
+
+        // Get all the userAnnexList where inviterId greater than or equals to UPDATED_INVITER_ID
+        defaultUserAnnexShouldNotBeFound("inviterId.greaterOrEqualThan=" + UPDATED_INVITER_ID);
+    }
+
+    @Test
+    @Transactional
+    public void getAllUserAnnexesByInviterIdIsLessThanSomething() throws Exception {
+        // Initialize the database
+        userAnnexRepository.saveAndFlush(userAnnex);
+
+        // Get all the userAnnexList where inviterId less than or equals to DEFAULT_INVITER_ID
+        defaultUserAnnexShouldNotBeFound("inviterId.lessThan=" + DEFAULT_INVITER_ID);
+
+        // Get all the userAnnexList where inviterId less than or equals to UPDATED_INVITER_ID
+        defaultUserAnnexShouldBeFound("inviterId.lessThan=" + UPDATED_INVITER_ID);
+    }
+
+
+    @Test
+    @Transactional
     public void getAllUserAnnexesByOwnerRelationIsEqualToSomething() throws Exception {
         // Initialize the database
         OwnerRelation ownerRelation = OwnerRelationResourceIntTest.createEntity(em);
@@ -764,7 +837,8 @@ public class UserAnnexResourceIntTest {
             .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)))
             .andExpect(jsonPath("$.[*].createdTime").value(hasItem(DEFAULT_CREATED_TIME.toString())))
             .andExpect(jsonPath("$.[*].updatedTime").value(hasItem(DEFAULT_UPDATED_TIME.toString())))
-            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)));
+            .andExpect(jsonPath("$.[*].type").value(hasItem(DEFAULT_TYPE)))
+            .andExpect(jsonPath("$.[*].inviterId").value(hasItem(DEFAULT_INVITER_ID.intValue())));
     }
 
     /**
@@ -808,7 +882,8 @@ public class UserAnnexResourceIntTest {
             .status(UPDATED_STATUS)
             .createdTime(UPDATED_CREATED_TIME)
             .updatedTime(UPDATED_UPDATED_TIME)
-            .type(UPDATED_TYPE);
+            .type(UPDATED_TYPE)
+            .inviterId(UPDATED_INVITER_ID);
         UserAnnexDTO userAnnexDTO = userAnnexMapper.toDto(updatedUserAnnex);
 
         restUserAnnexMockMvc.perform(put("/api/user-annexes")
@@ -830,6 +905,7 @@ public class UserAnnexResourceIntTest {
         assertThat(testUserAnnex.getCreatedTime()).isEqualTo(UPDATED_CREATED_TIME);
         assertThat(testUserAnnex.getUpdatedTime()).isEqualTo(UPDATED_UPDATED_TIME);
         assertThat(testUserAnnex.getType()).isEqualTo(UPDATED_TYPE);
+        assertThat(testUserAnnex.getInviterId()).isEqualTo(UPDATED_INVITER_ID);
     }
 
     @Test

@@ -52,9 +52,13 @@
             "fieldName": "updatedTime",
             "fieldType": "Instant"
         },
-        {
+		{
             "fieldName": "type",
             "fieldType": "Integer"
+        },
+        {
+            "fieldName": "inviterId",
+            "fieldType": "Long"
         }
     ],
     "changelogDate": "20180410080002",

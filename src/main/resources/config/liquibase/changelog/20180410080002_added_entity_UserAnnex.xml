@@ -62,6 +62,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="inviter_id" type="bigint">
+                <constraints nullable="true" />
+            </column>
+
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         <dropDefaultValue tableName="user_annex" columnName="created_time" columnDataType="datetime"/>

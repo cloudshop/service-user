@@ -34,6 +34,8 @@ public class UserAnnexDTO implements Serializable {
 
     private Integer type;
 
+    private Long inviterId;
+
     public Long getId() {
         return id;
     }
@@ -122,6 +124,14 @@ public class UserAnnexDTO implements Serializable {
         this.type = type;
     }
 
+    public Long getInviterId() {
+        return inviterId;
+    }
+
+    public void setInviterId(Long inviterId) {
+        this.inviterId = inviterId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -157,6 +167,7 @@ public class UserAnnexDTO implements Serializable {
             ", createdTime='" + getCreatedTime() + "'" +
             ", updatedTime='" + getUpdatedTime() + "'" +
             ", type=" + getType() +
+            ", inviterId=" + getInviterId() +
             "}";
     }
 }
