@@ -66,7 +66,7 @@ public interface MercuryService {
      * @param
      * @return
      */
-    MercuryDTO checkMercuryStatus(Long id);
+    Map checkMercuryStatus(Long id);
 
 
     /**
@@ -86,4 +86,9 @@ public interface MercuryService {
      */
     List<Map> getMercuryInfoProductList(Long id);
 
+
+
+    void uploadMercuryImages(String[] file, String mercuryName);
+
+    void mercuryChangeStatus(Long id);
 }
