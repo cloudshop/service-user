@@ -2,6 +2,8 @@ package com.eyun.user.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.eyun.user.service.MercuryService;
+import com.eyun.user.service.UaaService;
+import com.eyun.user.service.dto.UserDTO;
 import com.eyun.user.web.rest.errors.BadRequestAlertException;
 import com.eyun.user.web.rest.util.HeaderUtil;
 import com.eyun.user.web.rest.util.PaginationUtil;
@@ -12,12 +14,14 @@ import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.math.BigDecimal;
 import java.net.URI;
@@ -42,6 +46,9 @@ public class MercuryResource {
     private final MercuryService mercuryService;
 
     private final MercuryQueryService mercuryQueryService;
+
+    @Autowired private  UaaService uaaService;
+
 
     public MercuryResource(MercuryService mercuryService, MercuryQueryService mercuryQueryService) {
         this.mercuryService = mercuryService;
@@ -154,16 +161,17 @@ public class MercuryResource {
     /**
      *
      * 查询用户申请状态
-     * @param id
+     * @param
      * @return
      */
     @ApiOperation("查询用户申请状态")
-    @GetMapping("/mercuries/checkMercuryStatus/{id}")
+    @GetMapping("/mercuries/checkMercuryStatus")
     @Timed
-    public ResponseEntity<MercuryDTO> checkMercuryStatus(@PathVariable Long id){
-        log.info("{}",id);
-        MercuryDTO mercuryDTO = mercuryService.checkMercuryStatus(id);
-        return ResponseEntity.ok().body(mercuryDTO);
+    public ResponseEntity checkMercuryStatus(){
+        UserDTO account = uaaService.getAccount();
+        log.info("{}",account.getId());
+        Map map = mercuryService.checkMercuryStatus(account.getId());
+        return ResponseEntity.ok().body(map);
     }
 
 
@@ -208,6 +216,31 @@ public class MercuryResource {
         return ResponseEntity.ok().body(relult);
 
     }
+
+
+
+    @ApiOperation("商户申请图片上传 ")
+    @PostMapping("/mercuries/uploadMercuryImages")
+    @Timed
+    public ResponseEntity uploadMercuryImages( @RequestParam("file") String[] file,@RequestParam("name") String MercuryName){
+        if (file.length>0){
+            mercuryService.uploadMercuryImages(file, MercuryName);
+        }
+
+        return ResponseEntity.ok().body(null);
+
+    }
+
+    @ApiOperation("商户等级变更")
+    @GetMapping("/mercuries/mercuryChangeStatus")
+    @Timed
+    public ResponseEntity mercuryChangeStatus(){
+        UserDTO account = uaaService.getAccount();
+        mercuryService.mercuryChangeStatus(account.getId());
+        return ResponseEntity.ok().body(null);
+
+    }
+
 
 
 
