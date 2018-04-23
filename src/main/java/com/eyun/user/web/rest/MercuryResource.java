@@ -9,6 +9,7 @@ import com.eyun.user.service.dto.MercuryDTO;
 import com.eyun.user.service.dto.MercuryCriteria;
 import com.eyun.user.service.MercuryQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiOperation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -156,6 +157,7 @@ public class MercuryResource {
      * @param id
      * @return
      */
+    @ApiOperation("查询用户申请状态")
     @GetMapping("/mercuries/checkMercuryStatus/{id}")
     @Timed
     public ResponseEntity<MercuryDTO> checkMercuryStatus(@PathVariable Long id){
@@ -170,6 +172,7 @@ public class MercuryResource {
      * @param mercuryDTO
      * @return
      */
+    @ApiOperation("添加商户申请 ")
     @PostMapping("/mercuries/addMercury")
     @Timed
     public ResponseEntity addMercury(@RequestBody MercuryDTO mercuryDTO){
@@ -187,6 +190,7 @@ public class MercuryResource {
      *
      * @return
      */
+    @ApiOperation("根据经纬度查询附近的商家 ")
     @PostMapping("/mercuries/info-list/MercuryInfo")
     @Timed
     public ResponseEntity getMercuryInfo(@RequestBody MercuryDTO mercuryDTO) {
@@ -196,8 +200,8 @@ public class MercuryResource {
     }
 
 
-
-    @PostMapping("/mercuries/getMercuryInfoProductList/{id}/")
+    @ApiOperation("商品列表 ")
+    @PostMapping("/mercuries/getMercuryInfoProductList/{id}")
     @Timed
     public ResponseEntity getMercuryInfoProductList(@PathVariable Long id){
         List<Map> relult = mercuryService.getMercuryInfoProductList(id);
