@@ -56,6 +56,9 @@ public class UserAnnex implements Serializable {
     @Column(name = "jhi_type")
     private Integer type;
 
+    @Column(name = "inviter_id")
+    private Long inviterId;
+
     @OneToOne(mappedBy = "userAnnex")
     @JsonIgnore
     private OwnerRelation ownerRelation;
@@ -204,6 +207,19 @@ public class UserAnnex implements Serializable {
         this.type = type;
     }
 
+    public Long getInviterId() {
+        return inviterId;
+    }
+
+    public UserAnnex inviterId(Long inviterId) {
+        this.inviterId = inviterId;
+        return this;
+    }
+
+    public void setInviterId(Long inviterId) {
+        this.inviterId = inviterId;
+    }
+
     public OwnerRelation getOwnerRelation() {
         return ownerRelation;
     }
@@ -277,6 +293,7 @@ public class UserAnnex implements Serializable {
             ", createdTime='" + getCreatedTime() + "'" +
             ", updatedTime='" + getUpdatedTime() + "'" +
             ", type=" + getType() +
+            ", inviterId=" + getInviterId() +
             "}";
     }
 }
