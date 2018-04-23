@@ -21,7 +21,7 @@ import java.util.Map;
 public interface DeliveryAddressRepository extends JpaRepository<DeliveryAddress, Long>, JpaSpecificationExecutor<DeliveryAddress> {
 
 
-    @Query(value = " SELECT ifnull(d.city,\"\") AS city, ifnull(d.phone,\"\") AS phone,ifnull(d.contact,\"\") AS contact,ifnull(d.id,\"\") AS id,ifnull(d.default_address,0) AS default_address   FROM delivery_address AS d LEFT JOIN user_annex u ON d.user_annex_id=u.id WHERE u.id=:id",nativeQuery = true)
+    @Query(value = " SELECT ifnull(d.city,\"\") AS city, ifnull(d.phone,\"\") AS phone,ifnull(d.contact,\"\") AS contact,ifnull(d.id,\"\") AS id,isnull(d.default_address) AS default_address   FROM delivery_address AS d LEFT JOIN user_annex u ON d.user_annex_id=u.id WHERE u.id=:id",nativeQuery = true)
     List<Map> findDeliveryAddressList(@Param("id")Long id);
 
 
