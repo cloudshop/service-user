@@ -25,7 +25,7 @@ public interface MercuryRepository extends JpaRepository<Mercury, Long>, JpaSpec
 
 
     @Query(nativeQuery = true,value = "SELECT m.status FROM mercury AS m LEFT JOIN owner_relation o ON m.id=o.user_annex_id  LEFT JOIN user_annex u ON u.id=o.user_annex_id where u.id=:id")
-    MercuryDTO checkMercuryStatus(@Param("id")Long id);
+    Map checkMercuryStatus(@Param("id")Long id);
 
 
     @Query(nativeQuery = true, value = "SELECT m.name,m.city,m.img_license,m.id,SQRT( POW(111.2 * (lantitude - :Lantitude ), 2) + POW(111.2 * (:Langitude - langitude) * COS(lantitude / 57.3), 2))   AS distance FROM mercury AS m HAVING distance < 25 ORDER BY distance")
