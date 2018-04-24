@@ -180,10 +180,12 @@ public class UserAnnexResource {
     @ApiOperation("用户关系绑定")
     @PostMapping("/user-annexes-userBinding")
     @Timed
-    public ResponseEntity userBinding(){
+    public ResponseEntity userBinding(@RequestBody  UserAnnexDTO userParamDTO){
 
         UserDTO account = uaaService.getAccount();
-        userAnnexService.userBinding(account.getId());
+        userParamDTO.setUserid(account.getId());
+        userParamDTO.setInviterId(account.getId());
+        userAnnexService.userBinding(userParamDTO);
         return ResponseEntity.ok().body(null);
     }
 
