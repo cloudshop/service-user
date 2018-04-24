@@ -61,4 +61,6 @@ public interface UserAnnexService {
 
     void userBinding(Long id);
 
+    List<Map> shareUserList(Long id);
+
 }
