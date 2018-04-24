@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.data.jpa.repository.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -21,4 +22,6 @@ public interface UserAnnexRepository extends JpaRepository<UserAnnex, Long>, Jpa
     @Query(value = " select ifnull(u.phone,\"\") AS phone,ifnull(u.avatar,\"\") AS avatar,ifnull(u.nickname,\"\") AS nickname from user_annex AS u where userid=:id",nativeQuery = true)
     Map userInfo(@Param("id")Long id);
 
+    @Query(value = "select ifnull(s.name,\"\") AS name, ifnull(s.phone,\"\") AS phone from user_annex AS s where s.userid=:id",nativeQuery = true)
+    List<Map> shareUserList(@Param("id")Long id);
 }
