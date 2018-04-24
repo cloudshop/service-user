@@ -122,6 +122,16 @@ public class UserAnnexServiceImpl implements UserAnnexService {
     }
 
 
+    /**
+     * 用户分享邀请列表
+     * @param id
+     * @return
+     */
+    @Override
+    public List<Map> shareUserList(Long id) {
+        List<Map> resultUserList = userAnnexRepository.shareUserList(id);
+        return resultUserList;
+    }
 
     /**
      * 用户关系绑定
