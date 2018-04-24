@@ -138,9 +138,9 @@ public class UserAnnexServiceImpl implements UserAnnexService {
      * @param
      */
     @Override
-    public void userBinding(Long id) {
+    public void userBinding(UserAnnexDTO userParamDTO) {
         UserAnnex userAnnex = new UserAnnex();
-        userAnnex.setUserid(id);
+        BeanUtils.copyProperties(userParamDTO,userAnnex);
         userAnnexRepository.save(userAnnex);
 
     }
