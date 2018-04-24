@@ -147,6 +147,7 @@ public class UserAnnexResource {
         return ResponseEntity.ok().body(null);
     }
 
+    @ApiOperation("获取用户信息")
     @GetMapping("/user-annexes/userInfo")
     @Timed
     public ResponseEntity userInfo(){
@@ -171,9 +172,6 @@ public class UserAnnexResource {
 
 
 
-
-
-
     /**
      * 用户分享关系绑定接口
      * @param
@@ -187,5 +185,19 @@ public class UserAnnexResource {
         UserDTO account = uaaService.getAccount();
         userAnnexService.userBinding(account.getId());
         return ResponseEntity.ok().body(null);
+    }
+
+
+
+    @ApiOperation("用户分享列表")
+    @PostMapping("/user-annexes-shareUserList")
+    @Timed
+    public ResponseEntity shareUserList(){
+        UserDTO account = uaaService.getAccount();
+        List<Map> shareLists = userAnnexService.shareUserList(account.getId());
+        return ResponseEntity.ok().body(shareLists);
+
+
+
     }
 }
