@@ -116,16 +116,17 @@ public class UserAnnexServiceImpl implements UserAnnexService {
 
     @Override
     public UserAnnex userInfo(Long id) {
-        UserAnnex one = userAnnexRepository.findOne(id);
-          if (StringUtils.isBlank(one.getNickname())) {
-              one.setNickname("gr" + System.currentTimeMillis());
-          }
         UserDTO account = uaaService.getAccount();
+        UserAnnex userAnnex = new UserAnnex();
+        userAnnex.setNickname("gr"+System.currentTimeMillis());
+        userAnnex.setUserid(id);
+        userAnnex.setId(id);
+        userAnnexRepository.save(userAnnex);
+        UserAnnex one = userAnnexRepository.findOne(id);
         one.setPhone(account.getLogin());
-        if (one != null) {
-            return one;
-        }
-        throw new BadRequestAlertException(" 用户信息不存在", " one", "oneexists");
+        return one;
+
+
     }
 
 
