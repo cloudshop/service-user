@@ -148,7 +148,9 @@ public class MercuryServiceImpl implements MercuryService {
      */
     @Override
     public void uploadMercuryImages( MercuryDTO mercuryDTO) {
-
+        Mercury mercury = new Mercury();
+        BeanUtils.copyProperties(mercuryDTO,mercury);
+        mercuryRepository.save(mercury);
 
     }
 
