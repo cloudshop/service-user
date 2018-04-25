@@ -6,6 +6,7 @@ import com.eyun.user.repository.MercuryRepository;
 import com.eyun.user.service.ProductService;
 import com.eyun.user.service.dto.MercuryDTO;
 import com.eyun.user.service.mapper.MercuryMapper;
+import com.eyun.user.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -14,6 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -141,11 +143,11 @@ public class MercuryServiceImpl implements MercuryService {
 
     /**
      * 商户申请
-     * @param file
-     * @param mercuryName
+     * @param
+     * @param
      */
     @Override
-    public void uploadMercuryImages(String[] file, String mercuryName) {
+    public void uploadMercuryImages( MercuryDTO mercuryDTO) {
 
 
     }
@@ -176,7 +178,11 @@ public class MercuryServiceImpl implements MercuryService {
     @Override
     public List<Map> getMercuryInfoProductList(Long id) {
         List<Map> maps = productService.ProductList(id);
-        return maps;
+        if (maps.size()>0){
+            return maps;
+        }
+        throw new BadRequestAlertException(" 商户列表不存在"," maps","mapsexists");
+
     }
 
 
@@ -227,7 +233,6 @@ public class MercuryServiceImpl implements MercuryService {
         if (nearMerchantsList.size()>0){
             return nearMerchantsList;
         }
-
         return null;
 
     }
