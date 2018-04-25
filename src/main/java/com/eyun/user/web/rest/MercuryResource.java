@@ -21,16 +21,16 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
-import java.math.BigDecimal;
+
+
 import java.net.URI;
 import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
-import java.util.stream.StreamSupport;
+
 
 /**
  * REST controller for managing Mercury.
@@ -222,11 +222,8 @@ public class MercuryResource {
     @ApiOperation("商户申请图片上传 ")
     @PostMapping("/mercuries/uploadMercuryImages")
     @Timed
-    public ResponseEntity uploadMercuryImages( @RequestParam("file") String[] file,@RequestParam("name") String MercuryName){
-        if (file.length>0){
-            mercuryService.uploadMercuryImages(file, MercuryName);
-        }
-
+    public ResponseEntity uploadMercuryImages(@RequestBody MercuryDTO mercuryDTO){
+            mercuryService.uploadMercuryImages(mercuryDTO);
         return ResponseEntity.ok().body(null);
 
     }
