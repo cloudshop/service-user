@@ -1,22 +1,24 @@
 package com.eyun.user.service.impl;
 
+import com.eyun.user.service.UaaService;
 import com.eyun.user.service.UserAnnexService;
 import com.eyun.user.domain.UserAnnex;
 import com.eyun.user.repository.UserAnnexRepository;
 import com.eyun.user.service.dto.UserAnnexDTO;
+import com.eyun.user.service.dto.UserDTO;
 import com.eyun.user.service.mapper.UserAnnexMapper;
+import com.eyun.user.web.rest.errors.BadRequestAlertException;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -32,6 +34,8 @@ public class UserAnnexServiceImpl implements UserAnnexService {
     private final UserAnnexRepository userAnnexRepository;
 
     private final UserAnnexMapper userAnnexMapper;
+    @Autowired
+    private UaaService uaaService;
 
     public UserAnnexServiceImpl(UserAnnexRepository userAnnexRepository, UserAnnexMapper userAnnexMapper) {
         this.userAnnexRepository = userAnnexRepository;
@@ -84,8 +88,6 @@ public class UserAnnexServiceImpl implements UserAnnexService {
     }
 
 
-
-
     /**
      * Get one userAnnex by id.
      *
@@ -113,47 +115,60 @@ public class UserAnnexServiceImpl implements UserAnnexService {
 
 
     @Override
-    public UserAnnex  userInfo(Long id) {
-       /* Map result = new HashMap();*/
-     /*   Map map = userAnnexRepository.userInfo(id);*/
-      /*  result.put("map",map);*/
+    public UserAnnex userInfo(Long id) {
         UserAnnex one = userAnnexRepository.findOne(id);
-        return one;
+          if (StringUtils.isBlank(one.getNickname())) {
+              one.setNickname("gr" + System.currentTimeMillis());
+          }
+        UserDTO account = uaaService.getAccount();
+        one.setPhone(account.getLogin());
+        if (one != null) {
+            return one;
+        }
+        throw new BadRequestAlertException(" 用户信息不存在", " one", "oneexists");
     }
 
 
     /**
      * 用户分享邀请列表
+     *
      * @param id
      * @return
      */
     @Override
     public List<Map> shareUserList(Long id) {
         List<Map> resultUserList = userAnnexRepository.shareUserList(id);
-        return resultUserList;
+        if (resultUserList.size() > 0) {
+            return resultUserList;
+        }
+        throw new BadRequestAlertException(" 用户分享邀请列表不存在", "resultUserList", "resultUserListexists");
+
+
     }
 
     /**
      * 用户关系绑定
+     *
      * @param
      */
     @Override
     public void userBinding(UserAnnexDTO userParamDTO) {
         UserAnnex userAnnex = new UserAnnex();
-        BeanUtils.copyProperties(userParamDTO,userAnnex);
+        BeanUtils.copyProperties(userParamDTO, userAnnex);
         userAnnexRepository.save(userAnnex);
 
     }
 
     /**
      * 修改用户相关的信息
+     *
      * @param userParamDTO
      */
     @Override
     public void updataUserInfo(UserAnnexDTO userParamDTO) {
 
         //修改用户的头像
-        if (userParamDTO.getType()==0){
+        if (userParamDTO.getType() == 0) {
             UserAnnex userAnnex = new UserAnnex();
             userAnnex.setAvatar(userParamDTO.getAvatar());
             userAnnex.setId(userParamDTO.getId());
@@ -161,7 +176,7 @@ public class UserAnnexServiceImpl implements UserAnnexService {
             userAnnexRepository.saveAndFlush(userAnnex);
 
             //修改用户电话
-        } else if (userParamDTO.getType()==1) {
+        } else if (userParamDTO.getType() == 1) {
             UserAnnex userAnnex = new UserAnnex();
             userAnnex.setPhone(userParamDTO.getPhone());
             userAnnex.setId(userParamDTO.getId());
@@ -169,19 +184,20 @@ public class UserAnnexServiceImpl implements UserAnnexService {
             userAnnexRepository.saveAndFlush(userAnnex);
 
             //修改用户昵称
-        }else  if (userParamDTO.getType()==2) {
+        } else if (userParamDTO.getType() == 2) {
             UserAnnex userAnnex = new UserAnnex();
             userAnnex.setNickname(userParamDTO.getNickname());
             userAnnex.setId(userParamDTO.getId());
             userAnnex.setUserid(userParamDTO.getUserid());
             userAnnexRepository.saveAndFlush(userAnnex);
 
+
         }
-
-
-
 
     }
 
 
 }
+
+
+
