@@ -6,6 +6,7 @@ import com.eyun.user.domain.DeliveryAddress;
 import com.eyun.user.repository.DeliveryAddressRepository;
 import com.eyun.user.service.dto.DeliveryAddressDTO;
 import com.eyun.user.service.mapper.DeliveryAddressMapper;
+import com.eyun.user.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -96,8 +97,7 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
         if (deliveryAddressList.size()>0){
             return deliveryAddressList;
         }
-
-        return null;
+        throw new BadRequestAlertException(" 无地址数据"," delivery","deliveryexists");
 
 
 
