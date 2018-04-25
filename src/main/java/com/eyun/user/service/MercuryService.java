@@ -4,6 +4,8 @@ import com.eyun.user.domain.Mercury;
 import com.eyun.user.service.dto.MercuryDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.RequestBody;
+
 import java.util.List;
 import java.util.Map;
 
@@ -88,7 +90,7 @@ public interface MercuryService {
 
 
 
-    void uploadMercuryImages(String[] file, String mercuryName);
+    void uploadMercuryImages( MercuryDTO mercuryDTO);
 
     void mercuryChangeStatus(Long id);
 }
