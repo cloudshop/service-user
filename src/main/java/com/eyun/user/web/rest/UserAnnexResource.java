@@ -152,8 +152,10 @@ public class UserAnnexResource {
     @Timed
     public ResponseEntity userInfo(){
         UserDTO account = uaaService.getAccount();
-        UserAnnex userAnnex = userAnnexService.userInfo(account.getId());
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(userAnnex));
+        log.info("用户ID是{}",account.getId());
+        Map map = userAnnexService.userInfo(account.getId());
+
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(map));
     }
 
 
@@ -194,8 +196,6 @@ public class UserAnnexResource {
         UserDTO account = uaaService.getAccount();
         List<Map> shareLists = userAnnexService.shareUserList(account.getId());
         return ResponseEntity.ok().body(shareLists);
-
-
 
     }
 }
