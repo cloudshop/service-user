@@ -117,17 +117,15 @@ public class UserAnnexServiceImpl implements UserAnnexService {
     @Override
     public UserAnnex userInfo(Long id) {
         UserDTO account = uaaService.getAccount();
-        UserAnnex userAnnex = new UserAnnex();
-        userAnnex.setNickname("gr"+System.currentTimeMillis());
-        userAnnex.setUserid(id);
-        userAnnex.setId(id);
-        userAnnexRepository.save(userAnnex);
-        UserAnnex one = userAnnexRepository.findOne(id);
+        log.info("当前登陆的用户ID是{}",id);
+        log.info("电话号码{}",account.getLogin());
+        //UserAnnex one = userAnnexRepository.findOne(id);
+        UserAnnex one = new UserAnnex();
+        one.setUserid(id);
         one.setPhone(account.getLogin());
         return one;
-
-
     }
+
 
 
     /**
