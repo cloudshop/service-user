@@ -151,10 +151,10 @@ public class UserAnnexServiceImpl implements UserAnnexService {
         userAnnex.setUserid(id);
         userAnnexRepository.saveAndFlush(userAnnex);
 
-        //找到该用户的邀请人
-        int invitationID = findUserInvitation(id);
+       //找到该用户的邀请人
+       Long invitationID = findUserInvitation(id);
         ServiceProviderRewardDTO serviceProviderRewardDTO = new ServiceProviderRewardDTO();
-        serviceProviderRewardDTO.setServiceProviderID((long) invitationID);
+        serviceProviderRewardDTO.setServiceProviderID( invitationID);
         serviceProviderRewardDTO.setIncrementBusinessID(id);
         walletService.invitationDeductions(serviceProviderRewardDTO);
     }
@@ -164,8 +164,8 @@ public class UserAnnexServiceImpl implements UserAnnexService {
      * 则，该用户没有邀请人,不调用如何的方法
      * @param id
      */
-    private int findUserInvitation(Long id) {
-       int InvitationID =userAnnexRepository.findInvitationUser(id);
+    private Long findUserInvitation(Long id) {
+       Long InvitationID =userAnnexRepository.findInvitationUser(id);
         return InvitationID;
     }
 
