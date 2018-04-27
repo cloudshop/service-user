@@ -202,8 +202,8 @@ public class UserAnnexResource {
     @ApiOperation("变更用户的状态")
     @PostMapping("/user-annexes-UpdaeUserStatus")
     @Timed
-    public ResponseEntity UpdaeUserStatus(@RequestBody  UserAnnexDTO userParamDTO){
-        userAnnexService.UpdaeUserStatus(userParamDTO.getUserid());
+    public ResponseEntity UpdaeUserStatus(@RequestBody  UserDTO userParamDTO){
+        userAnnexService.UpdaeUserStatus(userParamDTO.getId());
         return ResponseEntity.ok().body(null);
     }
 }
