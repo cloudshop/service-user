@@ -4,9 +4,11 @@ import com.eyun.user.service.UaaService;
 import com.eyun.user.service.UserAnnexService;
 import com.eyun.user.domain.UserAnnex;
 import com.eyun.user.repository.UserAnnexRepository;
+import com.eyun.user.service.dto.ServiceProviderRewardDTO;
 import com.eyun.user.service.dto.UserAnnexDTO;
 import com.eyun.user.service.dto.UserDTO;
 import com.eyun.user.service.mapper.UserAnnexMapper;
+import com.eyun.user.service.walletService;
 import com.eyun.user.web.rest.errors.BadRequestAlertException;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -36,6 +38,8 @@ public class UserAnnexServiceImpl implements UserAnnexService {
     private final UserAnnexMapper userAnnexMapper;
     @Autowired
     private UaaService uaaService;
+
+    @Autowired private walletService walletService;
 
     public UserAnnexServiceImpl(UserAnnexRepository userAnnexRepository, UserAnnexMapper userAnnexMapper) {
         this.userAnnexRepository = userAnnexRepository;
@@ -114,9 +118,59 @@ public class UserAnnexServiceImpl implements UserAnnexService {
     }
 
 
+    /**
+     * 根据用户ID查出邀请人的跟用户是哪个邀请人
+     * @param id
+     * @return
+     */
+    @Override
+    public UserAnnexDTO invitationUserId(Long id) {
+        // TODO: 2018/4/27
+        return null;
+    }
+
+    /**
+     * 检查用户是不是属于这个供应商体系下的
+     * @param id
+     */
+    @Override
+    public void checkUserBelongProvider(Long id) {
+        //TODO 2018/4/27
+
+    }
+
+
+    /**
+     * 变更用户的状态
+     * @param id
+     */
+    @Override
+    public void UpdaeUserStatus(Long id) {
+        UserAnnex userAnnex = new UserAnnex();
+        userAnnex.setType(4);
+        userAnnex.setUserid(id);
+        userAnnexRepository.saveAndFlush(userAnnex);
+
+        //找到该用户的邀请人
+        int invitationID = findUserInvitation(id);
+        ServiceProviderRewardDTO serviceProviderRewardDTO = new ServiceProviderRewardDTO();
+        serviceProviderRewardDTO.setServiceProviderID((long) invitationID);
+        serviceProviderRewardDTO.setIncrementBusinessID(id);
+        walletService.invitationDeductions(serviceProviderRewardDTO);
+    }
+
+    /**
+     * 调用增加钱的方法,并且放回邀请人的ID号码，如果邀请人的ID号码不存在
+     * 则，该用户没有邀请人,不调用如何的方法
+     * @param id
+     */
+    private int findUserInvitation(Long id) {
+       int InvitationID =userAnnexRepository.findInvitationUser(id);
+        return InvitationID;
+    }
+
     @Override
     public Map userInfo(Long id) {
-
 
         UserDTO account = uaaService.getAccount();
         log.info("当前登陆的用户ID是{}",id);
@@ -127,6 +181,8 @@ public class UserAnnexServiceImpl implements UserAnnexService {
             one.setId(id);
             one.setUserid(id);
             one.setPhone(account.getLogin());
+            //刚注册进来的用户默认状态默认为 1,普通用户
+            one.setType(1);
             one.setNickname("gr"+System.currentTimeMillis());
             userAnnexRepository.save(one);
         }
@@ -167,7 +223,6 @@ public class UserAnnexServiceImpl implements UserAnnexService {
         UserAnnex userAnnex = new UserAnnex();
         BeanUtils.copyProperties(userParamDTO, userAnnex);
         userAnnexRepository.save(userAnnex);
-
     }
 
     /**
