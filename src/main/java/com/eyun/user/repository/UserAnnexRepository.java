@@ -40,4 +40,6 @@ public interface UserAnnexRepository extends JpaRepository<UserAnnex, Long>, Jpa
         "\tuser_annex b\n" +
         "WHERE a.inviter_id=b.inviter_id AND b.userid=:id",nativeQuery = true)
     Long findInvitationUser(@Param("id")Long id);
+
+    UserAnnex findByUserid(Long id);
 }
