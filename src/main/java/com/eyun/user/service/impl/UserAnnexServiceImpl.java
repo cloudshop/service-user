@@ -146,10 +146,9 @@ public class UserAnnexServiceImpl implements UserAnnexService {
      */
     @Override
     public void UpdaeUserStatus(Long id) {
-        UserAnnex userAnnex = new UserAnnex();
+        UserAnnex userAnnex = userAnnexRepository.findByUserid(id);
         userAnnex.setType(4);
-        userAnnex.setUserid(id);
-        userAnnexRepository.saveAndFlush(userAnnex);
+        userAnnexRepository.save(userAnnex);
 
        //找到该用户的邀请人
        Long invitationID = findUserInvitation(id);
