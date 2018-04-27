@@ -15,7 +15,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.RequestBody;
+
 
 import java.util.LinkedList;
 import java.util.List;
@@ -197,7 +197,7 @@ public class MercuryServiceImpl implements MercuryService {
         Mercury mercury = new Mercury();
         mercury.setId(id);
         //增值商户
-        mercury.setStatus(2);
+        mercury.setStatus(4);
         mercuryRepository.saveAndFlush(mercury);
 
     }
