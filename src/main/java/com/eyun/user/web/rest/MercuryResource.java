@@ -223,7 +223,9 @@ public class MercuryResource {
     @PostMapping("/mercuries/uploadMercuryImages")
     @Timed
     public ResponseEntity uploadMercuryImages(@RequestBody MercuryDTO mercuryDTO){
-            mercuryService.uploadMercuryImages(mercuryDTO);
+        UserDTO account = uaaService.getAccount();
+        mercuryDTO.setId(account.getId());
+        mercuryService.uploadMercuryImages(mercuryDTO);
         return ResponseEntity.ok().body(null);
 
     }
