@@ -196,6 +196,15 @@ public class UserAnnexResource {
         UserDTO account = uaaService.getAccount();
         List<Map> shareLists = userAnnexService.shareUserList(account.getId());
         return ResponseEntity.ok().body(shareLists);
+    }
 
+
+    @ApiOperation("变更用户的状态")
+    @PostMapping("/user-annexes-UpdaeUserStatus")
+    @Timed
+    public ResponseEntity UpdaeUserStatus(){
+        UserDTO account = uaaService.getAccount();
+        userAnnexService.UpdaeUserStatus(account.getId());
+        return ResponseEntity.ok().body(null);
     }
 }
