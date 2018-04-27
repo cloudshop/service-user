@@ -202,9 +202,8 @@ public class UserAnnexResource {
     @ApiOperation("变更用户的状态")
     @PostMapping("/user-annexes-UpdaeUserStatus")
     @Timed
-    public ResponseEntity UpdaeUserStatus(){
-        UserDTO account = uaaService.getAccount();
-        userAnnexService.UpdaeUserStatus(account.getId());
+    public ResponseEntity UpdaeUserStatus(@RequestBody  UserAnnexDTO userParamDTO){
+        userAnnexService.UpdaeUserStatus(userParamDTO.getUserid());
         return ResponseEntity.ok().body(null);
     }
 }
