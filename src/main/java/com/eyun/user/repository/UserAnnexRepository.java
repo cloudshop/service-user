@@ -24,4 +24,20 @@ public interface UserAnnexRepository extends JpaRepository<UserAnnex, Long>, Jpa
 
     @Query(value = "select ifnull(s.name,\"\") AS name, ifnull(s.phone,\"\") AS phone from user_annex AS s where s.userid=:id",nativeQuery = true)
     List<Map> shareUserList(@Param("id")Long id);
+
+    @Query(value = "UPDATE user_annex  SET jhi_type =4  WHERE userid =:id ",nativeQuery = true)
+    void UpdaeUserStatus(@Param("id")Long id);
+
+    /**
+     * 根据用户的id查询邀请人的ID
+     * @param id
+     * @return
+     */
+    @Query(value = "SELECT\n" +
+        "\tDISTINCT(b.inviter_id)\n" +
+        "FROM\n" +
+        "\tuser_annex a,\n" +
+        "\tuser_annex b\n" +
+        "WHERE a.inviter_id=b.inviter_id AND b.userid=:id",nativeQuery = true)
+    Long findInvitationUser(@Param("id")Long id);
 }
