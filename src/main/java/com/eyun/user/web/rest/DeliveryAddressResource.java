@@ -171,7 +171,7 @@ public class DeliveryAddressResource {
         log.info("{}",account.getId());
         UserAnnex userAnnex = deliveryAddress.getUserAnnex();
         userAnnex.setId(account.getId());
-        userAnnex.setUserid(account.getId());
+        userAnnex.setId(account.getId());
         deliveryAddressService.createAddress(deliveryAddress);
         return ResponseEntity.ok().body(null);
     }
@@ -189,7 +189,7 @@ public class DeliveryAddressResource {
         UserDTO account = uaaService.getAccount();
         UserAnnex userAnnex = deliveryAddressDTO.getUserAnnex();
         userAnnex.setId(account.getId());
-        userAnnex.setUserid(account.getId());
+        userAnnex.setId(account.getId());
         deliveryAddressService.updateAddress(deliveryAddressDTO);
         return ResponseEntity.ok().body(null);
     }
