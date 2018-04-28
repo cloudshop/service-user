@@ -29,24 +29,9 @@ public interface UserAnnexRepository extends JpaRepository<UserAnnex, Long>, Jpa
 
 
 
-    /**
-     * 根据用户的id查询邀请人的ID
-     * @param id
-     * @return
-     */
-    @Query(value = "SELECT\n" +
-        "\tDISTINCT(b.inviter_id)\n" +
-        "FROM\n" +
-        "\tuser_annex a,\n" +
-        "\tuser_annex b\n" +
-        "WHERE a.inviter_id=b.inviter_id AND b.id=:id",nativeQuery = true)
-    Long findInvitationUser(@Param("id")Long id);
 
 
 
-  /*  @Query(value = "SELECT * FROM user_annex",nativeQuery = true)
-    UserAnnex findProviders(@Param("invitationID")Long invitationID, @Param("userid")Long userid);
 
-*/
     UserAnnex findByid(Long id);
 }
