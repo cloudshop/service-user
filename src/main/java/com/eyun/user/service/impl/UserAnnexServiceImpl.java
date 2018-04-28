@@ -132,7 +132,7 @@ public class UserAnnexServiceImpl implements UserAnnexService {
         log.info("修改类******************************************************************************************型开始{}", 4);
         userAnnexRepository.save(userAnnex);
         log.info("修改用户****************************************************************************************类型结束{}");
-/*
+
        //找到该用户的邀请人
        Long invitationID = findUserInvitation(id);
         ServiceProviderRewardDTO serviceProviderRewardDTO = new ServiceProviderRewardDTO();
@@ -140,7 +140,7 @@ public class UserAnnexServiceImpl implements UserAnnexService {
         serviceProviderRewardDTO.setIncrementBusinessID(id);
         log.info("调用价钱服务开始*************************************************************************************");
         walletService.invitationDeductions(serviceProviderRewardDTO);
-        log.info("调用价钱服务结束*************************************************************************************");*/
+        log.info("调用价钱服务结束*************************************************************************************");
     }
 
     /**
@@ -149,11 +149,11 @@ public class UserAnnexServiceImpl implements UserAnnexService {
      *
      * @param id
      */
-   /* private Long findUserInvitation(Long id) {
+    private Long findUserInvitation(Long id) {
        Long InvitationID =userAnnexRepository.findInvitationUser(id);
        log.info("查询邀请人开始********************************************************************************{}",InvitationID);
-        return InvitationID;*/
-   // }
+        return InvitationID;
+    }
     @Override
     public Map userInfo(Long id) {
 
