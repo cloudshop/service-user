@@ -39,7 +39,8 @@ public class UserAnnexServiceImpl implements UserAnnexService {
     @Autowired
     private UaaService uaaService;
 
-    @Autowired private walletService walletService;
+    @Autowired
+    private walletService walletService;
 
     public UserAnnexServiceImpl(UserAnnexRepository userAnnexRepository, UserAnnexMapper userAnnexMapper) {
         this.userAnnexRepository = userAnnexRepository;
@@ -119,80 +120,60 @@ public class UserAnnexServiceImpl implements UserAnnexService {
 
 
     /**
-     * 根据用户ID查出邀请人的跟用户是哪个邀请人
-     * @param id
-     * @return
-     */
-    @Override
-    public UserAnnexDTO invitationUserId(Long id) {
-        // TODO: 2018/4/27
-        return null;
-    }
-
-    /**
-     * 检查用户是不是属于这个供应商体系下的
-     * @param id
-     */
-    @Override
-    public void checkUserBelongProvider(Long id) {
-        //TODO 2018/4/27
-
-    }
-
-
-    /**
      * 变更用户的状态
+     *
      * @param id
      */
     @Override
     public void UpdaeUserStatus(Long id) {
+        log.info("用户ID是{}", id);
         UserAnnex userAnnex = userAnnexRepository.findByUserid(id);
         userAnnex.setType(4);
+        log.info("修改类******************************************************************************************型开始{}", 4);
         userAnnexRepository.save(userAnnex);
+        log.info("修改用户****************************************************************************************类型结束{}");
 
-       /*//找到该用户的邀请人
+       //找到该用户的邀请人
        Long invitationID = findUserInvitation(id);
         ServiceProviderRewardDTO serviceProviderRewardDTO = new ServiceProviderRewardDTO();
         serviceProviderRewardDTO.setServiceProviderID( invitationID);
         serviceProviderRewardDTO.setIncrementBusinessID(id);
-        walletService.invitationDeductions(serviceProviderRewardDTO);*/
+        log.info("调用价钱服务开始*************************************************************************************");
+        walletService.invitationDeductions(serviceProviderRewardDTO);
+        log.info("调用价钱服务结束*************************************************************************************");
     }
 
     /**
      * 调用增加钱的方法,并且放回邀请人的ID号码，如果邀请人的ID号码不存在
      * 则，该用户没有邀请人,不调用如何的方法
+     *
      * @param id
      */
-   /* private Long findUserInvitation(Long id) {
+    private Long findUserInvitation(Long id) {
        Long InvitationID =userAnnexRepository.findInvitationUser(id);
+       log.info("查询邀请人开始********************************************************************************{}",InvitationID);
         return InvitationID;
-    }*/
-
+    }
     @Override
     public Map userInfo(Long id) {
 
         UserDTO account = uaaService.getAccount();
-        log.info("当前登陆的用户ID是{}",id);
-        log.info("电话号码{}",account.getLogin());
+        log.info("当前登陆的用户ID是{}", id);
+        log.info("电话号码{}", account.getLogin());
         Map map = userAnnexRepository.userInfo(id);
-        if (map.size()==0){
+        if (map.size() == 0) {
             UserAnnex one = new UserAnnex();
             one.setId(id);
             one.setUserid(id);
             one.setPhone(account.getLogin());
+            one.setAvatar("https://misc.360buyimg.com/mtd/pc/index_2017/2.0.1/static/images/mobile_qrcode.png");
             //刚注册进来的用户默认状态默认为 1,普通用户
             one.setType(1);
-            one.setNickname("gr"+System.currentTimeMillis());
+            one.setNickname("gr" + System.currentTimeMillis());
             userAnnexRepository.save(one);
         }
-
         return map;
     }
-
-
-
-
-
 
 
     /**
@@ -234,35 +215,28 @@ public class UserAnnexServiceImpl implements UserAnnexService {
 
         //修改用户的头像
         if (userParamDTO.getType() == 0) {
-            UserAnnex userAnnex = new UserAnnex();
+            UserAnnex userAnnex = userAnnexRepository.findByUserid(userParamDTO.getUserid());
             userAnnex.setAvatar(userParamDTO.getAvatar());
-            userAnnex.setId(userParamDTO.getId());
             userAnnex.setUserid(userParamDTO.getUserid());
             userAnnexRepository.saveAndFlush(userAnnex);
 
             //修改用户电话
-        } else if (userParamDTO.getType() == 1) {
-            UserAnnex userAnnex = new UserAnnex();
-            userAnnex.setPhone(userParamDTO.getPhone());
-            userAnnex.setId(userParamDTO.getId());
-            userAnnex.setUserid(userParamDTO.getUserid());
-            userAnnexRepository.saveAndFlush(userAnnex);
-
-            //修改用户昵称
         } else if (userParamDTO.getType() == 2) {
-            UserAnnex userAnnex = new UserAnnex();
+            UserAnnex userAnnex = userAnnexRepository.findByUserid(userParamDTO.getUserid());
             userAnnex.setNickname(userParamDTO.getNickname());
-            userAnnex.setId(userParamDTO.getId());
             userAnnex.setUserid(userParamDTO.getUserid());
             userAnnexRepository.saveAndFlush(userAnnex);
 
 
         }
 
+
     }
 
-
 }
+
+
+
 
 
 
