@@ -17,10 +17,6 @@
     ],
     "fields": [
         {
-            "fieldName": "userid",
-            "fieldType": "Long"
-        },
-        {
             "fieldName": "name",
             "fieldType": "String"
         },

@@ -78,9 +78,6 @@ public class UserAnnexQueryService extends QueryService<UserAnnex> {
             if (criteria.getId() != null) {
                 specification = specification.and(buildSpecification(criteria.getId(), UserAnnex_.id));
             }
-            if (criteria.getUserid() != null) {
-                specification = specification.and(buildRangeSpecification(criteria.getUserid(), UserAnnex_.userid));
-            }
             if (criteria.getName() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getName(), UserAnnex_.name));
             }

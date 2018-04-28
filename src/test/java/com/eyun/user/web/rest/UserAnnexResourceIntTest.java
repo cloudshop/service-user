@@ -49,9 +49,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(classes = {UserApp.class, SecurityBeanOverrideConfiguration.class})
 public class UserAnnexResourceIntTest {
 
-    private static final Long DEFAULT_USERID = 1L;
-    private static final Long UPDATED_USERID = 2L;
-
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
@@ -129,7 +126,6 @@ public class UserAnnexResourceIntTest {
      */
     public static UserAnnex createEntity(EntityManager em) {
         UserAnnex userAnnex = new UserAnnex()
-            .userid(DEFAULT_USERID)
             .name(DEFAULT_NAME)
             .email(DEFAULT_EMAIL)
             .phone(DEFAULT_PHONE)
@@ -164,7 +160,6 @@ public class UserAnnexResourceIntTest {
         List<UserAnnex> userAnnexList = userAnnexRepository.findAll();
         assertThat(userAnnexList).hasSize(databaseSizeBeforeCreate + 1);
         UserAnnex testUserAnnex = userAnnexList.get(userAnnexList.size() - 1);
-        assertThat(testUserAnnex.getUserid()).isEqualTo(DEFAULT_USERID);
         assertThat(testUserAnnex.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testUserAnnex.getEmail()).isEqualTo(DEFAULT_EMAIL);
         assertThat(testUserAnnex.getPhone()).isEqualTo(DEFAULT_PHONE);
@@ -208,7 +203,6 @@ public class UserAnnexResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(userAnnex.getId().intValue())))
-            .andExpect(jsonPath("$.[*].userid").value(hasItem(DEFAULT_USERID.intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
             .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE.toString())))
@@ -232,7 +226,6 @@ public class UserAnnexResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(userAnnex.getId().intValue()))
-            .andExpect(jsonPath("$.userid").value(DEFAULT_USERID.intValue()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.email").value(DEFAULT_EMAIL.toString()))
             .andExpect(jsonPath("$.phone").value(DEFAULT_PHONE.toString()))
@@ -244,72 +237,6 @@ public class UserAnnexResourceIntTest {
             .andExpect(jsonPath("$.type").value(DEFAULT_TYPE))
             .andExpect(jsonPath("$.inviterId").value(DEFAULT_INVITER_ID.intValue()));
     }
-
-    @Test
-    @Transactional
-    public void getAllUserAnnexesByUseridIsEqualToSomething() throws Exception {
-        // Initialize the database
-        userAnnexRepository.saveAndFlush(userAnnex);
-
-        // Get all the userAnnexList where userid equals to DEFAULT_USERID
-        defaultUserAnnexShouldBeFound("userid.equals=" + DEFAULT_USERID);
-
-        // Get all the userAnnexList where userid equals to UPDATED_USERID
-        defaultUserAnnexShouldNotBeFound("userid.equals=" + UPDATED_USERID);
-    }
-
-    @Test
-    @Transactional
-    public void getAllUserAnnexesByUseridIsInShouldWork() throws Exception {
-        // Initialize the database
-        userAnnexRepository.saveAndFlush(userAnnex);
-
-        // Get all the userAnnexList where userid in DEFAULT_USERID or UPDATED_USERID
-        defaultUserAnnexShouldBeFound("userid.in=" + DEFAULT_USERID + "," + UPDATED_USERID);
-
-        // Get all the userAnnexList where userid equals to UPDATED_USERID
-        defaultUserAnnexShouldNotBeFound("userid.in=" + UPDATED_USERID);
-    }
-
-    @Test
-    @Transactional
-    public void getAllUserAnnexesByUseridIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        userAnnexRepository.saveAndFlush(userAnnex);
-
-        // Get all the userAnnexList where userid is not null
-        defaultUserAnnexShouldBeFound("userid.specified=true");
-
-        // Get all the userAnnexList where userid is null
-        defaultUserAnnexShouldNotBeFound("userid.specified=false");
-    }
-
-    @Test
-    @Transactional
-    public void getAllUserAnnexesByUseridIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        userAnnexRepository.saveAndFlush(userAnnex);
-
-        // Get all the userAnnexList where userid greater than or equals to DEFAULT_USERID
-        defaultUserAnnexShouldBeFound("userid.greaterOrEqualThan=" + DEFAULT_USERID);
-
-        // Get all the userAnnexList where userid greater than or equals to UPDATED_USERID
-        defaultUserAnnexShouldNotBeFound("userid.greaterOrEqualThan=" + UPDATED_USERID);
-    }
-
-    @Test
-    @Transactional
-    public void getAllUserAnnexesByUseridIsLessThanSomething() throws Exception {
-        // Initialize the database
-        userAnnexRepository.saveAndFlush(userAnnex);
-
-        // Get all the userAnnexList where userid less than or equals to DEFAULT_USERID
-        defaultUserAnnexShouldNotBeFound("userid.lessThan=" + DEFAULT_USERID);
-
-        // Get all the userAnnexList where userid less than or equals to UPDATED_USERID
-        defaultUserAnnexShouldBeFound("userid.lessThan=" + UPDATED_USERID);
-    }
-
 
     @Test
     @Transactional
@@ -828,7 +755,6 @@ public class UserAnnexResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(userAnnex.getId().intValue())))
-            .andExpect(jsonPath("$.[*].userid").value(hasItem(DEFAULT_USERID.intValue())))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
             .andExpect(jsonPath("$.[*].email").value(hasItem(DEFAULT_EMAIL.toString())))
             .andExpect(jsonPath("$.[*].phone").value(hasItem(DEFAULT_PHONE.toString())))
@@ -873,7 +799,6 @@ public class UserAnnexResourceIntTest {
         // Disconnect from session so that the updates on updatedUserAnnex are not directly saved in db
         em.detach(updatedUserAnnex);
         updatedUserAnnex
-            .userid(UPDATED_USERID)
             .name(UPDATED_NAME)
             .email(UPDATED_EMAIL)
             .phone(UPDATED_PHONE)
@@ -895,7 +820,6 @@ public class UserAnnexResourceIntTest {
         List<UserAnnex> userAnnexList = userAnnexRepository.findAll();
         assertThat(userAnnexList).hasSize(databaseSizeBeforeUpdate);
         UserAnnex testUserAnnex = userAnnexList.get(userAnnexList.size() - 1);
-        assertThat(testUserAnnex.getUserid()).isEqualTo(UPDATED_USERID);
         assertThat(testUserAnnex.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testUserAnnex.getEmail()).isEqualTo(UPDATED_EMAIL);
         assertThat(testUserAnnex.getPhone()).isEqualTo(UPDATED_PHONE);

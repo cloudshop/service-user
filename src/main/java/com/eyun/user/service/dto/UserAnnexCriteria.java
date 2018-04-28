@@ -28,8 +28,6 @@ public class UserAnnexCriteria implements Serializable {
 
     private LongFilter id;
 
-    private LongFilter userid;
-
     private StringFilter name;
 
     private StringFilter email;
@@ -63,14 +61,6 @@ public class UserAnnexCriteria implements Serializable {
 
     public void setId(LongFilter id) {
         this.id = id;
-    }
-
-    public LongFilter getUserid() {
-        return userid;
-    }
-
-    public void setUserid(LongFilter userid) {
-        this.userid = userid;
     }
 
     public StringFilter getName() {
@@ -173,7 +163,6 @@ public class UserAnnexCriteria implements Serializable {
     public String toString() {
         return "UserAnnexCriteria{" +
                 (id != null ? "id=" + id + ", " : "") +
-                (userid != null ? "userid=" + userid + ", " : "") +
                 (name != null ? "name=" + name + ", " : "") +
                 (email != null ? "email=" + email + ", " : "") +
                 (phone != null ? "phone=" + phone + ", " : "") +

@@ -26,9 +26,6 @@ public class UserAnnex implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "userid")
-    private Long userid;
-
     @Column(name = "name")
     private String name;
 
@@ -75,19 +72,6 @@ public class UserAnnex implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public Long getUserid() {
-        return userid;
-    }
-
-    public UserAnnex userid(Long userid) {
-        this.userid = userid;
-        return this;
-    }
-
-    public void setUserid(Long userid) {
-        this.userid = userid;
     }
 
     public String getName() {
@@ -283,7 +267,6 @@ public class UserAnnex implements Serializable {
     public String toString() {
         return "UserAnnex{" +
             "id=" + getId() +
-            ", userid=" + getUserid() +
             ", name='" + getName() + "'" +
             ", email='" + getEmail() + "'" +
             ", phone='" + getPhone() + "'" +
