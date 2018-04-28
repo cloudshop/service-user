@@ -145,7 +145,7 @@ public class UserAnnexServiceImpl implements UserAnnexService {
             }*/
             ServiceProviderRewardDTO serviceProviderRewardDTO = new ServiceProviderRewardDTO();
             serviceProviderRewardDTO.setServiceProviderID(invitationID);
-            serviceProviderRewardDTO.setIncrementBusinessID(id);
+            serviceProviderRewardDTO.setIncrementBusinessID(userAnnex.getId());
             log.info("调用价钱服务开始*************************************************************************************");
             walletService.invitationDeductions(serviceProviderRewardDTO);
             log.info("调用价钱服务结束*************************************************************************************");
