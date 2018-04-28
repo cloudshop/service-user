@@ -142,7 +142,7 @@ public class UserAnnexResource {
     @Timed
     public ResponseEntity updaUserInfo(@RequestBody  UserAnnexDTO userParamDTO){
         UserDTO account = uaaService.getAccount();
-        userParamDTO.setUserid(account.getId());
+        userParamDTO.setId(account.getId());
         userAnnexService.updataUserInfo(userParamDTO);
         return ResponseEntity.ok().body(null);
     }
@@ -170,7 +170,7 @@ public class UserAnnexResource {
      log.debug("REST request to delete UserAnnex : {}", id);
      userAnnexService.delete(id);
      return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-     }*/
+     }*//*
 
 
 
