@@ -127,32 +127,57 @@ public class UserAnnexServiceImpl implements UserAnnexService {
 
     @Override
     public void UpdaeUserStatus(Long id) {
-        log.info("用户ID是{}", id);
-        UserAnnex userAnnex = userAnnexRepository.findByid(id);
+        UserAnnex userAnnex = userAnnexRepository.findOne(id);
         userAnnex.setType(4);
-        log.info("修改类******************************************************************************************型开始{}", 4);
         userAnnexRepository.save(userAnnex);
-        log.info("修改用户****************************************************************************************类型结束{}");
-        //增值用户
-        if (userAnnex.getType() == 4) {
-            //根据用户的ID找到邀请人的ID
-            Long invitationID = findUserInvitation(userAnnex.getId());
-            //判断这个邀请人是不是服务商或者没有服务商不调用价加钱的服务
-            /*UserAnnex userproviders = userproviders(invitationID, userAnnex.getId());
+
+        if (userAnnex.getInviterId() != null) {
+        	UserAnnex serviceProvider = null;
+        	Long inviterId = userAnnex.getInviterId();
+        	while (true) {
+        		serviceProvider = userAnnexRepository.getOne(inviterId);
+        		if (serviceProvider.getType() != null && serviceProvider.getType() == 5) {
+        			ServiceProviderRewardDTO serviceProviderRewardDTO = new ServiceProviderRewardDTO();
+        			serviceProviderRewardDTO.setIncrementBusinessID(userAnnex.getId());
+        			serviceProviderRewardDTO.setServiceProviderID(serviceProvider.getId());
+					walletService.invitationDeductions(serviceProviderRewardDTO);
+        			break;
+        		} else if (serviceProvider.getInviterId() == null) {
+        			break;
+        		} else if (serviceProvider.getInviterId() != null) {
+        			inviterId = serviceProvider.getInviterId();
+        		}
+        	}
+        }
+			
+    }
+/*    public void UpdaeUserStatus(Long id) {
+    	log.info("用户ID是{}", id);
+    	UserAnnex userAnnex = userAnnexRepository.findByid(id);
+    	userAnnex.setType(4);
+    	log.info("修改类******************************************************************************************型开始{}", 4);
+    	userAnnexRepository.save(userAnnex);
+    	log.info("修改用户****************************************************************************************类型结束{}");
+    	//增值用户
+    	if (userAnnex.getType() == 4) {
+    		//根据用户的ID找到邀请人的ID
+    		Long invitationID = findUserInvitation(userAnnex.getId());
+    		//判断这个邀请人是不是服务商或者没有服务商不调用价加钱的服务
+    		UserAnnex userproviders = userproviders(invitationID, userAnnex.getId());
             if (userproviders.getType() != 5 || userproviders.getInviterId() == null) {//没有邀请人
                 log.info("没有************************************************************************************邀请人{}");
                 throw new BadRequestAlertException(" 该用户暂无邀请人", " userproviders ", "userprovidersexists");
-            }*/
-            ServiceProviderRewardDTO serviceProviderRewardDTO = new ServiceProviderRewardDTO();
-            serviceProviderRewardDTO.setServiceProviderID(invitationID);
-            serviceProviderRewardDTO.setIncrementBusinessID(id);
-            log.info("调用价钱服务开始*************************************************************************************");
-            walletService.invitationDeductions(serviceProviderRewardDTO);
-            log.info("调用价钱服务结束*************************************************************************************");
-        }
-
+            }
+    		ServiceProviderRewardDTO serviceProviderRewardDTO = new ServiceProviderRewardDTO();
+    		serviceProviderRewardDTO.setServiceProviderID(invitationID);
+    		serviceProviderRewardDTO.setIncrementBusinessID(id);
+    		log.info("调用价钱服务开始*************************************************************************************");
+    		walletService.invitationDeductions(serviceProviderRewardDTO);
+    		log.info("调用价钱服务结束*************************************************************************************");
+    	}
+    	
     }
-
+*/
 
 /**
      * 根据服务商的ID和服务商ID查询出服务商的状态
