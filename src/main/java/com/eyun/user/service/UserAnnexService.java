@@ -63,12 +63,6 @@ public interface UserAnnexService {
 
     List<Map> shareUserList(Long id);
 
-    void checkUserBelongProvider(Long id);
-
-
-    UserAnnexDTO invitationUserId(Long id);
-
-
     void UpdaeUserStatus(Long id);
 
 
