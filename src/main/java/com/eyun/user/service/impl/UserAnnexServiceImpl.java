@@ -132,16 +132,38 @@ public class UserAnnexServiceImpl implements UserAnnexService {
         log.info("修改类******************************************************************************************型开始{}", 4);
         userAnnexRepository.save(userAnnex);
         log.info("修改用户****************************************************************************************类型结束{}");
+        //增值用户
+        if (userAnnex.getType() == 4) {
+            //根据用户的ID找到邀请人的ID
+            Long invitationID = findUserInvitation(userAnnex.getUserid());
+            //判断这个邀请人是不是服务商或者没有服务商不调用价加钱的服务
+            UserAnnex userproviders = userproviders(invitationID, userAnnex.getUserid());
+            if (userproviders.getType() != 5 || userproviders.getInviterId() == null) {//没有邀请人
+                log.info("没有************************************************************************************邀请人{}");
+                throw new BadRequestAlertException(" 该用户暂无邀请人", " userproviders ", "userprovidersexists");
+            }
+            ServiceProviderRewardDTO serviceProviderRewardDTO = new ServiceProviderRewardDTO();
+            serviceProviderRewardDTO.setServiceProviderID(invitationID);
+            serviceProviderRewardDTO.setIncrementBusinessID(id);
+            log.info("调用价钱服务开始*************************************************************************************");
+            walletService.invitationDeductions(serviceProviderRewardDTO);
+            log.info("调用价钱服务结束*************************************************************************************");
+        }
 
-       //找到该用户的邀请人
-       Long invitationID = findUserInvitation(id);
-        ServiceProviderRewardDTO serviceProviderRewardDTO = new ServiceProviderRewardDTO();
-        serviceProviderRewardDTO.setServiceProviderID( invitationID);
-        serviceProviderRewardDTO.setIncrementBusinessID(id);
-        log.info("调用价钱服务开始*************************************************************************************");
-        walletService.invitationDeductions(serviceProviderRewardDTO);
-        log.info("调用价钱服务结束*************************************************************************************");
     }
+
+    /**
+     * 根据服务商的ID和服务商ID查询出服务商的状态
+     *
+     * @param invitationID
+     * @return
+     */
+
+    private UserAnnex userproviders(Long invitationID, Long userid) {
+        UserAnnex ProvidersInfo = userAnnexRepository.findProviders(invitationID, userid);
+        return ProvidersInfo;
+    }
+
 
     /**
      * 调用增加钱的方法,并且放回邀请人的ID号码，如果邀请人的ID号码不存在
@@ -150,10 +172,11 @@ public class UserAnnexServiceImpl implements UserAnnexService {
      * @param id
      */
     private Long findUserInvitation(Long id) {
-       Long InvitationID =userAnnexRepository.findInvitationUser(id);
-       log.info("查询邀请人开始********************************************************************************{}",InvitationID);
+        Long InvitationID = userAnnexRepository.findInvitationUser(id);
+        log.info("查询邀请人开始********************************************************************************{}", InvitationID);
         return InvitationID;
     }
+
     @Override
     public Map userInfo(Long id) {
 
