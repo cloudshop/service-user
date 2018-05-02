@@ -202,6 +202,17 @@ public class MercuryServiceImpl implements MercuryService {
 
     }
 
+
+    /**
+     * 根据用户ID拿到对应的商户的ID
+     * @param id
+     * @return
+     */
+    @Override
+    public Map getUserIdMercuryId(Long id) {
+       return mercuryRepository.getUserIdMercuryId(id);
+    }
+
     private List<MercuryDTO> findNeighPosition(Double lantitude, Double langitude) {
         //先计算查询点的经纬度范围
 
