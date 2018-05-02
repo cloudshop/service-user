@@ -174,12 +174,12 @@ public class UserAnnexServiceImpl implements UserAnnexService {
     public void userAddMoney(Long id) {
 
         UserAnnex userAnnex = userAnnexRepository.findOne(id);
-        if (userAnnex.getType()==2){
+        if (userAnnex.getInviterId()!=null){
             UserAnnex uservlues = null;
             Long inviterId1 = userAnnex.getInviterId();//拿到推荐人ID
             while (true){
                 uservlues = userAnnexRepository.getOne(inviterId1);
-                if (uservlues.getType()!=null&&uservlues.getType()==4){
+                if (uservlues.getType()!=null&&uservlues.getType()==2){
                     IncrementUserRewardDTO incrementUserRewardDTO = new IncrementUserRewardDTO();
                     incrementUserRewardDTO.setIncrementUserID(userAnnex.getId());
                     incrementUserRewardDTO.setIncrementBusinessID(uservlues.getId());
