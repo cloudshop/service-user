@@ -206,4 +206,16 @@ public class UserAnnexResource {
         userAnnexService.UpdaeUserStatus(userParamDTO.getId());
         return ResponseEntity.ok().body(null);
     }
+
+
+
+
+    @ApiOperation("普通用户升级为增值用户")
+    @PostMapping("/user-annexes-valueUser")
+    @Timed
+    public ResponseEntity valueUser (){
+        UserDTO account = uaaService.getAccount();
+        userAnnexService.valueUser(account.getId());
+        return ResponseEntity.ok().body("OK");
+    }
 }
