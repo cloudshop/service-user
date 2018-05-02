@@ -162,24 +162,34 @@ public class UserAnnexServiceImpl implements UserAnnexService {
         		}
             }
 
-            if (userAnnex.getInviterId() !=null){
-                UserAnnex uservlues = null;
-                Long inviterId1 = userAnnex.getInviterId();//拿到推荐人ID
-                while (true){
-                    serviceProvider = userAnnexRepository.getOne(inviterId);
-                    if (uservlues.getType()!=null&&uservlues.getType()==4){
-                        IncrementUserRewardDTO incrementUserRewardDTO = new IncrementUserRewardDTO();
-                        incrementUserRewardDTO.setIncrementUserID(userAnnex.getId());
-                        incrementUserRewardDTO.setIncrementBusinessID(uservlues.getId());
-                        //加一百元
-                        walletService.incrementUserReward(incrementUserRewardDTO);
-                        break;
-                    } else if (uservlues.getInviterId() == null){
-                        break;
-                    } else if (uservlues.getInviterId()!=null){
-                        inviterId = uservlues.getInviterId();
+        }
 
-                    }
+    }
+
+    /**
+     * 增值用户邀请增值商户
+     * @param id
+     */
+    @Override
+    public void userAddMoney(Long id) {
+
+        UserAnnex userAnnex = userAnnexRepository.findOne(id);
+        if (userAnnex.getType()==2){
+            UserAnnex uservlues = null;
+            Long inviterId1 = userAnnex.getInviterId();//拿到推荐人ID
+            while (true){
+                uservlues = userAnnexRepository.getOne(inviterId1);
+                if (uservlues.getType()!=null&&uservlues.getType()==4){
+                    IncrementUserRewardDTO incrementUserRewardDTO = new IncrementUserRewardDTO();
+                    incrementUserRewardDTO.setIncrementUserID(userAnnex.getId());
+                    incrementUserRewardDTO.setIncrementBusinessID(uservlues.getId());
+                    //加一百元
+                    walletService.incrementUserReward(incrementUserRewardDTO);
+                    break;
+                } else if (uservlues.getInviterId() == null){
+                    break;
+                } else if (uservlues.getInviterId()!=null){
+                    inviterId1 = uservlues.getInviterId();
 
                 }
 
@@ -187,11 +197,9 @@ public class UserAnnexServiceImpl implements UserAnnexService {
 
         }
 
+
+
     }
-
-
-
-
 
     @Override
     public Map userInfo(Long id) {
