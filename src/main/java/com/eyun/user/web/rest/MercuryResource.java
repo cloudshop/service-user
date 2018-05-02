@@ -241,6 +241,18 @@ public class MercuryResource {
     }
 
 
+    @ApiOperation("根据用户的ID拿到商户的ID")
+    @GetMapping("/mercuries/getUserIdMercuryId")
+    @Timed
+    public ResponseEntity getUserIdMercuryId(){
+        UserDTO account = uaaService.getAccount();
+        mercuryService.getUserIdMercuryId(account.getId());
+        return ResponseEntity.ok().body("ok");
+
+
+    }
+
+
 
 
 
