@@ -93,4 +93,6 @@ public interface MercuryService {
     void uploadMercuryImages( MercuryDTO mercuryDTO);
 
     void mercuryChangeStatus(Long id);
+
+    Map getUserIdMercuryId(Long id);
 }
