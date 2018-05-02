@@ -218,4 +218,14 @@ public class UserAnnexResource {
         userAnnexService.valueUser(account.getId());
         return ResponseEntity.ok().body("OK");
     }
+
+
+    @ApiOperation("增值用户邀请增值商户")
+    @PostMapping("/user-annexes-userAddMoney")
+    @Timed
+    public ResponseEntity userAddMoney (@RequestBody  UserAnnexDTO userParamDTO){
+        userAnnexService.userAddMoney(userParamDTO.getId());
+        return ResponseEntity.ok().body("OK");
+
+    }
 }
