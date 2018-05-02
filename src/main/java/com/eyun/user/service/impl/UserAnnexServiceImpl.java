@@ -4,6 +4,7 @@ import com.eyun.user.service.UaaService;
 import com.eyun.user.service.UserAnnexService;
 import com.eyun.user.domain.UserAnnex;
 import com.eyun.user.repository.UserAnnexRepository;
+import com.eyun.user.service.dto.IncrementUserRewardDTO;
 import com.eyun.user.service.dto.ServiceProviderRewardDTO;
 import com.eyun.user.service.dto.UserAnnexDTO;
 import com.eyun.user.service.dto.UserDTO;
@@ -167,11 +168,11 @@ public class UserAnnexServiceImpl implements UserAnnexService {
                 while (true){
                     serviceProvider = userAnnexRepository.getOne(inviterId);
                     if (uservlues.getType()!=null&&uservlues.getType()==4){
-                        ServiceProviderRewardDTO serviceProviderRewardDTO = new ServiceProviderRewardDTO();
-                        serviceProviderRewardDTO.setIncrementBusinessID(userAnnex.getId());
-                        serviceProviderRewardDTO.setServiceProviderID(uservlues.getId());
+                        IncrementUserRewardDTO incrementUserRewardDTO = new IncrementUserRewardDTO();
+                        incrementUserRewardDTO.setIncrementUserID(userAnnex.getId());
+                        incrementUserRewardDTO.setIncrementBusinessID(uservlues.getId());
                         //加一百元
-                        walletService.invitationDeductions(serviceProviderRewardDTO);
+                        walletService.incrementUserReward(incrementUserRewardDTO);
                         break;
                     } else if (uservlues.getInviterId() == null){
                         break;
