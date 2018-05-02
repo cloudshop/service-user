@@ -246,8 +246,8 @@ public class MercuryResource {
     @Timed
     public ResponseEntity getUserIdMercuryId(){
         UserDTO account = uaaService.getAccount();
-        mercuryService.getUserIdMercuryId(account.getId());
-        return ResponseEntity.ok().body("ok");
+        Map userIdMercuryId = mercuryService.getUserIdMercuryId(account.getId());
+        return ResponseEntity.ok().body(userIdMercuryId);
 
 
 
