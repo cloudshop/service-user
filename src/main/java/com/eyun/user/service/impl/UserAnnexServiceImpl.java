@@ -16,6 +16,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -119,7 +120,18 @@ public class UserAnnexServiceImpl implements UserAnnexService {
     }
 
 
-/**
+    /**
+     *普通用户升级为增值用户
+     * @param id
+     */
+    @Override
+    public void valueUser(Long id) {
+        UserAnnex userAnnex = userAnnexRepository.findByid(id);
+        userAnnex.setType(2);
+        userAnnexRepository.saveAndFlush(userAnnex);
+    }
+
+    /**
      * 变更用户的状态
      *
      * @param id
@@ -147,7 +159,30 @@ public class UserAnnexServiceImpl implements UserAnnexService {
         		} else if (serviceProvider.getInviterId() != null) {
         			inviterId = serviceProvider.getInviterId();
         		}
-        	}
+            }
+
+            if (userAnnex.getInviterId() !=null){
+                Long inviterId1 = userAnnex.getInviterId();//拿到推荐人ID
+                while (true){
+                    serviceProvider = userAnnexRepository.getOne(inviterId);
+                    if (serviceProvider.getType()!=null&&serviceProvider.getType()==4){
+                        ServiceProviderRewardDTO serviceProviderRewardDTO = new ServiceProviderRewardDTO();
+                        serviceProviderRewardDTO.setIncrementBusinessID(userAnnex.getId());
+                        serviceProviderRewardDTO.setServiceProviderID(serviceProvider.getId());
+                        //加一百元
+                        walletService.invitationDeductions(serviceProviderRewardDTO);
+                        break;
+                    } else if (serviceProvider.getInviterId() == null){
+                        break;
+                    } else if (serviceProvider.getInviterId()!=null){
+                        inviterId = serviceProvider.getInviterId();
+
+                    }
+
+                }
+
+            }
+
         }
 
     }
