@@ -153,9 +153,9 @@ public class UserAnnexResource {
     public ResponseEntity userInfo(){
         UserDTO account = uaaService.getAccount();
         log.info("用户ID是{}",account.getId());
-        Map map = userAnnexService.userInfo(account.getId());
+        UserAnnex userAnnex = userAnnexService.userInfo(account.getId());
 
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(map));
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(userAnnex));
     }
 
 
