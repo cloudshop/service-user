@@ -58,6 +58,10 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="type_string" type="varchar(255)">
+                <constraints nullable="true" />
+            </column>
+
             <column name="inviter_id" type="bigint">
                 <constraints nullable="true" />
             </column>

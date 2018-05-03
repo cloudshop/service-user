@@ -52,6 +52,9 @@ public class UserAnnex implements Serializable {
     @Column(name = "jhi_type")
     private Integer type;
 
+    @Column(name = "type_string")
+    private String typeString;
+
     @Column(name = "inviter_id")
     private Long inviterId;
 
@@ -190,6 +193,19 @@ public class UserAnnex implements Serializable {
         this.type = type;
     }
 
+    public String getTypeString() {
+        return typeString;
+    }
+
+    public UserAnnex typeString(String typeString) {
+        this.typeString = typeString;
+        return this;
+    }
+
+    public void setTypeString(String typeString) {
+        this.typeString = typeString;
+    }
+
     public Long getInviterId() {
         return inviterId;
     }
@@ -275,6 +291,7 @@ public class UserAnnex implements Serializable {
             ", createdTime='" + getCreatedTime() + "'" +
             ", updatedTime='" + getUpdatedTime() + "'" +
             ", type=" + getType() +
+            ", typeString='" + getTypeString() + "'" +
             ", inviterId=" + getInviterId() +
             "}";
     }

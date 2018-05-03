@@ -52,6 +52,10 @@
             "fieldName": "type",
             "fieldType": "Integer"
         },
+		{
+            "fieldName": "typeString",
+            "fieldType": "String"
+        },
         {
             "fieldName": "inviterId",
             "fieldType": "Long"
