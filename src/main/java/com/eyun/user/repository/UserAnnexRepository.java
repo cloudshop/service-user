@@ -21,8 +21,6 @@ public interface UserAnnexRepository extends JpaRepository<UserAnnex, Long>, Jpa
 
 
 
-    @Query(value = " select ifnull(u.avatar,\"\") AS avatar,ifnull(u.nickname,\"\") AS nickname ,ifnull(u.phone,\"\") AS phone,ifnull(u.id,\"\") AS id,ifnull(u.id,\"\") AS userid from user_annex AS u where u.id=:id",nativeQuery = true)
-    Map userInfo(@Param("id")Long id);
 
     @Query(value = "select ifnull(s.name,\"\") AS name, ifnull(s.phone,\"\") AS phone from user_annex AS s where s.id=:id",nativeQuery = true)
     List<Map> shareUserList(@Param("id")Long id);
