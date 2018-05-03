@@ -202,23 +202,18 @@ public class UserAnnexServiceImpl implements UserAnnexService {
     }
 
     @Override
-    public Map userInfo(Long id) {
+    public UserAnnex userInfo(Long id) {
 
         UserDTO account = uaaService.getAccount();
         log.info("当前登陆的用户ID是{}", id);
         log.info("电话号码{}", account.getLogin());
-        Map map = userAnnexRepository.userInfo(id);
-        if (map.size() == 0) {
-            UserAnnex one = new UserAnnex();
-            one.setId(id);
-            one.setPhone(account.getLogin());
-            one.setAvatar("https://misc.360buyimg.com/mtd/pc/index_2017/2.0.1/static/images/mobile_qrcode.png");
-            //刚注册进来的用户默认状态默认为 1,普通用户
-            one.setType(1);
-            one.setNickname("gr" + System.currentTimeMillis());
-            userAnnexRepository.save(one);
-        }
-        return map;
+        UserAnnex userAnnex = userAnnexRepository.findByid(id);
+        userAnnex.setPhone(account.getLogin());
+        userAnnex.setAvatar("https://misc.360buyimg.com/mtd/pc/index_2017/2.0.1/static/images/mobile_qrcode.png");
+        userAnnex.setNickname("gr" + System.currentTimeMillis());
+        userAnnexRepository.saveAndFlush(userAnnex);
+
+        return userAnnex;
     }
 
 
