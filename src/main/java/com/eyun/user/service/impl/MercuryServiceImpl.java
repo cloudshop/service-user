@@ -1,5 +1,7 @@
 package com.eyun.user.service.impl;
 
+import com.eyun.user.domain.OwnerRelation;
+import com.eyun.user.domain.UserAnnex;
 import com.eyun.user.service.MercuryService;
 import com.eyun.user.domain.Mercury;
 import com.eyun.user.repository.MercuryRepository;
@@ -149,6 +151,14 @@ public class MercuryServiceImpl implements MercuryService {
     @Override
     public void uploadMercuryImages( MercuryDTO mercuryDTO) {
         Mercury mercury = new Mercury();
+        //申请中
+        mercury.setStatus(1);
+        OwnerRelation ownerRelation = new OwnerRelation();
+        ownerRelation.setMercury(mercury);
+        UserAnnex userAnnex = new UserAnnex();
+        userAnnex.setId(mercuryDTO.getId());
+        ownerRelation.setUserAnnex(userAnnex);
+        mercury.setOwnerRelation(ownerRelation);
         BeanUtils.copyProperties(mercuryDTO,mercury);
         mercuryRepository.save(mercury);
 
