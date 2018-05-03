@@ -175,24 +175,13 @@ public class UserAnnexServiceImpl implements UserAnnexService {
 
         UserAnnex userAnnex = userAnnexRepository.findOne(id);
         if (userAnnex.getInviterId()!=null){
-            UserAnnex uservlues = null;
             Long inviterId1 = userAnnex.getInviterId();//拿到推荐人ID
-            while (true){
-                uservlues = userAnnexRepository.getOne(inviterId1);
-                if (uservlues.getType()!=null&&uservlues.getType()==2){
-                    IncrementUserRewardDTO incrementUserRewardDTO = new IncrementUserRewardDTO();
-                    incrementUserRewardDTO.setIncrementUserID(userAnnex.getId());
-                    incrementUserRewardDTO.setIncrementBusinessID(uservlues.getId());
-                    //加一百元
-                    walletService.incrementUserReward(incrementUserRewardDTO);
-                    break;
-                } else if (uservlues.getInviterId() == null){
-                    break;
-                } else if (uservlues.getInviterId()!=null){
-                    inviterId1 = uservlues.getInviterId();
-
-                }
-
+            UserAnnex inviterUser = userAnnexRepository.findByid(inviterId1);
+            if (inviterUser.getType()==2){
+                IncrementUserRewardDTO incrementUserRewardDTO = new IncrementUserRewardDTO();
+                incrementUserRewardDTO.setIncrementBusinessID(userAnnex.getId());
+                incrementUserRewardDTO.setIncrementBusinessID(inviterId1);
+                walletService.incrementUserReward(incrementUserRewardDTO);
             }
 
         }
