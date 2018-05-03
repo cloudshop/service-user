@@ -70,9 +70,9 @@ public class UserAnnexResource {
     @Timed
     public ResponseEntity<UserAnnexDTO> createUserAnnex(@RequestBody UserAnnexDTO userAnnexDTO) throws URISyntaxException {
         log.debug("REST request to save UserAnnex : {}", userAnnexDTO);
-        if (userAnnexDTO.getId() != null) {
-            throw new BadRequestAlertException("A new userAnnex cannot already have an ID", ENTITY_NAME, "idexists");
-        }
+//        if (userAnnexDTO.getId() != null) {
+//            throw new BadRequestAlertException("A new userAnnex cannot already have an ID", ENTITY_NAME, "idexists");
+//        }
         UserAnnexDTO result = userAnnexService.save(userAnnexDTO);
         return ResponseEntity.created(new URI("/api/user-annexes/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
