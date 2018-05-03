@@ -174,7 +174,7 @@ public class UserAnnexServiceImpl implements UserAnnexService {
     public void userAddMoney(Long id) {
 
         UserAnnex userAnnex = userAnnexRepository.findOne(id);
-        if (userAnnex.getInviterId()!=null){
+        if (userAnnex.getInviterId()!=null&&userAnnex.getType()==4){
             Long inviterId1 = userAnnex.getInviterId();//拿到推荐人ID
             UserAnnex inviterUser = userAnnexRepository.findByid(inviterId1);
             if (inviterUser.getType()==2){
