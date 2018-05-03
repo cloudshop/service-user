@@ -56,7 +56,7 @@ public interface UserAnnexService {
 
     void updataUserInfo(UserAnnexDTO userAnnexDTO);
 
-    Map  userInfo(Long id);
+    UserAnnex userInfo(Long id);
 
 
     void userBinding(UserAnnexDTO userParamDTO);
