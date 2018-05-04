@@ -2,6 +2,8 @@ package com.eyun.user.service.impl;
 
 import com.eyun.user.domain.OwnerRelation;
 import com.eyun.user.domain.UserAnnex;
+import com.eyun.user.repository.OwnerRelationRepository;
+import com.eyun.user.repository.UserAnnexRepository;
 import com.eyun.user.service.MercuryService;
 import com.eyun.user.domain.Mercury;
 import com.eyun.user.repository.MercuryRepository;
@@ -37,6 +39,12 @@ public class MercuryServiceImpl implements MercuryService {
     private final MercuryRepository mercuryRepository;
 
     private final MercuryMapper mercuryMapper;
+
+    @Autowired
+    private  OwnerRelationRepository relationRepository;
+
+    @Autowired
+    private UserAnnexRepository userAnnexRepository;
 
     @Autowired
     private ProductService productService;
@@ -151,11 +159,18 @@ public class MercuryServiceImpl implements MercuryService {
     @Override
     public void uploadMercuryImages( MercuryDTO mercuryDTO) {
         Mercury mercury = new Mercury();
-        //申请中
         mercury.setStatus(1);
-
-        BeanUtils.copyProperties(mercuryDTO,mercury);
+        mercury.setId(mercury.getId());
+        mercury.setName(mercuryDTO.getName());
+        mercury.setImgIdcardBack(mercuryDTO.getImgIdcardBack());
+        mercury.setImgIdcardFront(mercuryDTO.getImgIdcardFront());
+        mercury.setImgFacade(mercuryDTO.getImgFacade());
+        mercury.setImgIdcardHold(mercuryDTO.getImgIdcardHold());
+        mercury.setImgIntroduces(mercuryDTO.getImgIntroduces());
+        mercury.setImgLicense(mercuryDTO.getImgLicense());
         mercuryRepository.save(mercury);
+
+
 
     }
 
