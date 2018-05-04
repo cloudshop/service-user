@@ -11,6 +11,7 @@ import com.eyun.user.web.rest.util.PaginationUtil;
 import com.eyun.user.service.dto.UserAnnexDTO;
 import com.eyun.user.service.dto.UserAnnexCriteria;
 import com.eyun.user.service.UserAnnexQueryService;
+import com.netflix.hystrix.HystrixCommandGroupKey;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -194,8 +195,8 @@ public class UserAnnexResource {
     @Timed
     public ResponseEntity shareUserList(){
         UserDTO account = uaaService.getAccount();
-        List<Map> shareLists = userAnnexService.shareUserList(account.getId());
-        return ResponseEntity.ok().body(shareLists);
+        List<UserAnnexDTO> annexDTOS = userAnnexService.shareUserList(account.getId());
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(annexDTOS));
     }
 
 
