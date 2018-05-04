@@ -216,8 +216,8 @@ public class UserAnnexServiceImpl implements UserAnnexService {
      */
 
     @Override
-    public List<UserAnnexDTO> shareUserList(Long id) {
-        List<UserAnnexDTO> byinviterId = userAnnexRepository.findByinviterId(id);
+    public List<UserAnnex> shareUserList(Long id) {
+        List<UserAnnex> byinviterId = userAnnexRepository.findByinviterId(id);
        return byinviterId;
     }
 
