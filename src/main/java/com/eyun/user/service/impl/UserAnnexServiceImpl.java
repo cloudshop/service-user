@@ -216,15 +216,16 @@ public class UserAnnexServiceImpl implements UserAnnexService {
      */
 
     @Override
-    public List<Map> shareUserList(Long id) {
-        List<Map> resultUserList = userAnnexRepository.shareUserList(id);
-        if (resultUserList.size() > 0) {
-            return resultUserList;
+    public List<UserAnnexDTO> shareUserList(Long id) {
+        List<UserAnnexDTO> byinviterId = userAnnexRepository.findByinviterId(id);
+        if (byinviterId.size() > 0) {
+            return byinviterId;
         }
         throw new BadRequestAlertException(" 用户分享邀请列表不存在", "resultUserList", "resultUserListexists");
 
 
     }
+
 
 
 /**
