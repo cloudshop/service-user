@@ -191,7 +191,7 @@ public class UserAnnexResource {
 
 
     @ApiOperation("用户分享列表")
-    @PostMapping("/user-annexes-shareUserList/{id}")
+   @GetMapping("/user-annexes-shareUserList/{id}")
     @Timed
     public ResponseEntity shareUserList(@PathVariable Long id){
         UserDTO account = uaaService.getAccount();
