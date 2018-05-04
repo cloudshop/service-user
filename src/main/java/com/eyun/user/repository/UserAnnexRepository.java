@@ -32,4 +32,6 @@ public interface UserAnnexRepository extends JpaRepository<UserAnnex, Long>, Jpa
 
 
     UserAnnex findByid(Long id);
+
+    List<UserAnnexDTO>  findByinviterId(Long inviterId);
 }
