@@ -195,7 +195,7 @@ public class UserAnnexResource {
     @Timed
     public ResponseEntity shareUserList(@PathVariable Long id){
         UserDTO account = uaaService.getAccount();
-        List<UserAnnexDTO> annexDTOS = userAnnexService.shareUserList(account.getId());
+        List<UserAnnexDTO> annexDTOS = userAnnexService.shareUserList(id);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(annexDTOS));
     }
 
