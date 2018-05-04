@@ -171,7 +171,7 @@ public class UserAnnexResource {
      log.debug("REST request to delete UserAnnex : {}", id);
      userAnnexService.delete(id);
      return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
-     }*//*
+     }*/
 
 
 
@@ -191,11 +191,11 @@ public class UserAnnexResource {
 
 
     @ApiOperation("用户分享列表")
-   @GetMapping("/user-annexes-shareUserList/{id}")
+   @GetMapping("/user-annexes-shareUserList")
     @Timed
-    public ResponseEntity shareUserList(@PathVariable Long id){
+    public ResponseEntity shareUserList(){
         UserDTO account = uaaService.getAccount();
-        List<UserAnnexDTO> annexDTOS = userAnnexService.shareUserList(id);
+        List<UserAnnexDTO> annexDTOS = userAnnexService.shareUserList(account.getId());
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(annexDTOS));
     }
 
