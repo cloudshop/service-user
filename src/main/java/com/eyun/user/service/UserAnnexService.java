@@ -63,7 +63,7 @@ public interface UserAnnexService {
     void userBinding(UserAnnexDTO userParamDTO);
 
 
-    List<UserAnnexDTO> shareUserList(Long id);
+    List<UserAnnex> shareUserList(Long id);
 
     void UpdaeUserStatus(Long id);
 
