@@ -153,12 +153,7 @@ public class MercuryServiceImpl implements MercuryService {
         Mercury mercury = new Mercury();
         //申请中
         mercury.setStatus(1);
-        OwnerRelation ownerRelation = new OwnerRelation();
-        ownerRelation.setMercury(mercury);
-        UserAnnex userAnnex = new UserAnnex();
-        userAnnex.setId(mercuryDTO.getId());
-        ownerRelation.setUserAnnex(userAnnex);
-        mercury.setOwnerRelation(ownerRelation);
+
         BeanUtils.copyProperties(mercuryDTO,mercury);
         mercuryRepository.save(mercury);
 
