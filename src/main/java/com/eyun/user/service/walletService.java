@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 public interface walletService {
 
     @PutMapping("/api/serviceProvider/reward")
-    void invitationDeductions( ServiceProviderRewardDTO serviceProviderRewardDTO);
-    
+    void invitationDeductions(@RequestBody  ServiceProviderRewardDTO serviceProviderRewardDTO);
+
     @PutMapping("/api/incrementUser/reward")
     void incrementUserReward(@RequestBody IncrementUserRewardDTO incrementUserRewardDTO);
-    
+
 }
