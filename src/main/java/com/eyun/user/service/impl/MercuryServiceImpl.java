@@ -159,6 +159,7 @@ public class MercuryServiceImpl implements MercuryService {
      */
     @Override
     public void uploadMercuryImages( MercuryDTO mercuryDTO) {
+        log.info("商户申请开始************************************************************************************");
         Mercury mercury = new Mercury();
         mercury.setStatus(1);
         mercury.setId(mercury.getId());
@@ -178,6 +179,7 @@ public class MercuryServiceImpl implements MercuryService {
         userAnnex.setId(mercuryDTO.getId());
         ownerRelation.setUserAnnex(userAnnex);
         relationRepository.save(ownerRelation);
+        log.info("商户申请结束************************************************************************************");
 
 
     }
