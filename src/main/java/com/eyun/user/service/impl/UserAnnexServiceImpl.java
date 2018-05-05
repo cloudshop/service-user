@@ -176,12 +176,15 @@ public class UserAnnexServiceImpl implements UserAnnexService {
         UserAnnex userAnnex = userAnnexRepository.findOne(id);
         if (userAnnex.getInviterId()!=null&&userAnnex.getType()==4){
             Long inviterId1 = userAnnex.getInviterId();//拿到推荐人ID
+            log.info("邀请人ID是{}",inviterId1);
             UserAnnex inviterUser = userAnnexRepository.findByid(inviterId1);
             if (inviterUser.getType()==2){
+                log.info("加100开始","*******************************************************************************");
                 IncrementUserRewardDTO incrementUserRewardDTO = new IncrementUserRewardDTO();
                 incrementUserRewardDTO.setIncrementBusinessID(userAnnex.getId());
                 incrementUserRewardDTO.setIncrementBusinessID(inviterId1);
                 walletService.incrementUserReward(incrementUserRewardDTO);
+                log.info("加100结束","*******************************************************************************");
             }
 
         }
