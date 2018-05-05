@@ -179,6 +179,7 @@ public class UserAnnexServiceImpl implements UserAnnexService {
             log.info("邀请人ID是{}",inviterId1);
             System.out.println("邀请人ID是"+inviterId1);
             UserAnnex inviterUser = userAnnexRepository.findByid(inviterId1);
+
             if (inviterUser.getType()==2){
                 log.info("加100开始","*******************************************************************************");
                 System.out.println("加100开始"+"*******************************************************************************");
