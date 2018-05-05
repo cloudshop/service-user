@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 
+import java.time.Instant;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -168,6 +169,8 @@ public class MercuryServiceImpl implements MercuryService {
         mercury.setImgIdcardHold(mercuryDTO.getImgIdcardHold());
         mercury.setImgIntroduces(mercuryDTO.getImgIntroduces());
         mercury.setImgLicense(mercuryDTO.getImgLicense());
+        mercury.setUpdatedTime(Instant.now());
+        mercury.setUpdatedTime(Instant.now());
         mercuryRepository.save(mercury);
 
 
