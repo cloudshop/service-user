@@ -205,8 +205,13 @@ public class UserAnnexServiceImpl implements UserAnnexService {
         log.info("电话号码{}", account.getLogin());
         UserAnnex userAnnex = userAnnexRepository.findByid(id);
         userAnnex.setPhone(account.getLogin());
-        userAnnex.setAvatar("https://misc.360buyimg.com/mtd/pc/index_2017/2.0.1/static/images/mobile_qrcode.png");
-        userAnnex.setNickname("gr" + System.currentTimeMillis());
+        if (StringUtils.isBlank(userAnnex.getNickname())){
+            userAnnex.setNickname("gr" + System.currentTimeMillis());
+        }
+        if ( StringUtils.isBlank(userAnnex.getAvatar())){
+            userAnnex.setAvatar("https://misc.360buyimg.com/mtd/pc/index_2017/2.0.1/static/images/mobile_qrcode.png");
+        }
+
         userAnnex.setId(id);
         userAnnexRepository.saveAndFlush(userAnnex);
 
