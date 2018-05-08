@@ -1,5 +1,6 @@
 package com.eyun.user.service.impl;
 
+import com.eyun.user.domain.Mercury;
 import com.eyun.user.service.UaaService;
 import com.eyun.user.service.UserAnnexService;
 import com.eyun.user.domain.UserAnnex;
@@ -277,6 +278,20 @@ public class UserAnnexServiceImpl implements UserAnnexService {
 
 
 
+    }
+
+
+
+    /**
+     * 升级为服务商
+     * @param id
+     */
+    @Override
+    public void changeService(Long id) {
+        UserAnnex userAnnex = userAnnexRepository.findByid(id);
+        //成为服务商
+        userAnnex.setType(5);
+        userAnnexRepository.saveAndFlush(userAnnex);
     }
 
 }
