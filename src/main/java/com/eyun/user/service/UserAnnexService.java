@@ -73,4 +73,7 @@ public interface UserAnnexService {
     void userAddMoney(Long id);
 
 
+    void changeService(Long id);
+
+
 }
