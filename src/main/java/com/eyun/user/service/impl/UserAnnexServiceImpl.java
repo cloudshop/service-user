@@ -281,6 +281,12 @@ public class UserAnnexServiceImpl implements UserAnnexService {
     }
 
 
+    @Override
+    public Long ShopIdFindByUserid(Long id) {
+        Long userid = userAnnexRepository.ShopIdFindByUserid(id);
+        return userid;
+
+    }
 
     /**
      * 升级为服务商
