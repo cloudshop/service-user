@@ -75,5 +75,7 @@ public interface UserAnnexService {
 
     void changeService(Long id);
 
+    Long  ShopIdFindByUserid(Long id);
+
 
 }
