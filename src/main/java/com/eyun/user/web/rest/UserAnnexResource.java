@@ -239,4 +239,14 @@ public class UserAnnexResource {
 
 
     }
+
+
+    @ApiOperation("根据商户的ID拿到当前用户ID")
+    @GetMapping("/user-annexes-ShopIdFindByUserid/{shopid}")
+    @Timed
+    public ResponseEntity<Long> ShopIdFindByUserid(@PathVariable Long shopid){
+        Long aLong = userAnnexService.ShopIdFindByUserid(shopid);
+        return ResponseEntity.ok().body(aLong);
+
+    }
 }
