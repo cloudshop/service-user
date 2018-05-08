@@ -227,6 +227,16 @@ public class UserAnnexResource {
     public ResponseEntity userAddMoney (@RequestBody  UserAnnexDTO userParamDTO){
         userAnnexService.userAddMoney(userParamDTO.getId());
         return ResponseEntity.ok().body("OK");
+    }
+
+
+    @ApiOperation("升级为服务商")
+    @GetMapping("/user-annexes-changeService/{id}")
+    @Timed
+    public ResponseEntity changeService(@PathVariable Long id){
+        userAnnexService.changeService(id);
+        return ResponseEntity.ok().body("OK");
+
 
     }
 }
