@@ -69,7 +69,9 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
    @Override
     public void updateAddress(DeliveryAddress  deliveryAddress) {
 
-        deliveryAddressRepository.saveAndFlush(deliveryAddress);
+       DeliveryAddress one = deliveryAddressRepository.findOne(deliveryAddress.getId());
+       one.setDefaultAddress(false);
+       deliveryAddressRepository.saveAndFlush(deliveryAddress);
     }
 
     /**
