@@ -179,18 +179,14 @@ public class DeliveryAddressResource {
 
     /**
      * 修改地址
-     * @param deliveryAddressDTO
+     * @param AddressId
      * @return
      */
     @ApiOperation("修改地址")
-    @PostMapping("/user-annexes-updateAddress")
+    @GetMapping("/user-annexes-updateAddress/{AddressId}")
     @Timed
-    public ResponseEntity updateAddress(@RequestBody DeliveryAddress deliveryAddressDTO){
-        UserDTO account = uaaService.getAccount();
-        UserAnnex userAnnex = deliveryAddressDTO.getUserAnnex();
-        userAnnex.setId(account.getId());
-        userAnnex.setId(account.getId());
-        deliveryAddressService.updateAddress(deliveryAddressDTO);
+    public ResponseEntity updateAddress(@PathVariable Long AddressId){
+        deliveryAddressService.updateAddress(AddressId);
         return ResponseEntity.ok().body(null);
     }
 
