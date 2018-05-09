@@ -67,12 +67,11 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
 
 
    @Override
-    public void updateAddress(DeliveryAddress  deliveryAddress) {
-
-       DeliveryAddress one = deliveryAddressRepository.findOne(deliveryAddress.getId());
+    public void updateAddress(Long AddressId) {
+       DeliveryAddress one = deliveryAddressRepository.findOne(AddressId);
        one.setDefaultAddress(false);
-       deliveryAddressRepository.saveAndFlush(deliveryAddress);
-    }
+       deliveryAddressRepository.saveAndFlush(one);
+   }
 
     /**
      * Save a deliveryAddress.
