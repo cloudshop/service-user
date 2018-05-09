@@ -55,15 +55,16 @@ public interface DeliveryAddressService {
 
     /**
      * 修改地址
-     * @param deliveryAddressDTO
+     * @param
+     *   AddressId
      */
-   void updateAddress(DeliveryAddress deliveryAddressDTO);
+   void updateAddress(Long AddressId);
 
 
     void createAddress(DeliveryAddress deliveryAddressDTO);
 
 
-    
+
     /**
      *
      * @param deliveryAddressDTO
