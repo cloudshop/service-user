@@ -90,7 +90,7 @@ public interface MercuryService {
 
 
 
-    void uploadMercuryImages( MercuryDTO mercuryDTO);
+    String uploadMercuryImages( MercuryDTO mercuryDTO);
 
     void mercuryChangeStatus(Long id);
 
