@@ -78,4 +78,10 @@ public interface UserAnnexService {
     Long  ShopIdFindByUserid(Long id);
 
 
+    UserAnnex checkUserStatus(Long id);
+
+
+
+
+
 }
