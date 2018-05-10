@@ -225,8 +225,8 @@ public class MercuryResource {
     public ResponseEntity uploadMercuryImages(@RequestBody MercuryDTO mercuryDTO){
         UserDTO account = uaaService.getAccount();
         mercuryDTO.setId(account.getId());
-        mercuryService.uploadMercuryImages(mercuryDTO);
-        return ResponseEntity.ok().body(null);
+        String messages = mercuryService.uploadMercuryImages(mercuryDTO);
+        return ResponseEntity.ok().body(messages);
 
     }
 
