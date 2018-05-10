@@ -171,7 +171,7 @@ public class MercuryServiceImpl implements MercuryService {
         mercury.setImgIntroduces(mercuryDTO.getImgIntroduces());
         mercury.setImgLicense(mercuryDTO.getImgLicense());
         mercury.setUpdatedTime(Instant.now());
-        mercury.setUpdatedTime(Instant.now());
+        mercury.setCreatedTime(Instant.now());
         mercury = mercuryRepository.save(mercury);
         OwnerRelation ownerRelation = new OwnerRelation();
         ownerRelation.setMercury(mercury);
