@@ -158,29 +158,54 @@ public class MercuryServiceImpl implements MercuryService {
      * @param
      */
     @Override
-    public void uploadMercuryImages( MercuryDTO mercuryDTO) {
-        log.info("商户申请开始************************************************************************************");
-        Mercury mercury = new Mercury();
-        mercury.setStatus(1);
-        mercury.setId(mercury.getId());
-        mercury.setName(mercuryDTO.getName());
-        mercury.setImgIdcardBack(mercuryDTO.getImgIdcardBack());
-        mercury.setImgIdcardFront(mercuryDTO.getImgIdcardFront());
-        mercury.setImgFacade(mercuryDTO.getImgFacade());
-        mercury.setImgIdcardHold(mercuryDTO.getImgIdcardHold());
-        mercury.setImgIntroduces(mercuryDTO.getImgIntroduces());
-        mercury.setImgLicense(mercuryDTO.getImgLicense());
-        mercury.setUpdatedTime(Instant.now());
-        mercury.setCreatedTime(Instant.now());
-        mercury = mercuryRepository.save(mercury);
-   /*     OwnerRelation ownerRelation = new OwnerRelation();
-        ownerRelation.setMercury(mercury);
-        UserAnnex userAnnex = new UserAnnex();
-        userAnnex.setId(mercuryDTO.getId());
-        ownerRelation.setUserAnnex(userAnnex);
-        relationRepository.save(ownerRelation);
-        log.info("商户申请结束************************************************************************************");
-*/
+    public String uploadMercuryImages( MercuryDTO mercuryDTO) {
+
+        UserAnnex annex = userAnnexRepository.findByid(mercuryDTO.getId());
+        if (annex.getType()==1) {
+            log.info("商户提交资料开始************************************************************************************");
+            Mercury mercury = new Mercury();
+            mercury.setId(mercury.getId());
+            mercury.setName(mercuryDTO.getName());
+            mercury.setImgIdcardBack(mercuryDTO.getImgIdcardBack());
+            mercury.setImgIdcardFront(mercuryDTO.getImgIdcardFront());
+            mercury.setImgFacade(mercuryDTO.getImgFacade());
+            mercury.setImgIdcardHold(mercuryDTO.getImgIdcardHold());
+            mercury.setImgIntroduces(mercuryDTO.getImgIntroduces());
+            mercury.setImgLicense(mercuryDTO.getImgLicense());
+            mercury.setUpdatedTime(Instant.now());
+            mercury.setCreatedTime(Instant.now());
+            //1，表示店铺未激活，2.表示店铺已激活
+            mercury.setStatus(2);
+            Mercury save = mercuryRepository.save(mercury);
+            log.info("商户提交申请结束**********************************************************************************");
+
+
+            log.info("创建店铺开始*************************************************************************************");
+            OwnerRelation ownerRelation = new OwnerRelation();
+            ownerRelation.setMercury(save);
+            UserAnnex userAnnex = new UserAnnex();
+            userAnnex.setId(mercuryDTO.getId());
+            ownerRelation.setUserAnnex(userAnnex);
+            relationRepository.save(ownerRelation);
+            log.info("创建店铺开始结束*********************************************************************************");
+
+            //变更用户的type普通商家
+            annex.setType(3);
+            //店铺申请成功2，不成功设为1
+            annex.setStatus(2);
+            userAnnexRepository.saveAndFlush(annex);
+
+            return "ok";
+        }
+
+        return "fal";
+
+
+
+
+
+
+
 
     }
 
