@@ -58,7 +58,7 @@ public interface DeliveryAddressService {
      * @param
      *   AddressId
      */
-   void updateAddress(Long AddressId);
+   void updateAddress(Long AddressId,Long id);
 
 
     void createAddress(DeliveryAddress deliveryAddressDTO);
