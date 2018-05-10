@@ -249,4 +249,15 @@ public class UserAnnexResource {
         return ResponseEntity.ok().body(aLong);
 
     }
+
+    @ApiOperation("检查用户申请商户的的状态")
+    @GetMapping("/user-annexes-getCheckUserStatus")
+    @Timed
+    public ResponseEntity<UserAnnex> getCheckUserStatus(){
+        UserDTO account = uaaService.getAccount();
+        UserAnnex userAnnex = userAnnexService.checkUserStatus(account.getId());
+        return ResponseEntity.ok().body(userAnnex);
+
+
+    }
 }
