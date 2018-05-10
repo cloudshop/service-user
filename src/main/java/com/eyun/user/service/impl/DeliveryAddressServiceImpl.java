@@ -67,10 +67,26 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
 
 
    @Override
-    public void updateAddress(Long AddressId) {
+    public void updateAddress(Long AddressId,Long id) {
+       UserAnnex userAnnex = new UserAnnex();
+       userAnnex.setId(id);
+       List<DeliveryAddress> deliveryAddressList = deliveryAddressRepository.findByuserAnnex(userAnnex);
+       deliveryAddressList.forEach(f ->{
+           f.defaultAddress(true);
+       });
+       deliveryAddressRepository.save(deliveryAddressList);
+
        DeliveryAddress one = deliveryAddressRepository.findOne(AddressId);
        one.setDefaultAddress(false);
        deliveryAddressRepository.saveAndFlush(one);
+
+
+
+
+
+
+
+
    }
 
     /**
