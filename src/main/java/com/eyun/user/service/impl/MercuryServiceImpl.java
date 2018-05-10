@@ -173,14 +173,14 @@ public class MercuryServiceImpl implements MercuryService {
         mercury.setUpdatedTime(Instant.now());
         mercury.setCreatedTime(Instant.now());
         mercury = mercuryRepository.save(mercury);
-        OwnerRelation ownerRelation = new OwnerRelation();
+   /*     OwnerRelation ownerRelation = new OwnerRelation();
         ownerRelation.setMercury(mercury);
         UserAnnex userAnnex = new UserAnnex();
         userAnnex.setId(mercuryDTO.getId());
         ownerRelation.setUserAnnex(userAnnex);
         relationRepository.save(ownerRelation);
         log.info("商户申请结束************************************************************************************");
-
+*/
 
     }
 
