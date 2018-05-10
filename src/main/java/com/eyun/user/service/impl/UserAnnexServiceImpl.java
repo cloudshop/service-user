@@ -133,6 +133,18 @@ public class UserAnnexServiceImpl implements UserAnnexService {
         userAnnexRepository.saveAndFlush(userAnnex);
     }
 
+
+    /**
+     * 检查用户申请商户的的状态
+     * @param id
+     * @return
+     */
+    @Override
+    public UserAnnex checkUserStatus(Long id) {
+        UserAnnex userAnnex = userAnnexRepository.findByid(id);
+        return userAnnex;
+    }
+
     /**
      * 变更用户的状态
      *
