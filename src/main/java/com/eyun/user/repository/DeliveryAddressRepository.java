@@ -1,6 +1,7 @@
 package com.eyun.user.repository;
 
 import com.eyun.user.domain.DeliveryAddress;
+import com.eyun.user.domain.UserAnnex;
 import com.eyun.user.service.dto.DeliveryAddressDTO;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Component;
@@ -28,4 +29,5 @@ public interface DeliveryAddressRepository extends JpaRepository<DeliveryAddress
     @Query(value = "DELETE FROM delivery_address WHERE id = :id AND user_annex_id= :userId",nativeQuery = true)
     void deleteAddress(@Param("id")Long id,@Param("id")Long userId);
 
+    List<DeliveryAddress> findByuserAnnex(UserAnnex userAnnex);
 }
