@@ -12,6 +12,7 @@ import com.eyun.user.service.dto.MercuryCriteria;
 import com.eyun.user.service.MercuryQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -246,12 +247,12 @@ public class MercuryResource {
     @Timed
     public ResponseEntity getUserIdMercuryId(){
         UserDTO account = uaaService.getAccount();
+        String s = account.getId().toString();
+        if (StringUtils.isBlank(s)){
+            return ResponseUtil.wrapOrNotFound(Optional.ofNullable("未登录，请先登录！"));
+        }
         Map userIdMercuryId = mercuryService.getUserIdMercuryId(account.getId());
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(userIdMercuryId));
-
-
-
-
     }
 
 
