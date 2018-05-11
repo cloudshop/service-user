@@ -35,6 +35,6 @@ public interface UserAnnexRepository extends JpaRepository<UserAnnex, Long>, Jpa
 
     List<UserAnnex>  findByinviterId(Long inviterId);
 
-    @Query(value = "SELECT u.id FROM mercury AS m LEFT JOIN owner_relation o ON m.id=o.user_annex_id  LEFT JOIN user_annex u ON u.id=o.user_annex_id where m.id=:id",nativeQuery = true)
+    @Query(value = "SELECT u.id FROM mercury AS m LEFT JOIN owner_relation o ON m.id=o.mercury_id LEFT JOIN user_annex u ON u.id=o.user_annex_id where m.id=:id",nativeQuery = true)
     Long ShopIdFindByUserid(@Param("id")Long id);
 }
