@@ -186,6 +186,8 @@ public class MercuryServiceImpl implements MercuryService {
             UserAnnex userAnnex = new UserAnnex();
             userAnnex.setId(mercuryDTO.getId());
             ownerRelation.setUserAnnex(userAnnex);
+            ownerRelation.setCreatedTime(Instant.now());
+            ownerRelation.setUpdatedTime(Instant.now());
             relationRepository.save(ownerRelation);
             log.info("创建店铺开始结束*********************************************************************************");
 
@@ -193,6 +195,7 @@ public class MercuryServiceImpl implements MercuryService {
             annex.setType(3);
             //店铺申请成功2，不成功设为1
             annex.setStatus(2);
+            annex.setUpdatedTime(Instant.now());
             userAnnexRepository.saveAndFlush(annex);
 
             return "ok";
