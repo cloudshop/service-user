@@ -187,7 +187,7 @@ public class MercuryResource {
     public ResponseEntity addMercury(@RequestBody MercuryDTO mercuryDTO){
         log.info("{}",mercuryDTO);
         mercuryService.addMercury(mercuryDTO);
-        return ResponseEntity.ok().body(null);
+        return ResponseEntity.ok().body(HttpStatus.OK);
     }
 
 
@@ -237,7 +237,7 @@ public class MercuryResource {
     public ResponseEntity mercuryChangeStatus(){
         UserDTO account = uaaService.getAccount();
         mercuryService.mercuryChangeStatus(account.getId());
-        return ResponseEntity.ok().body(null);
+        return ResponseEntity.ok().body(HttpStatus.OK);
 
     }
 
@@ -248,9 +248,6 @@ public class MercuryResource {
     public ResponseEntity getUserIdMercuryId(){
         UserDTO account = uaaService.getAccount();
         String s = account.getId().toString();
-        if (StringUtils.isBlank(s)){
-            return ResponseUtil.wrapOrNotFound(Optional.ofNullable("未登录，请先登录！"));
-        }
         Map userIdMercuryId = mercuryService.getUserIdMercuryId(account.getId());
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(userIdMercuryId));
     }
