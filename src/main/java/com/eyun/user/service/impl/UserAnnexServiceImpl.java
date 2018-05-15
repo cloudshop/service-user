@@ -293,6 +293,16 @@ public class UserAnnexServiceImpl implements UserAnnexService {
     }
 
 
+    /**
+     * 根据用户的电话查询用户的信息
+     * @param phone
+     * @return
+     */
+    @Override
+    public UserAnnex getUserInfosByPhone(String phone) {
+        return userAnnexRepository.findByPhone(phone);
+    }
+
     @Override
     public Long ShopIdFindByUserid(Long id) {
         Long userid = userAnnexRepository.ShopIdFindByUserid(id);
