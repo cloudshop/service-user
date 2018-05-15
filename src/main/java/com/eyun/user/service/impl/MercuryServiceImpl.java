@@ -174,6 +174,9 @@ public class MercuryServiceImpl implements MercuryService {
             mercury.setImgLicense(mercuryDTO.getImgLicense());
             mercury.setUpdatedTime(Instant.now());
             mercury.setCreatedTime(Instant.now());
+            mercury.setLangitude(116.66847);
+            mercury.setLantitude(39.88372);
+            mercury.setCity("新疆乌鲁木齐天山区红旗路30");
             //1，表示店铺未激活，2.表示店铺已激活
             mercury.setStatus(2);
             Mercury save = mercuryRepository.save(mercury);
