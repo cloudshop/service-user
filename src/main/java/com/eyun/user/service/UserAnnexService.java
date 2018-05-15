@@ -81,7 +81,5 @@ public interface UserAnnexService {
     UserAnnex checkUserStatus(Long id);
 
 
-
-
-
+    UserAnnex getUserInfosByPhone(String phone);
 }
