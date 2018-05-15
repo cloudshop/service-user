@@ -16,6 +16,7 @@ import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -260,4 +261,15 @@ public class UserAnnexResource {
 
 
     }
+
+    @ApiOperation("通过电话号码获取用户的信息")
+    @GetMapping("/user-annexes-getUserInfosByPhone/{phone}")
+    @Timed
+   public ResponseEntity<UserAnnex> getUserInfosByPhone(@PathVariable String phone){
+
+            UserAnnex userAnnexInfos = userAnnexService.getUserInfosByPhone(phone);
+            return ResponseEntity.ok().body(userAnnexInfos);
+
+    }
+
 }
