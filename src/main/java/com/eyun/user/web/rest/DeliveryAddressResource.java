@@ -28,7 +28,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.time.Instant;
 import java.util.List;
 import java.util.Map;
 import java.util.Optional;
@@ -50,7 +50,6 @@ public class DeliveryAddressResource {
 
     @Autowired
     UaaService uaaService;
-
 
     public DeliveryAddressResource(DeliveryAddressService deliveryAddressService, DeliveryAddressQueryService deliveryAddressQueryService) {
         this.deliveryAddressService = deliveryAddressService;
@@ -207,7 +206,21 @@ public class DeliveryAddressResource {
         return ResponseEntity.ok().body(null);
     }
 
-
+    @ApiOperation("编辑地址")
+    @PostMapping("/user-annexes-upstateAddress")
+    @Timed
+    public ResponseEntity upstateAddress(@RequestBody DeliveryAddressDTO deliveryAddressDTO){
+    	try {
+    		DeliveryAddressDTO addressDTO = deliveryAddressService.findOne(deliveryAddressDTO.getId());
+    		addressDTO.setCity(deliveryAddressDTO.getCity());
+    		addressDTO.setContact(deliveryAddressDTO.getContact());
+    		addressDTO.setPhone(deliveryAddressDTO.getPhone());
+			deliveryAddressService.save(addressDTO);
+		} catch (Exception e) {
+			throw new BadRequestAlertException("编辑地址失败", "", "");
+		}
+		return ResponseEntity.ok().body(null);
+    }
 
 
 
