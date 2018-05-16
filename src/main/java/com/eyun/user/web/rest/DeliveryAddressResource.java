@@ -224,24 +224,4 @@ public class DeliveryAddressResource {
 		return ResponseEntity.ok().body(null);
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 }
