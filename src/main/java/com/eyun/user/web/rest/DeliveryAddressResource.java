@@ -216,6 +216,7 @@ public class DeliveryAddressResource {
     		addressDTO.setContact(deliveryAddressDTO.getContact());
     		addressDTO.setPhone(deliveryAddressDTO.getPhone());
 			deliveryAddressService.save(addressDTO);
+			
 		} catch (Exception e) {
 			throw new BadRequestAlertException("编辑地址失败", "", "");
 		}
