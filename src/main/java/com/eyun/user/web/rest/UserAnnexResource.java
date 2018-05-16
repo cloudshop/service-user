@@ -162,14 +162,12 @@ public class UserAnnexResource {
         BeanUtils.copyProperties(userAnnex,userAnnexDTO);
         //查看邀请人
         UserAnnexDTO inviter = userAnnexService.findOne(userAnnexDTO.getInviterId());
-        System.out.println(inviter.toString());
-        if(inviter == null){
+        /*if(inviter == null){
         	throw new BadRequestAlertException("推荐人不存在", "", "");
-        }
+        }*/
         userAnnexDTO.setInvNickName(inviter.getNickname());
         userAnnexDTO.setInvPhone(inviter.getPhone());
         userAnnexDTO.setUpdatedTime(Instant.now());
-        System.out.println(userAnnexDTO);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(userAnnexDTO));
     }
 
