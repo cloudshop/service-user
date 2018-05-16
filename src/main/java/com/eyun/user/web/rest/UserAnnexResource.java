@@ -19,6 +19,7 @@ import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -29,7 +30,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.time.Instant;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -155,9 +156,21 @@ public class UserAnnexResource {
     public ResponseEntity userInfo(){
         UserDTO account = uaaService.getAccount();
         log.info("用户ID是{}",account.getId());
+        UserAnnexDTO userAnnexDTO = new UserAnnexDTO();
+        //查询当前用户
         UserAnnex userAnnex = userAnnexService.userInfo(account.getId());
-
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(userAnnex));
+        BeanUtils.copyProperties(userAnnex,userAnnexDTO);
+        //查看邀请人
+        UserAnnexDTO inviter = userAnnexService.findOne(userAnnexDTO.getInviterId());
+        System.out.println(inviter.toString());
+        if(inviter == null){
+        	throw new BadRequestAlertException("推荐人不存在", "", "");
+        }
+        userAnnexDTO.setInvNickName(inviter.getNickname());
+        userAnnexDTO.setInvPhone(inviter.getPhone());
+        userAnnexDTO.setUpdatedTime(Instant.now());
+        System.out.println(userAnnexDTO);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(userAnnexDTO));
     }
 
 

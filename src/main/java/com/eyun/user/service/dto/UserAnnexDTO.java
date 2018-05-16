@@ -35,8 +35,33 @@ public class UserAnnexDTO implements Serializable {
     private String typeString;
 
     private Long inviterId;
+    
+//	String nickName = findOne.getNickname();
+//	String phone = findOne.getPhone();
+    
+    private String invNickName;
+    
+    private String invPhone;
+    
+    
 
-    public Long getId() {
+    public String getInvNickName() {
+		return invNickName;
+	}
+
+	public void setInvNickName(String invNickName) {
+		this.invNickName = invNickName;
+	}
+
+	public String getInvPhone() {
+		return invPhone;
+	}
+
+	public void setInvPhone(String invPhone) {
+		this.invPhone = invPhone;
+	}
+
+	public Long getId() {
         return id;
     }
 
