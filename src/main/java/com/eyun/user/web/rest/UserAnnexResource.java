@@ -161,11 +161,12 @@ public class UserAnnexResource {
         UserAnnex userAnnex = userAnnexService.userInfo(account.getId());
         BeanUtils.copyProperties(userAnnex,userAnnexDTO);
         //查看邀请人
-        UserAnnexDTO inviter = userAnnexService.findOne(userAnnexDTO.getInviterId());
-        if(inviter == null){
-        	userAnnexDTO.setInvNickName(null);
-            userAnnexDTO.setInvPhone(null);
+        if(userAnnexDTO.getInviterId() == null){
+//            UserAnnexDTO inviter = userAnnexService.findOne(userAnnexDTO.getInviterId());
+//            userAnnexDTO.setInvNickName(null);
+//            userAnnexDTO.setInvPhone(null);
         }else{
+            UserAnnexDTO inviter = userAnnexService.findOne(userAnnexDTO.getInviterId());
         	userAnnexDTO.setInvNickName(inviter.getNickname());
             userAnnexDTO.setInvPhone(inviter.getPhone());
         }
