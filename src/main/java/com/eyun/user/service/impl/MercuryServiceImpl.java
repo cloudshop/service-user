@@ -239,8 +239,8 @@ public class MercuryServiceImpl implements MercuryService {
      * @return
      */
     @Override
-    public List<Map> getMercuryInfoProductList(Long id) {
-        List<Map> maps = productService.ProductList(id);
+    public List<Map> getMercuryInfoProductList(Long id,Integer pageNum,Integer pageSize) {
+        List<Map> maps = productService.ProductList(id,pageNum,pageSize);
         if (maps.size()>0){
             return maps;
         }
