@@ -16,6 +16,6 @@ import java.util.Map;
 public interface ProductService {
 
     @GetMapping("/api/product/shop")
-    List<Map> ProductList(@RequestParam("shopId") Long id);
+    List<Map> ProductList(@RequestParam("shopId")Long id,@RequestParam("pageNum")Integer pageNum,@RequestParam("pageSize")Integer pageSize);
 
 }
