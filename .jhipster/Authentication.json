@@ -1,0 +1,48 @@
+{
+    "fluentMethods": true,
+    "relationships": [],
+    "fields": [
+        {
+            "fieldName": "realName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "idnuber",
+            "fieldType": "String",
+            "fieldValidateRules": []
+        },
+        {
+            "fieldName": "frontImg",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "reverseImg",
+            "fieldType": "String",
+            "fieldValidateRules": []
+        },
+        {
+            "fieldName": "status",
+            "fieldType": "Integer"
+        },
+        {
+            "fieldName": "statusString",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "createdTime",
+            "fieldType": "Instant"
+        },
+        {
+            "fieldName": "updatedTime",
+            "fieldType": "Instant"
+        }
+    ],
+    "changelogDate": "20180517022918",
+    "dto": "mapstruct",
+    "service": "serviceImpl",
+    "entityTableName": "authentication",
+    "jpaMetamodelFiltering": true,
+    "pagination": "pager",
+    "microserviceName": "user",
+    "searchEngine": false
+}
