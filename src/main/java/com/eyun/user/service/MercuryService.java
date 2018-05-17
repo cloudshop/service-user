@@ -4,6 +4,7 @@ import com.eyun.user.domain.Mercury;
 import com.eyun.user.service.dto.MercuryDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
@@ -86,7 +87,7 @@ public interface MercuryService {
      * @param id
      * @return
      */
-    List<Map> getMercuryInfoProductList(Long id);
+    List<Map> getMercuryInfoProductList(Long id,Integer pageNum,Integer pageSize);
 
 
 
