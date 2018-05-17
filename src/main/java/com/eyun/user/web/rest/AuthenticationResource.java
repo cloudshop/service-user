@@ -2,15 +2,22 @@ package com.eyun.user.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
 import com.eyun.user.service.AuthenticationService;
+import com.eyun.user.service.PushService;
+import com.eyun.user.service.UaaService;
 import com.eyun.user.web.rest.errors.BadRequestAlertException;
 import com.eyun.user.web.rest.util.HeaderUtil;
 import com.eyun.user.web.rest.util.PaginationUtil;
+import com.eyun.user.web.rest.vm.AuthenticationVM;
 import com.eyun.user.service.dto.AuthenticationDTO;
+import com.eyun.user.service.dto.UserDTO;
 import com.eyun.user.service.dto.AuthenticationCriteria;
 import com.eyun.user.service.AuthenticationQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
+import io.swagger.annotations.ApiOperation;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
@@ -20,9 +27,11 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-
+import java.time.Instant;
 import java.util.List;
 import java.util.Optional;
+
+import javax.annotation.security.RolesAllowed;
 
 /**
  * REST controller for managing Authentication.
@@ -38,6 +47,12 @@ public class AuthenticationResource {
     private final AuthenticationService authenticationService;
 
     private final AuthenticationQueryService authenticationQueryService;
+    
+    @Autowired
+    private UaaService uaaService;
+    
+    @Autowired
+    private PushService pushService;
 
     public AuthenticationResource(AuthenticationService authenticationService, AuthenticationQueryService authenticationQueryService) {
         this.authenticationService = authenticationService;
@@ -129,4 +144,140 @@ public class AuthenticationResource {
         authenticationService.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+    
+    /**
+     * 申请实名认证
+     * @author 逍遥子
+     * @email 756898059@qq.com
+     * @date 2018年5月17日
+     * @version 1.0
+     * @param authenticationDTO
+     */
+    @ApiOperation("申请实名认证")
+    @PostMapping("/authentication")
+    @Timed
+    public void realNameAuthentication(@RequestBody AuthenticationDTO authenticationDTO) {
+    	UserDTO user = uaaService.getAccount();
+    	AuthenticationDTO findOne = authenticationService.findOne(user.getId());
+    	if (findOne == null) {//未实名认证
+    		Instant now = Instant.now();
+    		AuthenticationDTO authnDTO = new AuthenticationDTO();
+    		authnDTO.setId(user.getId());
+    		authnDTO.setCreatedTime(now);
+    		authnDTO.setUpdatedTime(now);
+    		authnDTO.setRealName(authenticationDTO.getRealName());
+    		authnDTO.setIdnuber(authenticationDTO.getIdnuber());
+    		authnDTO.setFrontImg(authenticationDTO.getFrontImg());
+    		authnDTO.setReverseImg(authenticationDTO.getReverseImg());
+    		authnDTO.setStatus(1);
+    		authnDTO.setStatusString("审核中");
+    		authenticationService.save(authnDTO);
+    	} else if (findOne.getStatus() == 1) {//审核中
+    		throw new BadRequestAlertException("审核中请勿重复申请！", "authentications", "authentications.status");
+    	} else if (findOne.getStatus() == 2) {//被拒绝
+    		throw new BadRequestAlertException("已被拒绝请重新申请！", "authentications", "authentications.status");
+    	} else if (findOne.getStatus() == 3) {//审核通过
+    		throw new BadRequestAlertException("审核已通过请勿重复申请！", "authentications", "authentications.status");
+    	}
+    }
+    
+    /**
+     * 查看我的实名认证
+     * @author 逍遥子
+     * @email 756898059@qq.com
+     * @date 2018年5月17日
+     * @version 1.0
+     * @return
+     */
+    @ApiOperation("查看我的实名认证")
+    @GetMapping("/my-auth")
+    @Timed
+    public ResponseEntity<AuthenticationVM> findMyAuthentication() {
+    	UserDTO user = uaaService.getAccount();
+    	AuthenticationDTO findOne = authenticationService.findOne(user.getId());
+    	if (findOne == null) {
+    		return new ResponseEntity(null, HttpStatus.OK);
+    	}
+    	AuthenticationVM authenticationVM = new AuthenticationVM();
+    	authenticationVM.setFrontImg(findOne.getFrontImg());
+    	authenticationVM.setIdnuber(authenticationVM.getIdnuber());
+    	authenticationVM.setRealName(authenticationVM.getRealName());
+    	authenticationVM.setReverseImg(authenticationVM.getReverseImg());
+    	authenticationVM.setStatus(findOne.getStatus());
+    	authenticationVM.setStatusString(findOne.getStatusString());
+    	return new ResponseEntity<AuthenticationVM>(authenticationVM, HttpStatus.OK);
+    }
+    
+    /**
+     * 修改实名认证信息
+     * @author 逍遥子
+     * @email 756898059@qq.com
+     * @date 2018年5月17日
+     * @version 1.0
+     * @param authenticationDTO
+     */
+    @ApiOperation("修改实名认证信息")
+    @PutMapping("/my-auth/update")
+    public void fun(@RequestBody AuthenticationDTO authenticationDTO) {
+    	UserDTO user = uaaService.getAccount();
+    	AuthenticationDTO findOne = authenticationService.findOne(user.getId());
+    	if (findOne == null) {//未实名认证
+    		throw new BadRequestAlertException("请先申请实名认证！", "authentications", "authentications.status");
+    	} else if (findOne.getStatus() == 1) {//审核中
+    		throw new BadRequestAlertException("审核中请勿修改！", "authentications", "authentications.status");
+    	} else if (findOne.getStatus() == 2) {//被拒绝
+    		Instant now = Instant.now();
+    		AuthenticationDTO authnDTO = new AuthenticationDTO();
+    		authnDTO.setId(user.getId());
+    		authnDTO.setUpdatedTime(now);
+    		authnDTO.setRealName(authenticationDTO.getRealName());
+    		authnDTO.setIdnuber(authenticationDTO.getIdnuber());
+    		authnDTO.setFrontImg(authenticationDTO.getFrontImg());
+    		authnDTO.setReverseImg(authenticationDTO.getReverseImg());
+    		authnDTO.setStatus(1);
+    		authnDTO.setStatusString("审核中");
+    		authenticationService.save(authnDTO);
+    	} else if (findOne.getStatus() == 3) {//审核通过
+    		throw new BadRequestAlertException("审核已通过请勿修改信息！", "authentications", "authentications.status");
+    	}
+    }
+    
+    /**
+     * 管理端审核通过认证
+     * @author 逍遥子
+     * @email 756898059@qq.com
+     * @date 2018年5月17日
+     * @version 1.0
+     * @param userid
+     */
+    @ApiOperation("管理端审核通过认证")
+    @RolesAllowed("ROLE_ADMIN")
+    @PutMapping("/authentication/agree/{userid}")
+    public void adminUpdateAuthentication(@PathVariable("userid") Long userid) {
+    	AuthenticationDTO authenticationDTO = authenticationService.findOne(userid);
+    	authenticationDTO.setStatus(3);
+    	authenticationDTO.setStatusString("审核通过");
+    	authenticationService.save(authenticationDTO);
+    	pushService.sendPushByUserid(userid.toString(), "你的实名认证已经通过审核");
+    }
+    
+    /**
+     * 管理端审核拒绝认证
+     * @author 逍遥子
+     * @email 756898059@qq.com
+     * @date 2018年5月17日
+     * @version 1.0
+     * @param userid
+     */
+    @ApiOperation("管理端审核拒绝认证")
+    @RolesAllowed("ROLE_ADMIN")
+    @PutMapping("/authentication/refuse/{userid}")
+    public void adminUpdateAuthentication2(@PathVariable("userid") Long userid,@RequestBody String content) {
+    	AuthenticationDTO authenticationDTO = authenticationService.findOne(userid);
+    	authenticationDTO.setStatus(2);
+    	authenticationDTO.setStatusString("未通过审核");
+    	authenticationService.save(authenticationDTO);
+    	pushService.sendPushByUserid(userid.toString(), content);
+    }
+    
 }
