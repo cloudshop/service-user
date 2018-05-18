@@ -4,6 +4,7 @@ import com.eyun.user.domain.Mercury;
 import com.eyun.user.service.dto.MercuryDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -97,5 +98,6 @@ public interface MercuryService {
 
     Map getUserIdMercuryId(Long id);
 
-    void setBackground(MercuryDTO mercuryDTO);
+    void setBackground(Map background);
+    public MercuryDTO getUserShop();
 }

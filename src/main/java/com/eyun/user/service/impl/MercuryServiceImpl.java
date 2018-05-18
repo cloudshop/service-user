@@ -228,15 +228,20 @@ public class MercuryServiceImpl implements MercuryService {
 
 
     @Override
-    public void setBackground(MercuryDTO mercuryDTO) {
-
+    public void setBackground(Map background) {
         UserDTO account = uaaService.getAccount();
         Map MercuryId = mercuryService.getUserIdMercuryId(account.getId());
         Mercury one = mercuryRepository.findOne((Long) MercuryId.get("id"));
-        one.setImgIntroduces(mercuryDTO.getImgIntroduces());
+        one.setImgIntroduces(background.get("imgIntroduces").toString());
         mercuryRepository.saveAndFlush(one);
+    }
 
-
+    @Override
+    public MercuryDTO getUserShop() {
+        UserDTO account = uaaService.getAccount();
+        Map MercuryId = mercuryService.getUserIdMercuryId(account.getId());
+        Mercury one = mercuryRepository.findOne((Long) MercuryId.get("id"));
+        return mercuryMapper.toDto(one);
     }
 
     @Override

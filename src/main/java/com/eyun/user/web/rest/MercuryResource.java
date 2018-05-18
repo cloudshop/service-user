@@ -259,13 +259,18 @@ public class MercuryResource {
     @ApiOperation("设置店铺的背景图")
     @PutMapping("/mercuries/setBackground")
     @Timed
-    public ResponseEntity setBackground(@RequestBody MercuryDTO mercuryDTO){
-        mercuryService.setBackground(mercuryDTO);
+    public ResponseEntity setBackground(@RequestBody Map background){
+        mercuryService.setBackground(background);
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable("ok"));
     }
 
-
-
+    @ApiOperation("当前登陆商家店铺信息")
+    @GetMapping("/mercuries/usermercurie")
+    @Timed
+    public ResponseEntity getUserShop(){
+        MercuryDTO mercuryDTO=mercuryService.getUserShop();
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(mercuryDTO));
+    }
 
 
 
