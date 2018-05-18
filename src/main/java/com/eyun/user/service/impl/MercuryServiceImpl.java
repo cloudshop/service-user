@@ -8,7 +8,9 @@ import com.eyun.user.service.MercuryService;
 import com.eyun.user.domain.Mercury;
 import com.eyun.user.repository.MercuryRepository;
 import com.eyun.user.service.ProductService;
+import com.eyun.user.service.UaaService;
 import com.eyun.user.service.dto.MercuryDTO;
+import com.eyun.user.service.dto.UserDTO;
 import com.eyun.user.service.mapper.MercuryMapper;
 import com.eyun.user.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
@@ -49,6 +51,14 @@ public class MercuryServiceImpl implements MercuryService {
 
     @Autowired
     private ProductService productService;
+
+
+    @Autowired private UaaService uaaService;
+
+    @Autowired private MercuryService mercuryService;
+
+
+
 
 
     public MercuryServiceImpl(MercuryRepository mercuryRepository, MercuryMapper mercuryMapper) {
@@ -211,6 +221,20 @@ public class MercuryServiceImpl implements MercuryService {
 
 
 
+
+
+    }
+
+
+
+    @Override
+    public void setBackground(MercuryDTO mercuryDTO) {
+
+        UserDTO account = uaaService.getAccount();
+        Map MercuryId = mercuryService.getUserIdMercuryId(account.getId());
+        Mercury one = mercuryRepository.findOne((Long) MercuryId.get("id"));
+        one.setImgIntroduces(mercuryDTO.getImgIntroduces());
+        mercuryRepository.saveAndFlush(one);
 
 
     }
