@@ -96,4 +96,6 @@ public interface MercuryService {
     void mercuryChangeStatus(Long id);
 
     Map getUserIdMercuryId(Long id);
+
+    void setBackground(MercuryDTO mercuryDTO);
 }
