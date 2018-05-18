@@ -256,6 +256,19 @@ public class MercuryResource {
 
 
 
+    @ApiOperation("设置店铺的背景图")
+    @PutMapping("/mercuries/setBackground")
+    @Timed
+    public ResponseEntity setBackground(@RequestBody MercuryDTO mercuryDTO){
+        mercuryService.setBackground(mercuryDTO);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable("ok"));
+    }
+
+
+
+
+
+
 
 
 
