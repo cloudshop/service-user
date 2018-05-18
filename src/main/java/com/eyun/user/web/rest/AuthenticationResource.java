@@ -9,6 +9,7 @@ import com.eyun.user.web.rest.util.HeaderUtil;
 import com.eyun.user.web.rest.util.PaginationUtil;
 import com.eyun.user.web.rest.vm.AuthenticationVM;
 import com.eyun.user.service.dto.AuthenticationDTO;
+import com.eyun.user.service.dto.RefuseDTO;
 import com.eyun.user.service.dto.UserDTO;
 import com.eyun.user.service.dto.AuthenticationCriteria;
 import com.eyun.user.service.AuthenticationQueryService;
@@ -271,13 +272,13 @@ public class AuthenticationResource {
      */
     @ApiOperation("管理端审核拒绝认证")
     @RolesAllowed("ROLE_ADMIN")
-    @PutMapping("/authentication/refuse/{userid}")
-    public void adminUpdateAuthentication2(@PathVariable("userid") Long userid,@RequestBody String content) {
-    	AuthenticationDTO authenticationDTO = authenticationService.findOne(userid);
+    @PutMapping("/authentication/refuse")
+    public void adminUpdateAuthentication2(@RequestBody RefuseDTO refuseDTO) {
+    	AuthenticationDTO authenticationDTO = authenticationService.findOne(refuseDTO.getId());
     	authenticationDTO.setStatus(2);
     	authenticationDTO.setStatusString("未通过审核");
     	authenticationService.save(authenticationDTO);
-    	pushService.sendPushByUserid(userid.toString(), content);
+    	pushService.sendPushByUserid(refuseDTO.getId().toString(), refuseDTO.getContent());
     }
     
 }
