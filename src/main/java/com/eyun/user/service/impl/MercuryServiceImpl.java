@@ -8,7 +8,9 @@ import com.eyun.user.service.MercuryService;
 import com.eyun.user.domain.Mercury;
 import com.eyun.user.repository.MercuryRepository;
 import com.eyun.user.service.ProductService;
+import com.eyun.user.service.UaaService;
 import com.eyun.user.service.dto.MercuryDTO;
+import com.eyun.user.service.dto.UserDTO;
 import com.eyun.user.service.mapper.MercuryMapper;
 import com.eyun.user.web.rest.errors.BadRequestAlertException;
 import org.slf4j.Logger;
@@ -49,6 +51,14 @@ public class MercuryServiceImpl implements MercuryService {
 
     @Autowired
     private ProductService productService;
+
+
+    @Autowired private UaaService uaaService;
+
+    @Autowired private MercuryService mercuryService;
+
+
+
 
 
     public MercuryServiceImpl(MercuryRepository mercuryRepository, MercuryMapper mercuryMapper) {
@@ -215,6 +225,20 @@ public class MercuryServiceImpl implements MercuryService {
 
     }
 
+
+
+    @Override
+    public void setBackground(MercuryDTO mercuryDTO) {
+
+        UserDTO account = uaaService.getAccount();
+        Map MercuryId = mercuryService.getUserIdMercuryId(account.getId());
+        Mercury one = mercuryRepository.findOne((Long) MercuryId.get("id"));
+        one.setImgIntroduces(mercuryDTO.getImgIntroduces());
+        mercuryRepository.saveAndFlush(one);
+
+
+    }
+
     @Override
     public List<MercuryDTO> findNearMerchants(MercuryDTO mercuryDTO) {
         //经度
@@ -239,8 +263,8 @@ public class MercuryServiceImpl implements MercuryService {
      * @return
      */
     @Override
-    public List<Map> getMercuryInfoProductList(Long id) {
-        List<Map> maps = productService.ProductList(id);
+    public List<Map> getMercuryInfoProductList(Long id,Integer pageNum,Integer pageSize) {
+        List<Map> maps = productService.ProductList(id,pageNum,pageSize);
         if (maps.size()>0){
             return maps;
         }

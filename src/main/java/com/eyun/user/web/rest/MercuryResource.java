@@ -210,10 +210,10 @@ public class MercuryResource {
 
 
     @ApiOperation("商品列表 ")
-    @PostMapping("/mercuries/getMercuryInfoProductList/{id}")
+    @GetMapping("/mercuries/getMercuryInfoProductList/{id}/{pageNum}/{pageSize}")
     @Timed
-    public ResponseEntity getMercuryInfoProductList(@PathVariable Long id){
-        List<Map> relult = mercuryService.getMercuryInfoProductList(id);
+    public ResponseEntity getMercuryInfoProductList(@PathVariable Long id,@PathVariable Integer pageNum,@PathVariable Integer pageSize){
+        List<Map> relult = mercuryService.getMercuryInfoProductList(id,pageNum,pageSize);
         return ResponseEntity.ok().body(relult);
 
     }
@@ -251,6 +251,19 @@ public class MercuryResource {
         Map userIdMercuryId = mercuryService.getUserIdMercuryId(account.getId());
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(userIdMercuryId));
     }
+
+
+
+
+
+    @ApiOperation("设置店铺的背景图")
+    @PutMapping("/mercuries/setBackground")
+    @Timed
+    public ResponseEntity setBackground(@RequestBody MercuryDTO mercuryDTO){
+        mercuryService.setBackground(mercuryDTO);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable("ok"));
+    }
+
 
 
 
