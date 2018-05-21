@@ -231,7 +231,7 @@ public class MercuryServiceImpl implements MercuryService {
     public void setBackground(Map background) {
         UserDTO account = uaaService.getAccount();
         Map MercuryId = mercuryService.getUserIdMercuryId(account.getId());
-        Mercury one = mercuryRepository.findOne((Long) MercuryId.get("id"));
+        Mercury one = mercuryRepository.findOne(Long.valueOf(MercuryId.get("id").toString()));
         one.setImgIntroduces(background.get("imgIntroduces").toString());
         mercuryRepository.saveAndFlush(one);
     }
@@ -240,7 +240,7 @@ public class MercuryServiceImpl implements MercuryService {
     public MercuryDTO getUserShop() {
         UserDTO account = uaaService.getAccount();
         Map MercuryId = mercuryService.getUserIdMercuryId(account.getId());
-        Mercury one = mercuryRepository.findOne((Long) MercuryId.get("id"));
+        Mercury one = mercuryRepository.findOne(Long.valueOf(MercuryId.get("id").toString()));
         return mercuryMapper.toDto(one);
     }
 
