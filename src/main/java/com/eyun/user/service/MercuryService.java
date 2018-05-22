@@ -88,7 +88,7 @@ public interface MercuryService {
      * @param id
      * @return
      */
-    List<Map> getMercuryInfoProductList(Long id,Integer pageNum,Integer pageSize);
+    Map getMercuryInfoProductList(Long id,Integer pageNum,Integer pageSize);
 
 
 

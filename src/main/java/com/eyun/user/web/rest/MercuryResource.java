@@ -213,7 +213,7 @@ public class MercuryResource {
     @GetMapping("/mercuries/getMercuryInfoProductList/{id}/{pageNum}/{pageSize}")
     @Timed
     public ResponseEntity getMercuryInfoProductList(@PathVariable Long id,@PathVariable Integer pageNum,@PathVariable Integer pageSize){
-        List<Map> relult = mercuryService.getMercuryInfoProductList(id,pageNum,pageSize);
+        Map relult = mercuryService.getMercuryInfoProductList(id,pageNum,pageSize);
         return ResponseEntity.ok().body(relult);
 
     }

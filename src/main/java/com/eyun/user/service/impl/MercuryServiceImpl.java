@@ -266,16 +266,13 @@ public class MercuryServiceImpl implements MercuryService {
      * @return
      */
     @Override
-    public List<Map> getMercuryInfoProductList(Long id,Integer pageNum,Integer pageSize) {
-        List<Map> maps = productService.ProductList(id,pageNum,pageSize);
-        Mercury one = mercuryRepository.findOne(id);
-        Map<Object,String> map = new HashMap();
-        map.put(maps, "maps");
-        map.put(one, "one");
-        List list = new ArrayList();
-        list.add(map);
-
-        return list;
+    public Map getMercuryInfoProductList(Long id,Integer pageNum,Integer pageSize) {
+        List<Map> productList = productService.ProductList(id,pageNum,pageSize);
+        Mercury mercury = mercuryRepository.findOne(id);
+        Map<String,Object> map = new HashMap();
+        map.put("mercury", mercury);
+        map.put("productList", productList);
+        return map;
     }
 
 
