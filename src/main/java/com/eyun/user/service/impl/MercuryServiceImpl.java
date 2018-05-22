@@ -24,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.time.Instant;
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -270,10 +271,11 @@ public class MercuryServiceImpl implements MercuryService {
     @Override
     public List<Map> getMercuryInfoProductList(Long id,Integer pageNum,Integer pageSize) {
         List<Map> maps = productService.ProductList(id,pageNum,pageSize);
-        if (maps.size()>0){
-            return maps;
-        }
-        throw new BadRequestAlertException(" 商户列表不存在"," maps","mapsexists");
+        Mercury one = mercuryRepository.findOne(id);
+        Map<Object, String> map = new HashMap<>();
+        map.put(maps, "maps");
+        map.put(one,"one");
+        return (List<Map>) map;
 
     }
 
