@@ -24,10 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import java.time.Instant;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -272,11 +269,13 @@ public class MercuryServiceImpl implements MercuryService {
     public List<Map> getMercuryInfoProductList(Long id,Integer pageNum,Integer pageSize) {
         List<Map> maps = productService.ProductList(id,pageNum,pageSize);
         Mercury one = mercuryRepository.findOne(id);
-        Map<Object, String> map = new HashMap<>();
+        Map<Object,String> map = new HashMap();
         map.put(maps, "maps");
-        map.put(one,"one");
-        return (List<Map>) map;
+        map.put(one, "one");
+        List list = new ArrayList();
+        list.add(map);
 
+        return list;
     }
 
 
