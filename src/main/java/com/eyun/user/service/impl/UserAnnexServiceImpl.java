@@ -160,6 +160,10 @@ public class UserAnnexServiceImpl implements UserAnnexService {
         if (userAnnex.getInviterId() != null) {
         	UserAnnex serviceProvider = null;
         	Long inviterId = userAnnex.getInviterId();
+        	IncrementUserRewardDTO incrementUserRewardDTO = new IncrementUserRewardDTO();
+        	incrementUserRewardDTO.setIncrementBusinessID(userAnnex.getId());
+        	incrementUserRewardDTO.setIncrementUserID(userAnnex.getInviterId());
+			walletService.incrementUserReward(incrementUserRewardDTO );
         	while (true) {
         		serviceProvider = userAnnexRepository.getOne(inviterId);
         		if (serviceProvider.getType() != null && serviceProvider.getType() == 5) {
