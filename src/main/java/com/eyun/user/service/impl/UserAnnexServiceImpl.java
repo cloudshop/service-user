@@ -326,4 +326,21 @@ public class UserAnnexServiceImpl implements UserAnnexService {
         userAnnexRepository.saveAndFlush(userAnnex);
     }
 
+
+    /**
+     * 获取当前用户的直接推荐人
+     * @param id
+     * @return
+     */
+    @Override
+    public UserAnnex getReferees(Long id) {
+
+        UserAnnex userAnnex = userAnnexRepository.findByid(id);
+        UserAnnex Referees = null;
+        if (userAnnex.getInviterId()!=null&& userAnnex.getInviterId()!=0){
+              Referees= userAnnexRepository.findByid(userAnnex.getInviterId());
+        }
+
+        return Referees;
+    }
 }

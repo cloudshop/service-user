@@ -286,4 +286,18 @@ public class UserAnnexResource {
 
     }
 
+    @ApiOperation("获取当前用户的推荐人")
+    @GetMapping("/user-annexes-getReferees")
+    @Timed
+    public ResponseEntity<UserAnnex> getReferees(){
+        UserDTO account = uaaService.getAccount();
+       UserAnnex userReferees = userAnnexService.getReferees(account.getId());
+
+       return ResponseEntity.ok().body(userReferees);
+
+
+
+
+    }
+
 }

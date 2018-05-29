@@ -82,4 +82,6 @@ public interface UserAnnexService {
 
 
     UserAnnex getUserInfosByPhone(String phone);
+
+    UserAnnex getReferees(Long id);
 }
