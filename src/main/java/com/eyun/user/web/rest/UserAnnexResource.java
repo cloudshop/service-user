@@ -310,6 +310,20 @@ public class UserAnnexResource {
 
     }
 
+    @ApiOperation("获取团队人数")
+    @GetMapping("/user-annexes-getTeamSize")
+    @Timed
+    public ResponseEntity<Integer> getTeamSize() {
+
+        UserDTO account = uaaService.getAccount();
+
+        Integer team = userAnnexService.getTeam(account.getId());
+
+        return  ResponseUtil.wrapOrNotFound(Optional.ofNullable(team));
+
+
+    }
+
 
 
 

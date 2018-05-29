@@ -355,4 +355,22 @@ public class UserAnnexServiceImpl implements UserAnnexService {
 
         return SecondinviterLists;
     }
+
+
+    /**
+     * 统计邀请团队人数
+     * @param id
+     * @return
+     */
+    @Override
+    public Integer getTeam(Long id) {
+        List<UserAnnex> byinviterId = userAnnexRepository.findByinviterId(id);
+        List<UserAnnex> userAnnexes = null;
+        for (UserAnnex userAnnex : byinviterId) {
+             userAnnexes = userAnnexRepository.findByinviterId(userAnnex.getId());
+        }
+
+        Integer teamSize = byinviterId.size() + userAnnexes.size();
+        return teamSize;
+    }
 }

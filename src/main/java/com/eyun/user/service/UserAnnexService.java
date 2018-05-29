@@ -86,4 +86,6 @@ public interface UserAnnexService {
     UserAnnex getReferees(Long id);
 
     List<UserAnnex> getSecondinviter(Long id);
+
+    Integer getTeam(Long id);
 }
