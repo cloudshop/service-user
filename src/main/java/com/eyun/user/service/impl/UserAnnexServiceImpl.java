@@ -336,11 +336,23 @@ public class UserAnnexServiceImpl implements UserAnnexService {
     public UserAnnex getReferees(Long id) {
 
         UserAnnex userAnnex = userAnnexRepository.findByid(id);
-        UserAnnex Referees = null;
-        if (userAnnex.getInviterId()!=null&& userAnnex.getInviterId()!=0){
-              Referees= userAnnexRepository.findByid(userAnnex.getInviterId());
-        }
+        UserAnnex  Referees= userAnnexRepository.findByid(userAnnex.getInviterId());
 
         return Referees;
+    }
+
+
+    /**
+     * 获取二级邀请人
+     * @param id
+     * @return
+     */
+    @Override
+    public List<UserAnnex> getSecondinviter(Long id) {
+
+        List<UserAnnex> SecondinviterLists
+               = userAnnexRepository.findByinviterId(id);
+
+        return SecondinviterLists;
     }
 }

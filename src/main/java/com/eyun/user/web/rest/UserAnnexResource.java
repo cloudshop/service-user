@@ -293,11 +293,29 @@ public class UserAnnexResource {
         UserDTO account = uaaService.getAccount();
        UserAnnex userReferees = userAnnexService.getReferees(account.getId());
 
-       return ResponseEntity.ok().body(userReferees);
-
-
-
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(userReferees));
 
     }
+
+
+    @ApiOperation("获取二级邀请人")
+    @GetMapping("/user-annexes-getSecondinviter/{id}")
+    @Timed
+    public ResponseEntity<List<UserAnnex>> getSecondinviter(@PathVariable Long id){
+
+        List<UserAnnex> secondinviterLists =
+               userAnnexService.getSecondinviter(id);
+
+        return  ResponseUtil.wrapOrNotFound(Optional.ofNullable(secondinviterLists));
+
+    }
+
+
+
+
+
+
+
+
 
 }
