@@ -161,7 +161,7 @@ public class UserAnnexResource {
         UserAnnex userAnnex = userAnnexService.userInfo(account.getId());
         BeanUtils.copyProperties(userAnnex,userAnnexDTO);
         //查看邀请人
-        if(userAnnexDTO.getInviterId() == null && userAnnexDTO.getInviterId()!=0){
+        if(userAnnexDTO.getInviterId() != null && userAnnexDTO.getInviterId()!=0){
             UserAnnexDTO inviter = userAnnexService.findOne(userAnnexDTO.getInviterId());
             userAnnexDTO.setInvNickName(inviter.getNickname());
             userAnnexDTO.setInvPhone(inviter.getPhone());
