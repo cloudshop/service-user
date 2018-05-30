@@ -165,9 +165,9 @@ public class UserAnnexResource {
             UserAnnexDTO inviter = userAnnexService.findOne(userAnnexDTO.getInviterId());
             userAnnexDTO.setInvNickName(inviter.getNickname());
             userAnnexDTO.setInvPhone(inviter.getPhone());
+            userAnnexDTO.setUpdatedTime(Instant.now());
         }
-        
-        userAnnexDTO.setUpdatedTime(Instant.now());
+
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(userAnnexDTO));
     }
 
