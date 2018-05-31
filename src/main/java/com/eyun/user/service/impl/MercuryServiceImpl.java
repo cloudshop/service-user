@@ -282,11 +282,10 @@ public class MercuryServiceImpl implements MercuryService {
      */
     @Override
     public void mercuryChangeStatus(Long id) {
-        Mercury mercury = new Mercury();
-        mercury.setId(id);
+        Mercury one = mercuryRepository.findOne(id);
         //增值商户
-        mercury.setStatus(4);
-        mercuryRepository.saveAndFlush(mercury);
+        one.setStatus(4);
+        mercuryRepository.saveAndFlush(one);
 
     }
 
