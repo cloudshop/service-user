@@ -338,5 +338,13 @@ public class MercuryServiceImpl implements MercuryService {
 
     }
 
+	@Override
+	public List<MercuryDTO> getFavMercuries(List<String> ids) {
+		List<MercuryDTO> list = null;
+		mercuryRepository.
+		
+		return null;
+	}
+
 
 }

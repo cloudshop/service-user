@@ -100,4 +100,6 @@ public interface MercuryService {
 
     void setBackground(Map background);
     public MercuryDTO getUserShop();
+
+	List<MercuryDTO> getFavMercuries(List<String> ids);
 }

@@ -272,7 +272,14 @@ public class MercuryResource {
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(mercuryDTO));
     }
 
-
+    @ApiOperation("获取所有店铺信息")
+    @PostMapping("/mercuries/getFavMercuries")
+    @Timed
+    public ResponseEntity<List<MercuryDTO>> getFavMercuries(@RequestBody List<String> ids){
+    	
+    	List<MercuryDTO> mers=mercuryService.getFavMercuries(ids);
+        return null;
+    }
 
 
 
