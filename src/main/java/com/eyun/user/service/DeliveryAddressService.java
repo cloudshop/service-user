@@ -50,7 +50,7 @@ public interface DeliveryAddressService {
      * @param id
      * @return
      */
-    List<Map> findByIdList(Long id);
+    List<DeliveryAddress> findByIdList(Long id);
 
 
     /**

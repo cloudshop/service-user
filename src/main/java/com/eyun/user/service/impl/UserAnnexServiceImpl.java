@@ -326,4 +326,51 @@ public class UserAnnexServiceImpl implements UserAnnexService {
         userAnnexRepository.saveAndFlush(userAnnex);
     }
 
+
+    /**
+     * 获取当前用户的直接推荐人
+     * @param id
+     * @return
+     */
+    @Override
+    public UserAnnex getReferees(Long id) {
+
+        UserAnnex userAnnex = userAnnexRepository.findByid(id);
+        UserAnnex  Referees= userAnnexRepository.findByid(userAnnex.getInviterId());
+
+        return Referees;
+    }
+
+
+    /**
+     * 获取二级邀请人
+     * @param id
+     * @return
+     */
+    @Override
+    public List<UserAnnex> getSecondinviter(Long id) {
+
+        List<UserAnnex> SecondinviterLists
+               = userAnnexRepository.findByinviterId(id);
+
+        return SecondinviterLists;
+    }
+
+
+    /**
+     * 统计邀请团队人数
+     * @param id
+     * @return
+     */
+    @Override
+    public Integer getTeam(Long id) {
+        List<UserAnnex> byinviterId = userAnnexRepository.findByinviterId(id);
+        List<UserAnnex> userAnnexes = null;
+        for (UserAnnex userAnnex : byinviterId) {
+             userAnnexes = userAnnexRepository.findByinviterId(userAnnex.getId());
+        }
+
+        Integer teamSize = byinviterId.size() + userAnnexes.size();
+        return teamSize;
+    }
 }

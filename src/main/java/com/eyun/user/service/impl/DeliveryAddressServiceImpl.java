@@ -109,17 +109,12 @@ public class DeliveryAddressServiceImpl implements DeliveryAddressService {
      * @return
      */
     @Override
-    public List<Map> findByIdList(Long id) {
-        List<Map> deliveryAddressList = deliveryAddressRepository.findDeliveryAddressList(id);
-        if (deliveryAddressList.size()>0){
-            return deliveryAddressList;
-        }
-        throw new BadRequestAlertException(" 无地址数据"," delivery","deliveryexists");
+    public List<DeliveryAddress> findByIdList(Long id) {
+        UserAnnex userAnnex = new UserAnnex();
+        userAnnex.setId(id);
+        List<DeliveryAddress> byuserAnnex = deliveryAddressRepository.findByuserAnnex(userAnnex);
 
-
-
-
-
+        return byuserAnnex;
 
 
     }

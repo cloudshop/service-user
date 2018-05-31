@@ -161,16 +161,13 @@ public class UserAnnexResource {
         UserAnnex userAnnex = userAnnexService.userInfo(account.getId());
         BeanUtils.copyProperties(userAnnex,userAnnexDTO);
         //查看邀请人
-        if(userAnnexDTO.getInviterId() == null){
-//            UserAnnexDTO inviter = userAnnexService.findOne(userAnnexDTO.getInviterId());
-//            userAnnexDTO.setInvNickName(null);
-//            userAnnexDTO.setInvPhone(null);
-        }else{
+        if(userAnnexDTO.getInviterId() != null && userAnnexDTO.getInviterId()!=0){
             UserAnnexDTO inviter = userAnnexService.findOne(userAnnexDTO.getInviterId());
-        	userAnnexDTO.setInvNickName(inviter.getNickname());
+            userAnnexDTO.setInvNickName(inviter.getNickname());
             userAnnexDTO.setInvPhone(inviter.getPhone());
+            userAnnexDTO.setUpdatedTime(Instant.now());
         }
-        userAnnexDTO.setUpdatedTime(Instant.now());
+
         return ResponseUtil.wrapOrNotFound(Optional.ofNullable(userAnnexDTO));
     }
 
@@ -285,5 +282,51 @@ public class UserAnnexResource {
             return ResponseEntity.ok().body(userAnnexInfos);
 
     }
+
+    @ApiOperation("获取当前用户的推荐人")
+    @GetMapping("/user-annexes-getReferees")
+    @Timed
+    public ResponseEntity<UserAnnex> getReferees(){
+        UserDTO account = uaaService.getAccount();
+       UserAnnex userReferees = userAnnexService.getReferees(account.getId());
+
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(userReferees));
+
+    }
+
+
+    @ApiOperation("获取二级邀请人")
+    @GetMapping("/user-annexes-getSecondinviter/{id}")
+    @Timed
+    public ResponseEntity<List<UserAnnex>> getSecondinviter(@PathVariable Long id){
+
+        List<UserAnnex> secondinviterLists =
+               userAnnexService.getSecondinviter(id);
+
+        return  ResponseUtil.wrapOrNotFound(Optional.ofNullable(secondinviterLists));
+
+    }
+
+    @ApiOperation("获取团队人数")
+    @GetMapping("/user-annexes-getTeamSize")
+    @Timed
+    public ResponseEntity<Integer> getTeamSize() {
+
+        UserDTO account = uaaService.getAccount();
+
+        Integer team = userAnnexService.getTeam(account.getId());
+
+        return  ResponseUtil.wrapOrNotFound(Optional.ofNullable(team));
+
+
+    }
+
+
+
+
+
+
+
+
 
 }

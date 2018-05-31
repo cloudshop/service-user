@@ -152,8 +152,8 @@ public class DeliveryAddressResource {
     @Timed
     public ResponseEntity getAddressList(){
        UserDTO account = uaaService.getAccount();
-        List<Map> result = deliveryAddressService.findByIdList(account.getId());
-        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(result));
+        List<DeliveryAddress> byIdList = deliveryAddressService.findByIdList(account.getId());
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(byIdList));
     }
 
 
@@ -211,13 +211,13 @@ public class DeliveryAddressResource {
     @Timed
     public ResponseEntity upstateAddress(@RequestBody DeliveryAddressDTO deliveryAddressDTO){
     	try {
-    		
+
     		DeliveryAddressDTO addressDTO = deliveryAddressService.findOne(deliveryAddressDTO.getId());
     		addressDTO.setCity(deliveryAddressDTO.getCity());
     		addressDTO.setContact(deliveryAddressDTO.getContact());
     		addressDTO.setPhone(deliveryAddressDTO.getPhone());
 			deliveryAddressService.save(addressDTO);
-			
+
 		} catch (Exception e) {
 			throw new BadRequestAlertException("编辑地址失败", "", "");
 		}
