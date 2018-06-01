@@ -1,6 +1,7 @@
 package com.eyun.user.web.rest;
 
 import com.codahale.metrics.annotation.Timed;
+import com.eyun.user.domain.Mercury;
 import com.eyun.user.service.MercuryService;
 import com.eyun.user.service.UaaService;
 import com.eyun.user.service.dto.UserDTO;
@@ -275,10 +276,11 @@ public class MercuryResource {
     @ApiOperation("获取所有店铺信息")
     @PostMapping("/mercuries/getFavMercuries")
     @Timed
-    public ResponseEntity<List<MercuryDTO>> getFavMercuries(@RequestBody List<String> ids){
-    	
-    	List<MercuryDTO> mers=mercuryService.getFavMercuries(ids);
-        return null;
+    public ResponseEntity<List<Mercury>> getFavMercuries(@RequestBody List<Long> ids){
+
+    	List<Mercury> mers =mercuryService.getFavMercuries(ids);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(mers));
+
     }
 
 

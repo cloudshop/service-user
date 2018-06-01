@@ -338,10 +338,15 @@ public class MercuryServiceImpl implements MercuryService {
     }
 
 	@Override
-	public List<MercuryDTO> getFavMercuries(List<String> ids) {
-		List<MercuryDTO> list = null;
-		
-		return null;
+	public List<Mercury> getFavMercuries(List<Long> ids) {
+
+        List<Mercury> lists = new ArrayList<>();
+        ids.forEach( id -> {
+            Mercury one = mercuryRepository.findOne(id);
+            lists.add(one);
+        });
+
+		return lists;
 	}
 
 
