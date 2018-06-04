@@ -352,4 +352,25 @@ public class MercuryServiceImpl implements MercuryService {
 		return lists;
 	}
 
+
+    /**
+     * 修改商户信息
+     * @param mercuryDTO
+     * @return
+     */
+    @Override
+    public String updateBackgroundMercuryInfo(MercuryDTO mercuryDTO) {
+
+        Mercury one = mercuryRepository.findOne(mercuryDTO.getId());
+        one.setCity(mercuryDTO.getCity());
+        one.setStatus(mercuryDTO.getStatus());
+        one.setImgIntroduces(mercuryDTO.getImgIntroduces());
+        one.setImgLicense(mercuryDTO.getImgLicense());
+        one.setImgIdcardHold(mercuryDTO.getImgIdcardHold());
+        one.setImgFacade(mercuryDTO.getImgFacade());
+        one.setImgIdcardBack(mercuryDTO.getImgIdcardBack());
+        one.setName(mercuryDTO.getName());
+        mercuryRepository.saveAndFlush(one);
+        return "ok";
+    }
 }

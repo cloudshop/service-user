@@ -102,4 +102,6 @@ public interface MercuryService {
     public MercuryDTO getUserShop();
 
 	List<Mercury> getFavMercuries(List<Long> ids);
+
+    String updateBackgroundMercuryInfo(MercuryDTO mercuryDTO);
 }
