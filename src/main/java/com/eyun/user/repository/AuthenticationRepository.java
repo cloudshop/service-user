@@ -19,6 +19,6 @@ public interface AuthenticationRepository extends JpaRepository<Authentication, 
 	@Query(value = "SELECT * FROM `withdraw_deposit` WHERE DATE(`created_time`) >= DATE(?1) AND DATE(`created_time`) <= DATE(?2) LIMIT ?3,?4 ",nativeQuery = true)
 	public List<WithdrawDeposit> findSubDetilByPage(String frist,String last,Integer page,Integer size);*/
 	
-	@Query(value = "SELECT * FROM `authentication` WHERE DATE(`created_time`) >= DATE(?1) AND DATE(`created_time`) <= DATE(?2) LIMIT ?3,?4 ",nativeQuery = true)
+	@Query(value = "SELECT * FROM `authentication` WHERE DATE(`created_time`) >= DATE(?1) AND DATE(`created_time`) <= DATE(?2) order by 'created_time' desc LIMIT ?3,?4 ",nativeQuery = true)
 	public List<Authentication> findSubAutherntication(String frist,String last,Integer page,Integer size);
 }
