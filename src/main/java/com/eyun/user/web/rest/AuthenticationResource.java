@@ -10,8 +10,10 @@ import com.eyun.user.web.rest.util.PaginationUtil;
 import com.eyun.user.web.rest.vm.AuthenticationVM;
 import com.eyun.user.service.dto.AuthenticationDTO;
 import com.eyun.user.service.dto.RefuseDTO;
+import com.eyun.user.service.dto.SubTimeAuth;
 import com.eyun.user.service.dto.UserDTO;
 import com.eyun.user.service.dto.AuthenticationCriteria;
+import com.eyun.user.domain.Authentication;
 import com.eyun.user.service.AuthenticationQueryService;
 import io.github.jhipster.web.util.ResponseUtil;
 import io.swagger.annotations.ApiOperation;
@@ -279,6 +281,14 @@ public class AuthenticationResource {
     	authenticationDTO.setStatusString("未通过审核");
     	authenticationService.save(authenticationDTO);
     	pushService.sendPushByUserid(refuseDTO.getId().toString(), refuseDTO.getContent());
+    }
+    
+    @ApiOperation("时间段查询数据")
+    @PostMapping("/findSubAuthentication")
+    public ResponseEntity<List<Authentication>> findSubAutherntication(@RequestBody SubTimeAuth subTimeAuth){
+    	List<Authentication> findSubAutherntication = authenticationService.findSubAutherntication(subTimeAuth);
+		return new ResponseEntity<>(findSubAutherntication,HttpStatus.OK);
+		
     }
     
 }

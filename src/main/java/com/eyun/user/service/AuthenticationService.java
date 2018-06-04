@@ -1,6 +1,11 @@
 package com.eyun.user.service;
 
+import com.eyun.user.domain.Authentication;
 import com.eyun.user.service.dto.AuthenticationDTO;
+import com.eyun.user.service.dto.SubTimeAuth;
+
+import java.util.List;
+
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -39,4 +44,6 @@ public interface AuthenticationService {
      * @param id the id of the entity
      */
     void delete(Long id);
+
+	List<Authentication> findSubAutherntication(SubTimeAuth subTimeAuth);
 }

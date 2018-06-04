@@ -4,7 +4,11 @@ import com.eyun.user.service.AuthenticationService;
 import com.eyun.user.domain.Authentication;
 import com.eyun.user.repository.AuthenticationRepository;
 import com.eyun.user.service.dto.AuthenticationDTO;
+import com.eyun.user.service.dto.SubTimeAuth;
 import com.eyun.user.service.mapper.AuthenticationMapper;
+
+import java.util.List;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -83,4 +87,10 @@ public class AuthenticationServiceImpl implements AuthenticationService {
         log.debug("Request to delete Authentication : {}", id);
         authenticationRepository.delete(id);
     }
+
+	@Override
+	public List<Authentication> findSubAutherntication(SubTimeAuth subTimeAuth) {
+		List<Authentication> findSubAutherntication = authenticationRepository.findSubAutherntication(subTimeAuth.getFrist(),subTimeAuth.getLast(),subTimeAuth.getPage(),subTimeAuth.getSize());
+		return findSubAutherntication;
+	}
 }
