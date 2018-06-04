@@ -238,6 +238,9 @@ public class MercuryServiceImpl implements MercuryService {
     public MercuryDTO getUserShop() {
         UserDTO account = uaaService.getAccount();
         Map MercuryId = mercuryService.getUserIdMercuryId(account.getId());
+        if (MercuryId.isEmpty()){
+            throw new BadRequestAlertException("获取当前登陆用户店铺失败", "mercury", "mercuryNotfound");
+        }
         Mercury one = mercuryRepository.findOne(Long.valueOf(MercuryId.get("id").toString()));
         return mercuryMapper.toDto(one);
     }
@@ -348,6 +351,5 @@ public class MercuryServiceImpl implements MercuryService {
 
 		return lists;
 	}
-
 
 }
