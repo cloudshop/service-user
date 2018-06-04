@@ -237,7 +237,7 @@ public class MercuryServiceImpl implements MercuryService {
     @Override
     public MercuryDTO getUserShop() {
         UserDTO account = uaaService.getAccount();
-        log.info("当前登陆用户ID"+account.getId()+"当前登陆用户手机号"+account.getLogin());
+        log.info("当前登陆用户ID:"+account.getId()+"当前登陆用户手机号:"+account.getLogin());
         Map MercuryId = mercuryService.getUserIdMercuryId(account.getId());
         if (MercuryId.isEmpty()){
             throw new BadRequestAlertException("获取当前登陆用户店铺失败", "mercury", "mercuryNotfound");
