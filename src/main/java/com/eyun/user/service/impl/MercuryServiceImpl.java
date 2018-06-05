@@ -258,7 +258,8 @@ public class MercuryServiceImpl implements MercuryService {
 
     @Override
     public List<Map> findNearList(MercuryDTO mercuryDTO) {
-      return   mercuryRepository.findNearMerchants(mercuryDTO.getLangitude(),mercuryDTO.getLantitude());
+      return   mercuryRepository.findNearMerchants(mercuryDTO.getLangitude(),mercuryDTO.getLantitude(),mercuryDTO.getPageNum(),
+          mercuryDTO.getPageSize());
 
     }
 
