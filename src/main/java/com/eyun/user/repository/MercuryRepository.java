@@ -28,11 +28,14 @@ public interface MercuryRepository extends JpaRepository<Mercury, Long>, JpaSpec
     Map checkMercuryStatus(@Param("id")Long id);
 
 
-    @Query(nativeQuery = true, value = "SELECT m.name,m.city,m.img_license,m.id,SQRT( POW(111.2 * (lantitude - :Lantitude ), 2) + POW(111.2 * (:Langitude - langitude) * COS(lantitude / 57.3), 2))   AS distance FROM mercury AS m HAVING distance < 25 ORDER BY distance")
+    @Query(nativeQuery = true, value = "SELECT m.name,m.city,m.img_license,m.id,m.provice,SQRT( POW(111.2 * (lantitude - :Lantitude ), 2) + POW(111.2 * (:Langitude - langitude) * COS(lantitude / 57.3), 2))   AS distance FROM mercury AS m HAVING distance < 25 ORDER BY distance LIMIT 0,10")
     List<Map> findNearMerchants(@Param("Langitude")Double Langitude, @Param("Lantitude")Double Lantitude);
 
 
 
     @Query(nativeQuery = true,value = "SELECT m.id FROM mercury AS m LEFT JOIN owner_relation o ON m.id=o.mercury_id LEFT JOIN user_annex u ON u.id=o.user_annex_id where u.id=:id")
     Map getUserIdMercuryId(@Param("id")Long id);
+
+    @Query(nativeQuery = true,value = "SELECT m.id AS id,m.name AS name,m.img_license AS license FROM mercury m WHERE m.name LIKE CONCAT(\"%\",:name,\"%\")")
+    List<Map> findByNameLike(@Param("name")String name);
 }

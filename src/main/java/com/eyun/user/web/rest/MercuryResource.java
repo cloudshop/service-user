@@ -284,6 +284,23 @@ public class MercuryResource {
     }
 
 
+    @ApiOperation("修改管理后台商户的信息")
+    @PutMapping("/mercuries/updateBackgroundMercuryInfo")
+    @Timed
+    public ResponseEntity<String> updateBackgroundMercuryInfo(@RequestBody MercuryDTO mercuryDTO){
+        String message = mercuryService.updateBackgroundMercuryInfo(mercuryDTO);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(message));
+
+    }
+
+    @ApiOperation("按照店铺名称模糊搜索店铺")
+    @GetMapping("/mercuries/findbyname/{mercuriename}")
+    @Timed
+    public ResponseEntity findByNameLike(@PathVariable String mercuriename){
+        List<Map> mercurieList = mercuryService.findByNameLike(mercuriename);
+        return ResponseUtil.wrapOrNotFound(Optional.ofNullable(mercurieList));
+    }
+
 
 
 

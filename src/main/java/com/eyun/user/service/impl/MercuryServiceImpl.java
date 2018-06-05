@@ -259,7 +259,8 @@ public class MercuryServiceImpl implements MercuryService {
 
     @Override
     public List<Map> findNearList(MercuryDTO mercuryDTO) {
-      return   mercuryRepository.findNearMerchants(mercuryDTO.getLangitude(),mercuryDTO.getLantitude());
+      return   mercuryRepository.findNearMerchants(mercuryDTO.getLangitude(),mercuryDTO.getLantitude()
+          );
 
     }
 
@@ -373,5 +374,21 @@ public class MercuryServiceImpl implements MercuryService {
         one.setName(mercuryDTO.getName());
         mercuryRepository.saveAndFlush(one);
         return "ok";
+    }
+
+    @Override
+    public List<Map> findByNameLike(String name) {
+        List<Map>result=new ArrayList<>();
+        List<Map>list=mercuryRepository.findByNameLike(name);
+        if (!list.isEmpty()){
+            for (Map map:list){
+                List<Map>productList=productService.ProductList(Long.valueOf(map.get("id").toString()),1,10);
+                if (!productList.isEmpty()){
+                    result.add(map);
+                }
+            }
+
+        }
+        return result;
     }
 }
